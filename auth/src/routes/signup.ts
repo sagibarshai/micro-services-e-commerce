@@ -6,6 +6,7 @@ import { validateRequest } from "../middlewears/validate-request";
 import { DatabaseError } from "../errors/database-error";
 import User from "../moduls/user";
 import { CookieHandler } from "../utils/cookie";
+
 interface SignupRequest extends Request {
      body: {
           email: string;
@@ -43,7 +44,6 @@ signupRouter.post(
           } catch (err) {
                return next(new DatabaseError("Database error"));
           }
-          return res.send({ massge: req.body });
      }
 );
 

@@ -21,7 +21,7 @@ correntUserRouter.get(
      "/api/users/currentuser",
      async (req: CurrentUserRequest, res: Response, next: NextFunction) => {
           const token = req.headers.cookie?.split("=")[1] || undefined;
-          if (!token) throw new BadRequestError("Token must be suplied");
+          if (!token) return next(new BadRequestError("Token must be suplied"));
           const userPayload = jwt.verify(
                token,
                process.env.JWT_KEY!

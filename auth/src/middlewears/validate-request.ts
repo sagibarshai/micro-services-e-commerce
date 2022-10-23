@@ -9,7 +9,6 @@ export const validateRequest = (
 ) => {
      const errors = validationResult(req);
      if (!errors.isEmpty()) {
-          console.log("it's working!! coming from middlewear validate-request");
           throw new RequestValidatorError(errors.array());
      }
      next();

@@ -8,9 +8,6 @@ export const errorHandler = (
      next: NextFunction
 ) => {
      if (err instanceof CustomError) {
-          console.log(
-               "succsses!! , coming from err-handler that inside index.ts"
-          );
           return res
                .status(err.statusCode)
                .send({ errors: err.serializeErrors() });
