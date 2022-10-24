@@ -18,5 +18,13 @@ build:
       manual:
       - dest: .
         src: 'src/**/.ts'
+  - image: us.gcr.io/e-commerce-365907/client
+    context: client
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+      - dest: .
+        src: '**/*/.tsx'
 
 

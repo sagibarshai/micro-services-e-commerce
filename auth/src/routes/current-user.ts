@@ -26,7 +26,7 @@ correntUserRouter.get(
                token,
                process.env.JWT_KEY!
           ) as JwtUserPaylod;
-
+          console.log(userPayload);
           if (!userPayload) throw new UnauthorizedError("Token is not valid");
           const userId = userPayload.id;
 

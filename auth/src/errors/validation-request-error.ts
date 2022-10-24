@@ -1,4 +1,4 @@
-import { validationResult, ValidationError } from "express-validator";
+import { ValidationError } from "express-validator";
 import { CustomError } from "./custom-error";
 
 export class RequestValidatorError extends CustomError {
@@ -6,7 +6,8 @@ export class RequestValidatorError extends CustomError {
      constructor(public errors: ValidationError[]) {
           super("Invalid Request paramaters");
      }
-     serializeErrors() {
+     public serializeErrors() {
+          console.log(this.errors);
           return this.errors.map((err) => {
                return { message: err.msg, field: err.param };
           });

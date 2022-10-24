@@ -15,7 +15,6 @@ interface SignupRequest extends Request {
 }
 
 const signupRouter = express.Router();
-
 signupRouter.post(
      "/api/users/signup",
      [
@@ -25,11 +24,11 @@ signupRouter.post(
                .isLength({ min: 5, max: 20 })
                .withMessage("password must be between 4 and 20 characters"),
      ],
-     validateRequest,
+     // validateRequest,
      async (req: SignupRequest, res: Response, next: NextFunction) => {
           const errors = validationResult(req);
           if (!errors.isEmpty()) {
-               return next(new RequestValidatorError(errors.array()));
+               return res.status(400).send(errors.array());
           }
           const { email, password } = req.body;
           try {

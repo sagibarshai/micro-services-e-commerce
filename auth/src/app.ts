@@ -15,7 +15,6 @@ app.use(
           extended: true,
      })
 );
-console.log(process.env.GOOGLE_CLIENT_SECRET!, process.env.GOOGLE_CLIENT_ID);
 
 app.use(signupRouter);
 app.use(currentuserRouter);
