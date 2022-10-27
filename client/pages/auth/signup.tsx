@@ -1,24 +1,27 @@
 import { NextPage } from "next";
-import styled from "styled-components";
 import Router from "next/router";
-import { ReducerAction, ReducerState, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
+import {
+     StyledPageContainer,
+     StyledTitle,
+     StyledSignupContainer,
+     StyledLeftContent,
+     StyledSubtitle,
+     StyledRow,
+     StyledSpan,
+     StyledButton,
+     StyledForm,
+     StyledHr,
+     StyledRightConatiner,
+} from "../../styles/auth/StyledSignUp";
 import axios from "axios";
-const StyledDiv = styled.div`
-     display: flex;
-     flex-direction: column;
-     justify-content: space-around;
-     width: 50vw;
-     height: 50vh;
-     align-self: center;
-     justify-self: center;
-`;
+import { colors } from "../../shared/colors/colors";
+import Input from "../../shared/ui-elements/input/Input";
+import { StyledParimaryButton } from "../../shared/ui-elements/button/button";
+import Notification from "../../shared/notification/Notification";
+import InfoCircle from "../../shared/svg/info-circle.svg";
+type InputsTypes = "email" | "password" | "firstName" | "lastName";
 
-const StyledInput = styled.input`
-     width: 400px;
-     height: 100px;
-     border-radius: 10px;
-     font-size: 1.2rem;
-`;
 interface InputState {
      value: string;
      isValid: boolean;
@@ -27,109 +30,236 @@ interface InputState {
 interface InputsState {
      email: InputState;
      password: InputState;
+     firstName: InputState;
+     lastName: InputState;
 }
 
 type Action =
-     | ({
-            type: "EMAIL_VALUE" | "PASSWORD_VALUE";
+     | {
+            type:
+                 | "EMAIL_VALUE"
+                 | "PASSWORD_VALUE"
+                 | "FIRST_NAME_VALUE"
+                 | "LAST_NAME_VALUE";
             payload: {
                  event: React.ChangeEvent<HTMLInputElement>;
             };
-       } & ReducerAction<any>)
-     | ({
-            type: "EMAIL_VALIDATION" | "PASSWORD_VALIDATION";
-            payload: {
-                 event: React.ChangeEvent<HTMLInputElement>;
-                 isValid: boolean;
-            };
-       } & ReducerAction<any>);
+       } & React.ReducerAction<any>;
+
+const checkInputValidation = (value: string) => (value.length ? true : false);
 
 function inputsReducer(inputsState: InputsState, action: Action): InputsState {
      let emailUpdated: InputState = { ...inputsState.email };
      let passwordUpdated: InputState = { ...inputsState.password };
-     console.log(action);
+     let firstNameUpdated: InputState = { ...inputsState.firstName };
+     let lastNameUpdated: InputState = { ...inputsState.lastName };
      switch (action.type) {
           case "EMAIL_VALUE":
                emailUpdated = {
                     ...inputsState.email,
                     value: action.payload.event.target.value,
                };
+               emailUpdated.isValid = checkInputValidation(emailUpdated.value);
+
                return { ...inputsState, email: emailUpdated };
           case "PASSWORD_VALUE":
                passwordUpdated = {
                     ...inputsState.password,
                     value: action.payload.event.target.value,
                };
+               passwordUpdated.isValid = checkInputValidation(
+                    passwordUpdated.value
+               );
+
                return { ...inputsState, password: passwordUpdated };
-          case "EMAIL_VALIDATION":
-               emailUpdated = {
-                    ...inputsState.email,
-                    isValid: action.payload.isValid,
+          case "FIRST_NAME_VALUE":
+               firstNameUpdated = {
+                    ...inputsState.firstName,
+                    value: action.payload.event.target.value,
                };
-               return { ...inputsState, email: emailUpdated };
-          case "PASSWORD_VALIDATION":
-               passwordUpdated = {
-                    ...inputsState.password,
-                    isValid: action.payload.isValid,
+               firstNameUpdated.isValid = checkInputValidation(
+                    firstNameUpdated.value
+               );
+
+               return { ...inputsState, firstName: firstNameUpdated };
+          case "LAST_NAME_VALUE":
+               lastNameUpdated = {
+                    ...inputsState.lastName,
+                    value: action.payload.event.target.value,
                };
-               return { ...inputsState, password: passwordUpdated };
+               lastNameUpdated.isValid = checkInputValidation(
+                    lastNameUpdated.value
+               );
+
+               return { ...inputsState, lastName: lastNameUpdated };
           default:
                return inputsState;
      }
 }
+const initInputState = {
+     value: "",
+     isValid: false,
+};
 
 const Signup: NextPage = () => {
+     const [formRequestError, setFormRequestError] = useState<string | null>(
+          null
+     );
      const [inputsState, dispatch] = useReducer(inputsReducer, {
           email: {
-               value: "",
-               isValid: false,
+               ...initInputState,
           },
           password: {
-               value: "",
-               isValid: false,
+               ...initInputState,
+          },
+          firstName: {
+               ...initInputState,
+          },
+          lastName: {
+               ...initInputState,
           },
      });
-     const submitFunc = async () => {
+     const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+          e.preventDefault();
+          let input: InputsTypes;
+          for (input in inputsState) {
+               if (!inputsState[input].isValid) {
+                    return setFormRequestError("All filed must not be empty");
+               }
+          }
           try {
                const { data } = await axios.post("/api/users/signup", {
                     email: inputsState.email.value,
                     password: inputsState.password.value,
+                    firstName: inputsState.firstName.value,
+                    lastName: inputsState.lastName.value,
                });
                console.log(data);
                Router.push("/api/users/currentuser");
-          } catch (err) {
+          } catch (err: any) {
+               if (
+                    err?.response?.data?.errors &&
+                    Array.isArray(err.response.data.errors)
+               ) {
+                    let message = "";
+                    for (let error of err.response.data.errors) {
+                         message += error["message"];
+                    }
+                    return setFormRequestError(message);
+               }
+               setFormRequestError("Somthing went worng..");
                console.log(err);
           }
      };
+
+     useEffect(() => {
+          setFormRequestError(null);
+     }, [inputsState]);
+
      return (
-          <StyledDiv>
-               <StyledInput
-                    placeholder="email"
-                    onChange={(e) => {
-                         dispatch({
-                              type: "EMAIL_VALUE",
-                              payload: { event: e },
-                         });
-                    }}
-               />
-               <StyledInput
-                    placeholder="password"
-                    onChange={(e) => {
-                         dispatch({
-                              type: "PASSWORD_VALUE",
-                              payload: { event: e },
-                         });
-                    }}
-               />
-               <StyledInput
-                    // placeholder="password"
-                    type="button"
-                    value="submit"
-                    onClick={submitFunc}
-               />
-               {/* <StyledInput value={""} placeholder="email" onChange={(e) => setEmail(e.target.value) }  />; */}
-               {/* <StyledInput value={""} placeholder="email" onChange={(e) => setEmail(e.target.value) }  />; */}
-          </StyledDiv>
+          <StyledPageContainer>
+               <StyledSignupContainer>
+                    <StyledRow>
+                         <StyledLeftContent>
+                              <StyledTitle>Create An Account</StyledTitle>
+                              <StyledRow
+                                   alignItems="baseline"
+                                   gap="8px"
+                                   justifayContent="flex-start"
+                              >
+                                   <StyledSubtitle>
+                                        Already an user?
+                                   </StyledSubtitle>
+                                   <StyledButton
+                                        onClick={() =>
+                                             Router.push("/auth/signin")
+                                        }
+                                   >
+                                        <StyledSpan
+                                             color={colors.secondaryGreen}
+                                             fontSize="1.7rem"
+                                             fontWeight="bolder"
+                                        >
+                                             Sign In
+                                        </StyledSpan>
+                                   </StyledButton>
+                              </StyledRow>
+                              <StyledForm onSubmit={(e) => submitHandler(e)}>
+                                   {formRequestError && (
+                                        <Notification
+                                             fontWeight="bold"
+                                             fontSize="2rem"
+                                             backgroundColor={
+                                                  colors.notificationError
+                                             }
+                                             icon={<InfoCircle />}
+                                             message={formRequestError}
+                                             variant="error"
+                                             color="white"
+                                        />
+                                   )}
+                                   <StyledRow gap="14px">
+                                        <Input
+                                             variant="medium"
+                                             placeholder="First Name"
+                                             onChange={(e) =>
+                                                  dispatch({
+                                                       type: "FIRST_NAME_VALUE",
+                                                       payload: { event: e },
+                                                  })
+                                             }
+                                        />
+                                        <Input
+                                             variant="medium"
+                                             placeholder="Last Name"
+                                             onChange={(e) =>
+                                                  dispatch({
+                                                       type: "LAST_NAME_VALUE",
+                                                       payload: { event: e },
+                                                  })
+                                             }
+                                        />
+                                   </StyledRow>
+                                   <Input
+                                        variant="large"
+                                        placeholder="Email Address"
+                                        onChange={(e) =>
+                                             dispatch({
+                                                  type: "EMAIL_VALUE",
+                                                  payload: { event: e },
+                                             })
+                                        }
+                                   />
+                                   <Input
+                                        variant="large"
+                                        placeholder="Password"
+                                        type="password"
+                                        onChange={(e) =>
+                                             dispatch({
+                                                  type: "PASSWORD_VALUE",
+                                                  payload: { event: e },
+                                             })
+                                        }
+                                   />
+                                   <StyledParimaryButton>
+                                        Sign Up
+                                   </StyledParimaryButton>
+                                   <StyledRow alignItems="center">
+                                        <StyledHr></StyledHr>
+                                        <StyledSpan
+                                             fontSize="1.4rem"
+                                             fontWeight="bolder"
+                                        >
+                                             Or Sign In With
+                                        </StyledSpan>
+                                        <StyledHr></StyledHr>
+                                   </StyledRow>
+                              </StyledForm>
+                         </StyledLeftContent>
+                         <StyledRightConatiner></StyledRightConatiner>
+                    </StyledRow>
+               </StyledSignupContainer>
+          </StyledPageContainer>
      );
 };
 export default Signup;

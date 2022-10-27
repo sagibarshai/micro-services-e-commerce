@@ -5,6 +5,8 @@ import { UserDoc } from "../moduls/user";
 interface UserPayload {
      email: string;
      id: string;
+     firstName: string;
+     lastName: string;
 }
 
 export class CookieHandler {

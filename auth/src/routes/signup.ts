@@ -11,6 +11,8 @@ interface SignupRequest extends Request {
      body: {
           email: string;
           password: string;
+          firstName: string;
+          lastName: string;
      };
 }
 
@@ -24,21 +26,30 @@ signupRouter.post(
                .isLength({ min: 5, max: 20 })
                .withMessage("password must be between 4 and 20 characters"),
      ],
-     // validateRequest,
+     validateRequest,
      async (req: SignupRequest, res: Response, next: NextFunction) => {
-          const errors = validationResult(req);
-          if (!errors.isEmpty()) {
-               return res.status(400).send(errors.array());
-          }
-          const { email, password } = req.body;
+          const { email, password, firstName, lastName } = req.body;
           try {
                const existingUser = await User.findOne({ email });
                if (existingUser) {
                     return next(new BadRequestError("Email alredy exist"));
                }
-               const newUser = User.build({ email, password });
+               const newUser = User.build({
+                    email,
+                    password,
+                    firstName,
+                    lastName,
+               });
                const user = await newUser.save();
-               CookieHandler.setCookie({ email: user.email, id: user.id }, res);
+               CookieHandler.setCookie(
+                    {
+                         email: user.email,
+                         id: user.id,
+                         firstName: user.firstName,
+                         lastName: user.lastName,
+                    },
+                    res
+               );
                return res.status(201).send(user);
           } catch (err) {
                return next(new DatabaseError("Database error"));

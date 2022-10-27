@@ -3,11 +3,15 @@ import { Password } from "../utils/password";
 interface UserAtters {
      email: string;
      password: string;
+     firstName: string;
+     lastName: string;
 }
 
 export interface UserDoc extends mongoose.Document {
      email: string;
      password: string;
+     firstName: string;
+     lastName: string;
 }
 
 interface UserModal extends mongoose.Model<UserDoc> {
@@ -21,6 +25,14 @@ const UserSchama = new mongoose.Schema(
                type: String,
           },
           password: {
+               required: true,
+               type: String,
+          },
+          firstName: {
+               required: true,
+               type: String,
+          },
+          lastName: {
                required: true,
                type: String,
           },

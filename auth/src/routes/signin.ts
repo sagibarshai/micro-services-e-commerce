@@ -17,12 +17,8 @@ signinRouter.post(
                .isLength({ min: 5, max: 10 })
                .withMessage("password must be between 4 and 20 characters"),
      ],
-     // validateRequest,
+     validateRequest,
      async (req: Request, res: Response, next: NextFunction) => {
-          const errors = validationResult(req);
-          if (!errors.isEmpty()) {
-               return res.status(400).send(errors.array());
-          }
           const { email, password } = req.body;
           let existingUser;
           try {
@@ -49,6 +45,8 @@ signinRouter.post(
                {
                     email: existingUser.email,
                     id: existingUser.id,
+                    firstName: existingUser.firstName,
+                    lastName: existingUser.lastName,
                },
                res
           );
