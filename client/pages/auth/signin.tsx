@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import Router from "next/router";
 import { useEffect, useReducer, useState } from "react";
+import LeafSvg from "../../shared/svg/leaf2.svg";
 import {
      StyledPageContainer,
      StyledTitle,
@@ -12,6 +13,8 @@ import {
      StyledButton,
      StyledForm,
      StyledHr,
+     StyledSvg,
+     StyledRightConatiner,
 } from "../../styles/auth/StyledSignUp";
 import axios from "axios";
 import { colors } from "../../shared/colors/colors";
@@ -20,6 +23,8 @@ import { StyledParimaryButton } from "../../shared/ui-elements/button/button";
 import Notification from "../../shared/notification/Notification";
 import InfoCircle from "../../shared/svg/info-circle.svg";
 import Checkbox from "../../shared/ui-elements/input/Checkbox";
+import { StyledXButton } from "../../shared/components/StyledXButton";
+
 type InputsTypes = "email" | "password";
 
 interface InputState {
@@ -74,6 +79,8 @@ const initInputState = {
 };
 
 const Signup: NextPage = () => {
+     const [xButtonClicked, setXButtonClicked] = useState<boolean>(false);
+
      const [formRequestError, setFormRequestError] = useState<string | null>(
           null
      );
@@ -123,89 +130,109 @@ const Signup: NextPage = () => {
      return (
           <StyledPageContainer>
                <StyledSignupContainer>
-                    <StyledLeftContent>
-                         <StyledTitle>Sign In</StyledTitle>
-                         <StyledRow
-                              alignItems="baseline"
-                              gap="48px"
-                              justifayContent="flex-start"
+                    <StyledRow>
+                         <StyledXButton
+                              btnClicked={xButtonClicked}
+                              onClick={() => {
+                                   setXButtonClicked((prevState) => !prevState);
+                                   setTimeout(() => {
+                                        Router.push("/");
+                                   }, 400);
+                              }}
                          >
-                              <StyledSubtitle>New user?</StyledSubtitle>
-                              <StyledButton
-                                   onClick={() => Router.push("/auth/signup")}
+                              X
+                         </StyledXButton>
+                         <StyledLeftContent>
+                              <StyledTitle>Sign In</StyledTitle>
+                              <StyledRow
+                                   alignItems="baseline"
+                                   gap="48px"
+                                   justifayContent="flex-start"
                               >
-                                   <StyledSpan
-                                        color={colors.secondaryGreen}
-                                        fontSize="1.7rem"
-                                        fontWeight="bolder"
-                                   >
-                                        Create an account
-                                   </StyledSpan>
-                              </StyledButton>
-                         </StyledRow>
-                         <StyledForm onSubmit={(e) => submitHandler(e)}>
-                              {formRequestError && (
-                                   <Notification
-                                        fontWeight="bold"
-                                        fontSize="2rem"
-                                        backgroundColor={
-                                             colors.notificationError
+                                   <StyledSubtitle>New user?</StyledSubtitle>
+                                   <StyledButton
+                                        onClick={() =>
+                                             Router.push("/auth/signup")
                                         }
-                                        icon={<InfoCircle />}
-                                        message={formRequestError}
-                                        variant="error"
-                                        color="white"
-                                   />
-                              )}
-                              <Input
-                                   variant="large"
-                                   placeholder="Email Address"
-                                   onChange={(e) =>
-                                        dispatch({
-                                             type: "EMAIL_VALUE",
-                                             payload: { event: e },
-                                        })
-                                   }
-                              />
-                              <Input
-                                   variant="large"
-                                   type="password"
-                                   placeholder="Password"
-                                   onChange={(e) =>
-                                        dispatch({
-                                             type: "PASSWORD_VALUE",
-                                             payload: { event: e },
-                                        })
-                                   }
-                              />
-                              <StyledRow gap="17px" alignItems="center">
-                                   <Checkbox
-                                        onChange={(e) => {}}
-                                        alignSelf={"flex-start"}
-                                        width="35px"
-                                        height="35px"
-                                        borderRadius="8px"
-                                        color={colors.secondaryGreen}
-                                   />
-                                   <StyledSpan
-                                        fontSize="1.7rem"
-                                        fontWeight="bold"
                                    >
-                                        Keep me signed in
-                                   </StyledSpan>
+                                        <StyledSpan
+                                             color={colors.secondaryGreen}
+                                             fontSize="1.7rem"
+                                             fontWeight="bolder"
+                                        >
+                                             Create an account
+                                        </StyledSpan>
+                                   </StyledButton>
                               </StyledRow>
-                              <StyledParimaryButton>
-                                   Sign Up
-                              </StyledParimaryButton>
-                              <StyledRow alignItems="center">
+                              <StyledForm onSubmit={(e) => submitHandler(e)}>
+                                   {formRequestError && (
+                                        <Notification
+                                             fontWeight="bold"
+                                             fontSize="2rem"
+                                             backgroundColor={
+                                                  colors.notificationError
+                                             }
+                                             icon={<InfoCircle />}
+                                             message={formRequestError}
+                                             variant="error"
+                                             color="white"
+                                        />
+                                   )}
+                                   <Input
+                                        variant="large"
+                                        placeholder="Email Address"
+                                        onChange={(e) =>
+                                             dispatch({
+                                                  type: "EMAIL_VALUE",
+                                                  payload: { event: e },
+                                             })
+                                        }
+                                   />
+                                   <Input
+                                        variant="large"
+                                        type="password"
+                                        placeholder="Password"
+                                        onChange={(e) =>
+                                             dispatch({
+                                                  type: "PASSWORD_VALUE",
+                                                  payload: { event: e },
+                                             })
+                                        }
+                                   />
+                                   <StyledRow gap="17px" alignItems="center">
+                                        <Checkbox
+                                             onChange={(e) => {}}
+                                             alignSelf={"flex-start"}
+                                             width="35px"
+                                             height="35px"
+                                             borderRadius="8px"
+                                             color={colors.secondaryGreen}
+                                        />
+                                        <StyledSpan
+                                             fontSize="1.7rem"
+                                             fontWeight="bold"
+                                        >
+                                             Keep me signed in
+                                        </StyledSpan>
+                                   </StyledRow>
+                                   <StyledParimaryButton>
+                                        Sign Up
+                                   </StyledParimaryButton>
+                                   {/* <StyledRow alignItems="center">
                                    <StyledHr></StyledHr>
                                    <StyledSpan fontSize="1.4rem">
                                         Or Sign In With
                                    </StyledSpan>
                                    <StyledHr></StyledHr>
-                              </StyledRow>
-                         </StyledForm>
-                    </StyledLeftContent>
+                              </StyledRow> */}
+                              </StyledForm>
+                         </StyledLeftContent>
+                         <StyledRightConatiner>
+                              <StyledSvg>
+                                   <LeafSvg />
+                              </StyledSvg>
+                         </StyledRightConatiner>
+                    </StyledRow>
                </StyledSignupContainer>
           </StyledPageContainer>
      );

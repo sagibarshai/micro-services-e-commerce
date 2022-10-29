@@ -13,6 +13,7 @@ import {
      StyledForm,
      StyledHr,
      StyledRightConatiner,
+     StyledSvg,
 } from "../../styles/auth/StyledSignUp";
 import axios from "axios";
 import { colors } from "../../shared/colors/colors";
@@ -20,6 +21,8 @@ import Input from "../../shared/ui-elements/input/Input";
 import { StyledParimaryButton } from "../../shared/ui-elements/button/button";
 import Notification from "../../shared/notification/Notification";
 import InfoCircle from "../../shared/svg/info-circle.svg";
+import { StyledXButton } from "../../shared/components/StyledXButton";
+import LeafSvg from "../../shared/svg/leaf1.svg";
 type InputsTypes = "email" | "password" | "firstName" | "lastName";
 
 interface InputState {
@@ -102,6 +105,7 @@ const initInputState = {
 };
 
 const Signup: NextPage = () => {
+     const [xButtonClicked, setXButtonClicked] = useState<boolean>(false);
      const [formRequestError, setFormRequestError] = useState<string | null>(
           null
      );
@@ -159,6 +163,17 @@ const Signup: NextPage = () => {
      return (
           <StyledPageContainer>
                <StyledSignupContainer>
+                    <StyledXButton
+                         btnClicked={xButtonClicked}
+                         onClick={() => {
+                              setXButtonClicked((prevState) => !prevState);
+                              setTimeout(() => {
+                                   Router.push("/");
+                              }, 400);
+                         }}
+                    >
+                         X
+                    </StyledXButton>
                     <StyledRow>
                          <StyledLeftContent>
                               <StyledTitle>Create An Account</StyledTitle>
@@ -244,7 +259,7 @@ const Signup: NextPage = () => {
                                    <StyledParimaryButton>
                                         Sign Up
                                    </StyledParimaryButton>
-                                   <StyledRow alignItems="center">
+                                   {/* <StyledRow alignItems="center">
                                         <StyledHr></StyledHr>
                                         <StyledSpan
                                              fontSize="1.4rem"
@@ -253,10 +268,20 @@ const Signup: NextPage = () => {
                                              Or Sign In With
                                         </StyledSpan>
                                         <StyledHr></StyledHr>
-                                   </StyledRow>
+                                   </StyledRow> */}
                               </StyledForm>
                          </StyledLeftContent>
-                         <StyledRightConatiner></StyledRightConatiner>
+                         <StyledRightConatiner>
+                              <StyledSvg
+                                   style={{
+                                        width: "202px",
+                                        height: "445px",
+                                        display: "flex",
+                                   }}
+                              >
+                                   <LeafSvg />
+                              </StyledSvg>
+                         </StyledRightConatiner>
                     </StyledRow>
                </StyledSignupContainer>
           </StyledPageContainer>

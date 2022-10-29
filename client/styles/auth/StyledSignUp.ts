@@ -20,6 +20,7 @@ export const StyledPageContainer = styled.div`
 `;
 
 export const StyledSignupContainer = styled.div`
+     position: relative;
      background-color: ${colors.white};
      width: 895px;
      height: 603px;
@@ -27,11 +28,12 @@ export const StyledSignupContainer = styled.div`
      border-radius: 20px;
 `;
 export const StyledRightConatiner = styled.div`
-     object-fit: cover;
-     background-color: black;
-     background-image: url("/images/test.jpeg");
-     background-repeat: no-repeat;
+     display: flex;
+     align-items: center;
+     justify-items: center;
+     margin-left: 100px;
 `;
+export const StyledSvg = styled.i``;
 
 export const StyledLeftContent = styled.div`
      margin-left: 91px;
