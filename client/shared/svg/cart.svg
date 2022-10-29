@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="35.908" height="40.218" viewBox="0 0 35.908 40.218">
+  <g id="Icon_ICON_feather_shopping-cart_SIZE_LARGE_STYLE_STYLE1_" data-name="Icon [ICON=feather/shopping-cart][SIZE=LARGE][STYLE=STYLE1]" transform="translate(3.912 4.218)">
+    <rect id="Area_ICON:feather_shopping-cart_SIZE:LARGE_STYLE:STYLE1_" data-name="Area [ICON:feather/shopping-cart][SIZE:LARGE][STYLE:STYLE1]" width="30" height="30" transform="translate(1.996 6)" fill="#fcfcfc" opacity="0"/>
+    <g id="Icon" transform="translate(-2.412 -2.718)">
+      <circle id="_7f4fe367-aed5-4e22-acf0-1713a36fea4c" data-name="7f4fe367-aed5-4e22-acf0-1713a36fea4c" cx="1.377" cy="1.377" r="1.377" transform="translate(9.642 26.171)" fill="none" stroke="#1c2126" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <circle id="_5776eab5-80f2-4fda-abb7-d362f57ec937" data-name="5776eab5-80f2-4fda-abb7-d362f57ec937" cx="1.377" cy="1.377" r="1.377" transform="translate(24.793 26.171)" fill="none" stroke="#1c2126" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <path id="_563b200c-ce9e-45fb-9263-372c8fc67799" data-name="563b200c-ce9e-45fb-9263-372c8fc67799" d="M1.091,1.091H6.6l3.691,18.443a2.755,2.755,0,0,0,2.755,2.218H26.436a2.754,2.754,0,0,0,2.754-2.218l2.2-11.557H7.977" transform="translate(-1.091 -1.091)" fill="none" stroke="#1c2126" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+  </g>
+</svg>

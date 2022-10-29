@@ -8,6 +8,7 @@ interface Colors {
      lightGrey: string;
      errorRed: string;
      notificationError: string;
+     textGreen: string;
 }
 
 export const colors: Colors = {
@@ -20,4 +21,5 @@ export const colors: Colors = {
      lightGrey: "#cfcfcf",
      errorRed: "#F0274B",
      notificationError: "#ffe7e7",
+     textGreen: "#8b8b8b",
 };

@@ -11,8 +11,14 @@ export const StyledParimaryButton = styled.button`
      font-size: 1.7rem;
      cursor: pointer;
      font-weight: bold;
+     transition: all 0.5s;
      &:focus {
           outline: none;
           border: none;
+     }
+     &:hover {
+          transform: scale(0.95);
+          opacity: 0.7;
+          font-weight: bolder;
      }
 `;

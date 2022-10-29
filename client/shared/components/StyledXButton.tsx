@@ -20,6 +20,10 @@ export const StyledXButton = styled.button<XButtonProps>`
      outline: none;
      cursor: pointer;
      transition: all 0.5s;
+     &:hover {
+          background-color: ${colors.secondaryGreen};
+          color: ${colors.white};
+     }
      ${(props) =>
           props.btnClicked === true &&
           css`
