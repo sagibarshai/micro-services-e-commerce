@@ -9,6 +9,8 @@ interface Colors {
      errorRed: string;
      notificationError: string;
      textGreen: string;
+     whiteBackground: string;
+     greenBackground: string;
 }
 
 export const colors: Colors = {
@@ -22,4 +24,6 @@ export const colors: Colors = {
      errorRed: "#F0274B",
      notificationError: "#ffe7e7",
      textGreen: "#8b8b8b",
+     whiteBackground: "#FEFEFE",
+     greenBackground: "#DCE2CF",
 };

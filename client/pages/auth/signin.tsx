@@ -24,6 +24,7 @@ import Notification from "../../shared/notification/Notification";
 import InfoCircle from "../../shared/svg/info-circle.svg";
 import Checkbox from "../../shared/ui-elements/input/Checkbox";
 import { StyledXButton } from "../../shared/components/StyledXButton";
+import ParimaryLoader from "../../shared/loading-elements/parimary-loader";
 
 type InputsTypes = "email" | "password";
 
@@ -79,6 +80,7 @@ const initInputState = {
 };
 
 const Signup: NextPage = () => {
+     const [isLoading, setIsLoading] = useState<boolean>(false);
      const [xButtonClicked, setXButtonClicked] = useState<boolean>(false);
 
      const [formRequestError, setFormRequestError] = useState<string | null>(
@@ -97,17 +99,21 @@ const Signup: NextPage = () => {
           let input: InputsTypes;
           for (input in inputsState) {
                if (!inputsState[input].isValid) {
-                    return setFormRequestError("All filed must not be empty");
+                    setIsLoading(false);
+                    return setFormRequestError("All fileds must not be empty");
                }
           }
           try {
+               setIsLoading(true);
                const { data } = await axios.post("/api/users/signin", {
                     email: inputsState.email.value,
                     password: inputsState.password.value,
                });
+               setIsLoading(false);
                console.log(data);
                Router.push("/api/users/currentuser");
           } catch (err: any) {
+               setIsLoading(false);
                if (
                     err?.response?.data?.errors &&
                     Array.isArray(err.response.data.errors)
@@ -122,7 +128,7 @@ const Signup: NextPage = () => {
                console.log(err);
           }
      };
-
+     console.log(isLoading);
      useEffect(() => {
           setFormRequestError(null);
      }, [inputsState]);
@@ -216,7 +222,13 @@ const Signup: NextPage = () => {
                                         </StyledSpan>
                                    </StyledRow>
                                    <StyledParimaryButton>
-                                        Sign Up
+                                        {isLoading ? (
+                                             <ParimaryLoader
+                                                  loading={isLoading}
+                                             />
+                                        ) : (
+                                             "Sign In"
+                                        )}
                                    </StyledParimaryButton>
                                    {/* <StyledRow alignItems="center">
                                    <StyledHr></StyledHr>

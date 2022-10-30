@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-interface Link {
+export interface Link {
      name: string;
      path: string;
      isActive: boolean;

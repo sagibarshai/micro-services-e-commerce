@@ -23,6 +23,7 @@ import Notification from "../../shared/notification/Notification";
 import InfoCircle from "../../shared/svg/info-circle.svg";
 import { StyledXButton } from "../../shared/components/StyledXButton";
 import LeafSvg from "../../shared/svg/leaf1.svg";
+import ParimaryLoader from "../../shared/loading-elements/parimary-loader";
 type InputsTypes = "email" | "password" | "firstName" | "lastName";
 
 interface InputState {
@@ -105,6 +106,7 @@ const initInputState = {
 };
 
 const Signup: NextPage = () => {
+     const [isLoading, setIsLoading] = useState<boolean>(false);
      const [xButtonClicked, setXButtonClicked] = useState<boolean>(false);
      const [formRequestError, setFormRequestError] = useState<string | null>(
           null
@@ -125,9 +127,11 @@ const Signup: NextPage = () => {
      });
      const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
+          setIsLoading(true);
           let input: InputsTypes;
           for (input in inputsState) {
                if (!inputsState[input].isValid) {
+                    setIsLoading(false);
                     return setFormRequestError("All filed must not be empty");
                }
           }
@@ -138,9 +142,11 @@ const Signup: NextPage = () => {
                     firstName: inputsState.firstName.value,
                     lastName: inputsState.lastName.value,
                });
+               setIsLoading(false);
                console.log(data);
                Router.push("/api/users/currentuser");
           } catch (err: any) {
+               setIsLoading(false);
                if (
                     err?.response?.data?.errors &&
                     Array.isArray(err.response.data.errors)
@@ -257,7 +263,13 @@ const Signup: NextPage = () => {
                                         }
                                    />
                                    <StyledParimaryButton>
-                                        Sign Up
+                                        {isLoading ? (
+                                             <ParimaryLoader
+                                                  loading={isLoading}
+                                             />
+                                        ) : (
+                                             "Sign Up"
+                                        )}{" "}
                                    </StyledParimaryButton>
                                    {/* <StyledRow alignItems="center">
                                         <StyledHr></StyledHr>

@@ -21,9 +21,18 @@ a {
     /* color-scheme: dark; */
   }
   body {
+    overflow-x: hidden;
   }
 }
 * {
   font-family: proxima-nova, sans-serif;
   font-size: 62.5%;
+  margin:0;
+  padding:0;
+}
+.parimary-loader{
+    display: inline-block;
+}
+.parimary-loader-disapper{
+  display: none;
 }
