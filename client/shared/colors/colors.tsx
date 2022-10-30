@@ -1,4 +1,4 @@
-interface Colors {
+export interface Colors {
      praimarylack: string;
      parimaryGreen: string;
      white: string;

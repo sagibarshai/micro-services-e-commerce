@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58">
+  <g id="Circle_Button_SIZE_MEDIUM_STATE_DEFAULT_STYLE_STYLE2_" data-name="Circle Button [SIZE=MEDIUM][STATE=DEFAULT][STYLE=STYLE2]" transform="translate(0.168)">
+    <rect id="Area_SIZE:MEDIUM_STATE:DEFAULT_STYLE:STYLE2_" data-name="Area [SIZE:MEDIUM][STATE:DEFAULT][STYLE:STYLE2]" width="58" height="58" rx="29" transform="translate(-0.168)" fill="#fff"/>
+    <g id="Icon_ICON_feather_send_SIZE_MEDIUM_STATE_DEFAULT_STYLE_STYLE2_" data-name="Icon [ICON=feather/send][SIZE=MEDIUM][STATE=DEFAULT][STYLE=STYLE2]" transform="translate(16.819 16.909)">
+      <rect id="Area_ICON:feather_send_SIZE:MEDIUM_STATE:DEFAULT_STYLE:STYLE2_" data-name="Area [ICON:feather/send][SIZE:MEDIUM][STATE:DEFAULT][STYLE:STYLE2]" width="24" height="24" transform="translate(0.014 0.183)" fill="#fff" opacity="0"/>
+      <g id="Icon" transform="translate(0 0)">
+        <line id="_9c5bacb7-a909-4016-b861-40fca4384e77" data-name="9c5bacb7-a909-4016-b861-40fca4384e77" x1="13" y2="13" transform="translate(11.014 0.183)" fill="none" stroke="#1c2126" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <path id="_8561a159-067b-41f0-a471-0cf79f40cc2c" data-name="8561a159-067b-41f0-a471-0cf79f40cc2c" d="M26.024,2,17.616,26.024l-4.8-10.811L2,10.409Z" transform="translate(-2 -2)" fill="#fff" stroke="#1c2126" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+    </g>
+  </g>
+</svg>

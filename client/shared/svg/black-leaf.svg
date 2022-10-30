@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58">
+  <g id="Circle_Button_SIZE_MEDIUM_STATE_DEFAULT_STYLE_STYLE2_" data-name="Circle Button [SIZE=MEDIUM][STATE=DEFAULT][STYLE=STYLE2]" transform="translate(0.07)">
+    <rect id="Area_SIZE:MEDIUM_STATE:DEFAULT_STYLE:STYLE2_" data-name="Area [SIZE:MEDIUM][STATE:DEFAULT][STYLE:STYLE2]" width="58" height="58" rx="29" transform="translate(-0.07)" fill="#fff"/>
+    <path id="Icon_ionic-md-leaf" data-name="Icon ionic-md-leaf" d="M29.25,20.222C29.25,8.5,18,2.25,18,2.25S6.75,8.5,6.75,20.222c0,8.353,5.716,9.879,9,10.069V33.75h4.5V30.284C23.534,30.1,29.25,28.575,29.25,20.222Z" transform="translate(10.93 11)" fill="none" stroke="#000" stroke-width="2.18"/>
+  </g>
+</svg>
