@@ -13,6 +13,8 @@ interface StyledProps {
      buttonClicked?: boolean;
      marginTop?: string;
      padding?: string;
+     animation?: boolean;
+     backgroundColor?: string;
 }
 
 export const StyledPageContainer = styled.div`
@@ -28,7 +30,8 @@ export const StyledPageContainer = styled.div`
 export const StyledSection = styled.section<StyledProps>`
      width: 100vw;
      height: ${(props) => props.height};
-     background-color: ${colors.whiteBackground};
+     background-color: ${(props) =>
+          props.backgroundColor || colors.whiteBackground};
      padding-top: ${(props) => props.marginTop};
 `;
 export const StyledAbsoluteDivColumn = styled.section`
@@ -75,7 +78,7 @@ export const StyledDivRow = styled.div<StyledProps>`
      padding: ${(props) => props.padding};
 `;
 
-export const StyledButtonUnset = styled.button<StyledProps>`
+export const StyledIconButton = styled.button<StyledProps>`
      all: unset;
      cursor: pointer;
      transition: all 0.5s;

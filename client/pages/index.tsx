@@ -8,7 +8,7 @@ import {
      StyledSection,
      StyledDivRow,
      StyledDivColumn,
-     StyledButtonUnset,
+     StyledIconButton,
      StyledImg,
 } from "../styles/home/StyledHomePage";
 import LeafsSvg from "../shared/svg/homepage-leafs-background.svg";
@@ -34,7 +34,7 @@ const firstSectionIcons: IconSections[] = [
      { icon: <IconLeaf />, text: "Contant us" },
 ];
 
-const secondSectionImages: ImagesSection[] = [
+const firstSectionImages: ImagesSection[] = [
      {
           imgSrc: "/images/coconut.png",
           text: "Coconut plant",
@@ -43,6 +43,14 @@ const secondSectionImages: ImagesSection[] = [
           imgSrc: "/images/chair.png",
           text: "Chairs",
      },
+];
+const secondSectionImages: ImagesSection[] = [
+     {
+          imgSrc: "/images/minimalistic-picture.png",
+          text: "Minimalistic picture",
+     },
+     { imgSrc: "/images/stylish-chair.png", text: "Stylish chair" },
+     { imgSrc: "/images/bamboo.png", text: "Bamboo plant" },
 ];
 const App: NextPage = () => {
      const [buttonClicked, setButtonClicked] = useState<boolean>(false);
@@ -58,7 +66,9 @@ const App: NextPage = () => {
                               Make you're home beautiful with our plant and
                               accessories for your garden and house
                          </StyledText>
-                         <StyledParimaryButton>View More</StyledParimaryButton>
+                         <StyledParimaryButton width="200px" height="48px">
+                              View More
+                         </StyledParimaryButton>
                     </StyledAbsoluteDivColumn>
                </StyledSection>
                <StyledDivRow
@@ -69,7 +79,7 @@ const App: NextPage = () => {
                >
                     {firstSectionIcons.map((element) => {
                          return (
-                              <StyledButtonUnset
+                              <StyledIconButton
                                    buttonClicked={buttonClicked}
                                    onClick={() => {
                                         setButtonClicked(true);
@@ -88,7 +98,7 @@ const App: NextPage = () => {
                                              {element.text}
                                         </StyledText>
                                    </StyledDivColumn>
-                              </StyledButtonUnset>
+                              </StyledIconButton>
                          );
                     })}
                </StyledDivRow>
@@ -108,9 +118,12 @@ const App: NextPage = () => {
                               marginTop="82px"
                               padding="0 0 100px 0"
                          >
-                              {secondSectionImages.map((element) => {
+                              {firstSectionImages.map((element) => {
                                    return (
-                                        <StyledDivColumn gap="49px">
+                                        <StyledDivColumn
+                                             key={element.imgSrc}
+                                             gap="49px"
+                                        >
                                              <StyledImg
                                                   src={element.imgSrc}
                                                   width="528px"
@@ -126,6 +139,53 @@ const App: NextPage = () => {
                                    );
                               })}
                          </StyledDivRow>
+                    </StyledDivColumn>
+               </StyledSection>
+               <StyledSection backgroundColor="transparent" marginTop="90px">
+                    <StyledDivColumn alignItem="center" justifyContent="center">
+                         <StyledTitle
+                              fontWeight="bold"
+                              fontSize="5.2rem"
+                              color={colors.blackInputText}
+                         >
+                              Trending Products
+                         </StyledTitle>
+                         <StyledDivRow
+                              gap="60px"
+                              marginTop="90px"
+                              justifyContent="center"
+                         >
+                              {secondSectionImages.map((element) => {
+                                   return (
+                                        <StyledDivColumn
+                                             key={element.imgSrc}
+                                             gap="26px"
+                                             alignItem="center"
+                                        >
+                                             <StyledImg
+                                                  src={element.imgSrc}
+                                                  width="344px"
+                                                  height="234px"
+                                             />
+                                             <StyledText
+                                                  fontSize="1.6rem"
+                                                  fontWeight="bold"
+                                             >
+                                                  {element.text}
+                                             </StyledText>
+                                        </StyledDivColumn>
+                                   );
+                              })}
+                         </StyledDivRow>
+                         <StyledParimaryButton
+                              marginTop="72px"
+                              width="200px"
+                              height="48px"
+                              backgroundColor={colors.whiteBackground}
+                              color={colors.blackInputText}
+                         >
+                              View All Products{" "}
+                         </StyledParimaryButton>
                     </StyledDivColumn>
                </StyledSection>
           </StyledPageContainer>
