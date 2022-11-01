@@ -1,0 +1,10 @@
+<svg id="Circle_Button_SIZE_MEDIUM_STATE_DEFAULT_STYLE_STYLE2_" data-name="Circle Button [SIZE=MEDIUM][STATE=DEFAULT][STYLE=STYLE2]" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <rect id="Area_SIZE:MEDIUM_STATE:DEFAULT_STYLE:STYLE2_" data-name="Area [SIZE:MEDIUM][STATE:DEFAULT][STYLE:STYLE2]" width="48" height="48" rx="24" fill="#fff"/>
+  <g id="Icon_ICON_feather_mail_SIZE_MEDIUM_STATE_DEFAULT_STYLE_STYLE2_" data-name="Icon [ICON=feather/mail][SIZE=MEDIUM][STATE=DEFAULT][STYLE=STYLE2]" transform="translate(14 14)">
+    <rect id="Area_ICON:feather_mail_SIZE:MEDIUM_STATE:DEFAULT_STYLE:STYLE2_" data-name="Area [ICON:feather/mail][SIZE:MEDIUM][STATE:DEFAULT][STYLE:STYLE2]" width="20" height="20" fill="#fff" opacity="0"/>
+    <g id="Icon" transform="translate(0 2)">
+      <path id="_41080525-d26d-41fe-9c56-b4b9228e599e" data-name="41080525-d26d-41fe-9c56-b4b9228e599e" d="M4,4H20a2.006,2.006,0,0,1,2,2V18a2.006,2.006,0,0,1-2,2H4a2.006,2.006,0,0,1-2-2V6A2.006,2.006,0,0,1,4,4Z" transform="translate(-2 -4)" fill="#fff" stroke="#1c2126" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="f494b50e-3849-4db7-80f8-a8ed04a480a4" d="M22,6,12,13,2,6" transform="translate(-2 -4)" fill="#fff" stroke="#1c2126" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+  </g>
+</svg>

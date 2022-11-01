@@ -11,6 +11,7 @@ export interface Colors {
      textGreen: string;
      whiteBackground: string;
      greenBackground: string;
+     garyText: string;
 }
 
 export const colors: Colors = {
@@ -26,4 +27,5 @@ export const colors: Colors = {
      textGreen: "#8b8b8b",
      whiteBackground: "#FEFEFE",
      greenBackground: "#DCE2CF",
+     garyText: "#737373",
 };

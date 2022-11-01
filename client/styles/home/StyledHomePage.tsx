@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { Size } from "../../pages";
 import { Colors, colors } from "../../shared/colors/colors";
 
 interface StyledProps {
@@ -15,6 +16,8 @@ interface StyledProps {
      padding?: string;
      animation?: boolean;
      backgroundColor?: string;
+     alignSelf?: string;
+     size?: Size;
 }
 
 export const StyledPageContainer = styled.div`
@@ -52,6 +55,8 @@ export const StyledText = styled.p<StyledProps>`
      text-align: center;
      width: ${(props) => props.width};
      font-weight: ${(props) => props.fontWeight};
+     margin-top: ${(props) => props.marginTop};
+     align-self: ${(props) => props.alignSelf};
 `;
 export const StyledSvg = styled.i`
      width: 100%;
@@ -101,8 +106,21 @@ export const StyledDivColumn = styled.div<StyledProps>`
      justify-content: space-between;
      gap: ${(props) => props.gap};
      align-items: center;
+     padding: ${(props) => props.padding};
 `;
 export const StyledImg = styled.img<StyledProps>`
      width: ${(props) => props.width};
      height: ${(props) => props.height};
+     ${(props) =>
+          props.size === "M" &&
+          css`
+               width: 344px;
+               height: 234px;
+          `}
+     ${(props) =>
+          props.size === "L" &&
+          css`
+               width: 528px;
+               height: 352px;
+          `}
 `;

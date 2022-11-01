@@ -11,6 +11,7 @@ import {
      StyledIconButton,
      StyledImg,
 } from "../styles/home/StyledHomePage";
+import StyledFooter from "../components/layouts/Footer";
 import LeafsSvg from "../shared/svg/homepage-leafs-background.svg";
 import { StyledParimaryButton } from "../shared/ui-elements/button/button";
 import { colors } from "../shared/colors/colors";
@@ -19,6 +20,8 @@ import IconArrow from "../shared/svg/arrow.svg";
 import IconLeaf from "../shared/svg/black-leaf.svg";
 import { useState } from "react";
 
+export type Size = "S" | "M" | "L";
+
 interface IconSections {
      icon: React.ReactElement;
      text: string;
@@ -26,6 +29,8 @@ interface IconSections {
 interface ImagesSection {
      imgSrc: string;
      text: string;
+     size?: Size;
+     price?: number;
 }
 
 const firstSectionIcons: IconSections[] = [
@@ -38,19 +43,39 @@ const firstSectionImages: ImagesSection[] = [
      {
           imgSrc: "/images/coconut.png",
           text: "Coconut plant",
+          size: "L",
      },
      {
           imgSrc: "/images/chair.png",
           text: "Chairs",
+          size: "L",
      },
 ];
 const secondSectionImages: ImagesSection[] = [
      {
           imgSrc: "/images/minimalistic-picture.png",
           text: "Minimalistic picture",
+          size: "M",
      },
-     { imgSrc: "/images/stylish-chair.png", text: "Stylish chair" },
-     { imgSrc: "/images/bamboo.png", text: "Bamboo plant" },
+     { imgSrc: "/images/stylish-chair.png", text: "Stylish chair", size: "M" },
+     { imgSrc: "/images/bamboo.png", text: "Bamboo plant", size: "M" },
+];
+const thirdSectionImages: ImagesSection[] = [
+     { imgSrc: "/images/chair.png", text: "Lola chair", size: "L", price: 300 },
+     { imgSrc: "/images/ficus.png", text: "Ficus", size: "L", price: 20 },
+     {
+          imgSrc: "/images/magnet-butterly.png",
+          text: "Magnet butterly.png",
+          size: "M",
+          price: 50,
+     },
+     {
+          imgSrc: "/images/sydney-chair.png",
+          text: "Sydney chair",
+          size: "M",
+          price: 250,
+     },
+     { imgSrc: "/images/orchid.png", text: "Orchid", size: "M", price: 60 },
 ];
 const App: NextPage = () => {
      const [buttonClicked, setButtonClicked] = useState<boolean>(false);
@@ -126,8 +151,7 @@ const App: NextPage = () => {
                                         >
                                              <StyledImg
                                                   src={element.imgSrc}
-                                                  width="528px"
-                                                  height="352px"
+                                                  size={element.size}
                                              />
                                              <StyledText
                                                   fontSize="2.6rem"
@@ -142,7 +166,11 @@ const App: NextPage = () => {
                     </StyledDivColumn>
                </StyledSection>
                <StyledSection backgroundColor="transparent" marginTop="90px">
-                    <StyledDivColumn alignItem="center" justifyContent="center">
+                    <StyledDivColumn
+                         alignItem="center"
+                         justifyContent="center"
+                         padding="0 0 100px 0"
+                    >
                          <StyledTitle
                               fontWeight="bold"
                               fontSize="5.2rem"
@@ -184,10 +212,103 @@ const App: NextPage = () => {
                               backgroundColor={colors.whiteBackground}
                               color={colors.blackInputText}
                          >
-                              View All Products{" "}
+                              View All Products
                          </StyledParimaryButton>
                     </StyledDivColumn>
                </StyledSection>
+               <StyledSection marginTop="127px">
+                    <StyledDivColumn
+                         alignItem="center"
+                         justifyContent="center"
+                         padding="0 0 100px 0"
+                    >
+                         <StyledTitle
+                              fontWeight="bold"
+                              fontSize="5.2rem"
+                              color={colors.blackInputText}
+                         >
+                              On Sale This Week
+                         </StyledTitle>
+                         <StyledText
+                              color={colors.garyText}
+                              fontSize="2rem"
+                              marginTop="27px"
+                         >
+                              Buy one of our chair and get a plant for free
+                         </StyledText>
+                         <StyledDivRow
+                              gap="20px"
+                              justifyContent="center"
+                              marginTop="60px"
+                         >
+                              {thirdSectionImages.map((element) => {
+                                   if (element.size === "L") {
+                                        return (
+                                             <StyledDivColumn
+                                                  key={element.imgSrc}
+                                                  gap="10px"
+                                             >
+                                                  <StyledImg
+                                                       size={element.size}
+                                                       src={element.imgSrc}
+                                                  />
+                                                  <StyledText
+                                                       fontSize="1.6rem"
+                                                       fontWeight="bold"
+                                                       alignSelf="flex-start"
+                                                  >
+                                                       {element.text}
+                                                  </StyledText>
+                                                  <StyledText
+                                                       fontSize="1.6rem"
+                                                       alignSelf="flex-start"
+                                                       color={colors.garyText}
+                                                  >
+                                                       {element.price}$
+                                                  </StyledText>
+                                             </StyledDivColumn>
+                                        );
+                                   }
+                              })}
+                         </StyledDivRow>
+                         <StyledDivRow
+                              gap="20px"
+                              justifyContent="center"
+                              marginTop="60px"
+                         >
+                              {thirdSectionImages.map((element) => {
+                                   if (element.size === "M") {
+                                        return (
+                                             <StyledDivColumn
+                                                  key={element.imgSrc}
+                                                  gap="10px"
+                                             >
+                                                  <StyledImg
+                                                       size={element.size}
+                                                       src={element.imgSrc}
+                                                  />
+                                                  <StyledText
+                                                       fontSize="1.6rem"
+                                                       fontWeight="bold"
+                                                       alignSelf="flex-start"
+                                                  >
+                                                       {element.text}
+                                                  </StyledText>
+                                                  <StyledText
+                                                       fontSize="1.6rem"
+                                                       alignSelf="flex-start"
+                                                       color={colors.garyText}
+                                                  >
+                                                       {element.price}$
+                                                  </StyledText>
+                                             </StyledDivColumn>
+                                        );
+                                   }
+                              })}
+                         </StyledDivRow>
+                    </StyledDivColumn>
+               </StyledSection>
+               <StyledFooter />
           </StyledPageContainer>
      );
 };
