@@ -3,6 +3,7 @@ import IconFacebook from "../../shared/svg/icon-facebook.svg";
 import IconInstagram from "../../shared/svg/icon-instagram.svg";
 import IconTwitter from "../../shared/svg/icon-twitter.svg";
 import IconMail from "../../shared/svg/icon-mail.svg";
+import IconPhone from "../../shared/svg/icon-phone.svg";
 
 interface Props {
      justifyContent?: string;
@@ -10,10 +11,16 @@ interface Props {
      fontSize?: string;
      fontWeight?: string;
      height?: string;
+     width?: string;
+     alignItems?: string;
+     margin?: string;
 }
 
 const StyledFooterContainer = styled.footer<Props>`
-     height: 200px;
+     height: 250px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
 `;
 
 const StyledSubtitle = styled.h4<Props>`
@@ -26,6 +33,7 @@ const StyledDivColumn = styled.div<Props>`
      display: flex;
      flex-direction: column;
      gap: ${(props) => props.gap};
+     align-items: ${(props) => props.alignItems};
 `;
 
 const StyledDivRow = styled.div<Props>`
@@ -34,6 +42,17 @@ const StyledDivRow = styled.div<Props>`
      gap: ${(props) => props.gap};
      height: ${(props) => props.height};
      align-items: center;
+     width: ${(props) => props.width};
+`;
+const StyledWrapper = styled.div<Props>`
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin: ${(props) => props.margin};
+`;
+
+const StyledIcon = styled.i<Props>`
+     margin: ${(props) => props.margin};
 `;
 
 interface IconSection {
@@ -47,10 +66,9 @@ const firstIconsSection: IconSection[] = [
      { icon: <IconInstagram /> },
 ];
 const secondIconsSection: IconSection[] = [
-     { icon: <IconMail />, text: "0546077403" }, //shoud be iconPhone
+     { icon: <IconPhone />, text: "0546077403" },
      { icon: <IconMail />, text: "sagibarshai1@gmail.com" },
 ];
-const StyledIcon = styled.i``;
 
 const StyledFooter = (props: Props) => {
      return (
@@ -59,8 +77,9 @@ const StyledFooter = (props: Props) => {
                     {...props}
                     justifyContent="space-between"
                     height="100%"
+                    width="60vw"
                >
-                    <StyledDivColumn gap="20px">
+                    <StyledDivColumn gap="20px" alignItems="center">
                          <StyledSubtitle fontWeight="bolder">
                               Follow us
                          </StyledSubtitle>
@@ -72,14 +91,21 @@ const StyledFooter = (props: Props) => {
                               })}
                          </StyledDivRow>
                     </StyledDivColumn>
-                    <StyledDivColumn gap="20px">
+                    <StyledDivColumn gap="20px" alignItems="center">
                          <StyledSubtitle fontWeight="bolder">
-                              Follow us
+                              Content us
                          </StyledSubtitle>
-                         <StyledDivRow gap="20px">
-                              {firstIconsSection.map((element) => {
+                         <StyledDivRow gap="70px">
+                              {secondIconsSection.map((element) => {
                                    return (
-                                        <StyledIcon>{element.icon}</StyledIcon>
+                                        <StyledWrapper>
+                                             <StyledIcon margin="0 15px 0 0">
+                                                  {element.icon}
+                                             </StyledIcon>
+                                             <StyledSubtitle>
+                                                  {element.text}
+                                             </StyledSubtitle>
+                                        </StyledWrapper>
                                    );
                               })}
                          </StyledDivRow>

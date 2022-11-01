@@ -28,7 +28,6 @@ export const StyledPageContainer = styled.div`
      display: flex;
      justify-content: center;
      flex-direction: column;
-     padding-bottom: 100px;
 `;
 export const StyledSection = styled.section<StyledProps>`
      width: 100vw;

@@ -65,7 +65,7 @@ const thirdSectionImages: ImagesSection[] = [
      { imgSrc: "/images/ficus.png", text: "Ficus", size: "L", price: 20 },
      {
           imgSrc: "/images/magnet-butterly.png",
-          text: "Magnet butterly.png",
+          text: "Magnet butterly",
           size: "M",
           price: 50,
      },
@@ -83,7 +83,7 @@ const App: NextPage = () => {
           <StyledPageContainer>
                <StyledSection height="min-content">
                     <StyledSvg>
-                         <LeafsSvg width="min-content" />
+                         <LeafsSvg width="50vw" />
                     </StyledSvg>
                     <StyledAbsoluteDivColumn>
                          <StyledTitle>Every plant has a story</StyledTitle>
