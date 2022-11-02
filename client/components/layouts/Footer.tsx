@@ -4,6 +4,7 @@ import IconInstagram from "../../shared/svg/icon-instagram.svg";
 import IconTwitter from "../../shared/svg/icon-twitter.svg";
 import IconMail from "../../shared/svg/icon-mail.svg";
 import IconPhone from "../../shared/svg/icon-phone.svg";
+import { colors } from "../../shared/colors/colors";
 
 interface Props {
      justifyContent?: string;
@@ -21,6 +22,7 @@ const StyledFooterContainer = styled.footer<Props>`
      display: flex;
      align-items: center;
      justify-content: center;
+     background-color: ${colors.parimaryGreen};
 `;
 
 const StyledSubtitle = styled.h4<Props>`

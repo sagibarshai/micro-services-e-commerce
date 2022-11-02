@@ -308,7 +308,6 @@ const App: NextPage = () => {
                          </StyledDivRow>
                     </StyledDivColumn>
                </StyledSection>
-               <StyledFooter />
           </StyledPageContainer>
      );
 };
