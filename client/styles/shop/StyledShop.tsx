@@ -5,10 +5,16 @@ interface StyledProps {
      gap?: string;
      justifyContent?: string;
      marginTop?: string;
+     alignItems?: string;
 }
 export const StyledPageContainer = styled.div`
      display: flex;
      justify-content: center;
+     flex-direction: column;
+     align-items: center;
+     gap: 110px;
+     margin-top: 50px;
+     margin-bottom: 100px;
 `;
 export const StyledCategoryTitle = styled.h2<StyledProps>`
      color: ${colors.secondaryGreen};
@@ -19,6 +25,7 @@ export const StyledDivRow = styled.div<StyledProps>`
      gap: ${(props) => props.gap};
      justify-content: ${(props) => props.justifyContent};
      margin: ${(props) => props.marginTop};
+     align-items: ${(props) => props.alignItems};
 `;
 export const StyledDivColumn = styled.div<StyledProps>`
      display: flex;

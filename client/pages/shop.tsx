@@ -7,55 +7,59 @@ import {
      StyledText,
 } from "../styles/shop/StyledShop";
 
-import IconDelete from "../shared/svg/delete.svg";
+import IconCircleCart from "../shared/svg/circle-cart.svg";
+import IconFavorites from "../shared/svg/favorites.svg";
+import { products } from "../shared/products/products";
 
-export default () => (
-     <StyledPageContainer>
-          <StyledDivColumn gap="27px">
-               <StyledCategoryTitle>Chairs</StyledCategoryTitle>
-               <StyledDivRow gap="42px">
-                    <StyledDivColumn>
-                         <StyledImg src="/images/chair.png" />
-                         <StyledDivRow justifyContent="space-between">
-                              <StyledDivRow gap="20px">
-                                   <IconDelete />
-                                   <IconDelete />
-                                   <StyledText>Wood chair</StyledText>
+export default () => {
+     return (
+          <StyledPageContainer>
+               {products.map((product) => {
+                    return (
+                         <StyledDivColumn gap="27px">
+                              <StyledCategoryTitle>
+                                   {product.productType}
+                              </StyledCategoryTitle>
+                              <StyledDivRow gap="42px">
+                                   {product.products.map((prod) => {
+                                        return (
+                                             <StyledDivColumn gap="27px">
+                                                  <StyledImg
+                                                       width="528px"
+                                                       height="360px"
+                                                       src={prod.imgSrc}
+                                                  />
+                                                  <StyledDivRow
+                                                       justifyContent="space-between"
+                                                       alignItems="center"
+                                                  >
+                                                       <StyledDivRow
+                                                            gap="20px"
+                                                            alignItems="center"
+                                                       >
+                                                            <IconFavorites
+                                                                 width="48px"
+                                                                 height="48px"
+                                                            />
+                                                            <IconCircleCart
+                                                                 width="48px"
+                                                                 height="48px"
+                                                            />
+                                                            <StyledText>
+                                                                 {prod.text}
+                                                            </StyledText>
+                                                       </StyledDivRow>
+                                                       <StyledText>
+                                                            {prod.price}$
+                                                       </StyledText>
+                                                  </StyledDivRow>
+                                             </StyledDivColumn>
+                                        );
+                                   })}
                               </StyledDivRow>
-                              <StyledText>199$</StyledText>
-                         </StyledDivRow>
-                    </StyledDivColumn>
-                    <StyledDivColumn>
-                         <StyledImg src="/images/chair.png" />
-                         <StyledDivRow justifyContent="space-between">
-                              <StyledDivRow gap="20px">
-                                   <IconDelete />
-                                   <IconDelete />
-                                   <StyledText>Wood chair</StyledText>
-                              </StyledDivRow>
-                              <StyledText>199$</StyledText>
-                         </StyledDivRow>
-                    </StyledDivColumn>
-               </StyledDivRow>
-          </StyledDivColumn>
-     </StyledPageContainer>
-);
-{
-     /* <StyledCategoryTitle>Chairs</StyledCategoryTitle>
-<StyledDivRow gap="42px" marginTop="16px">
-     <StyledImg src="/images/chair.png" />
-     <StyledImg src="/images/chair.png" />
-</StyledDivRow>
-<StyledDivRow
-     marginTop="16px"
-     justifyContent="space-between"
-     alignItems="center"
->
-     <StyledDivRow gap="20px">
-          <IconDelete />
-          <IconDelete />
-          <StyledText>Wood chair</StyledText>
-     </StyledDivRow>
-     <StyledText>199$</StyledText>
-</StyledDivRow> */
-}
+                         </StyledDivColumn>
+                    );
+               })}
+          </StyledPageContainer>
+     );
+};

@@ -1,0 +1,9 @@
+<svg id="Group_31" data-name="Group 31" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <rect id="Area" width="48" height="48" rx="24" fill="#f2f4f8"/>
+  <g id="Icon" transform="translate(13 13)">
+    <rect id="Area-2" data-name="Area" width="22" height="22" transform="translate(0 0)" fill="#f2f4f8" opacity="0"/>
+    <g id="Icon-2" data-name="Icon" transform="translate(1.739 3.297)">
+      <path id="Path" d="M18.975,3.976a5.042,5.042,0,0,0-7.132,0l-.971.971L9.9,3.976a5.043,5.043,0,0,0-7.132,7.131l.972.971,7.131,7.132L18,12.079l.972-.971A5.041,5.041,0,0,0,18.975,3.976Z" transform="translate(-1.291 -2.499)" fill="#f2f4f8" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.18"/>
+    </g>
+  </g>
+</svg>
