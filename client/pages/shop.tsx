@@ -5,13 +5,27 @@ import {
      StyledDivRow,
      StyledImg,
      StyledText,
+     StyledIconButton,
 } from "../styles/shop/StyledShop";
 
 import IconCircleCart from "../shared/svg/circle-cart.svg";
 import IconFavorites from "../shared/svg/favorites.svg";
 import { products } from "../shared/products/products";
-
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { StoreState } from "../redux/store";
+import { addItemToCart } from "../redux/cartSlice";
 export default () => {
+     const dispatch = useDispatch();
+     const cartState = useSelector(
+          (state: StoreState) => state.cartSlice.cartItems
+     );
+     console.log(cartState);
+     const [buttonClicked, setButtonClicked] = useState<boolean>(false);
+     const buttonAnimation = () => {
+          setButtonClicked(true);
+          setTimeout(() => setButtonClicked(false), 500);
+     };
      return (
           <StyledPageContainer>
                {products.map((product) => {
@@ -37,14 +51,40 @@ export default () => {
                                                             gap="20px"
                                                             alignItems="center"
                                                        >
-                                                            <IconFavorites
-                                                                 width="48px"
-                                                                 height="48px"
-                                                            />
-                                                            <IconCircleCart
-                                                                 width="48px"
-                                                                 height="48px"
-                                                            />
+                                                            <StyledIconButton
+                                                                 buttonClicked={
+                                                                      buttonClicked
+                                                                 }
+                                                                 onClick={() => {
+                                                                      buttonAnimation();
+                                                                      dispatch(
+                                                                           addItemToCart(
+                                                                                prod
+                                                                           )
+                                                                      );
+                                                                 }}
+                                                            >
+                                                                 <IconFavorites
+                                                                      width="48px"
+                                                                      height="48px"
+                                                                 />
+                                                            </StyledIconButton>
+                                                            <StyledIconButton
+                                                                 buttonClicked={
+                                                                      buttonClicked
+                                                                 }
+                                                                 onClick={() => {
+                                                                      buttonAnimation();
+                                                                      console.log(
+                                                                           prod
+                                                                      );
+                                                                 }}
+                                                            >
+                                                                 <IconCircleCart
+                                                                      width="48px"
+                                                                      height="48px"
+                                                                 />
+                                                            </StyledIconButton>
                                                             <StyledText>
                                                                  {prod.text}
                                                             </StyledText>

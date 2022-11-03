@@ -1,6 +1,9 @@
 import CartIcon from "../../shared/svg/cart.svg";
 import styled from "styled-components";
 import { colors } from "../colors/colors";
+import { toggleCartPopup } from "../../redux/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { StoreState } from "../../redux/store";
 
 const StyledNotification = styled.span`
      position: absolute;
@@ -18,21 +21,37 @@ const StyledNotificationText = styled.span`
      transform: translate(-50%, -50%);
      color: ${colors.white};
      font-size: 1.3rem;
-     /* font-weight: bold; */
 `;
 
 const StyledIcon = styled.i``;
-const StyledContainer = styled.div`
+const StyledContainer = styled.button`
+     all: unset;
      position: relative;
+     cursor: pointer;
 `;
-export default () => {
+
+interface Props {
+     itemsInCart: number;
+}
+export default (props: Props) => {
+     const dispatch = useDispatch();
+     const cartIsOpen = useSelector(
+          (state: StoreState) => state.cartSlice.openCartPopup
+     );
+     console.log(cartIsOpen);
      return (
-          <StyledContainer>
+          <StyledContainer
+               onClick={() => {
+                    dispatch(toggleCartPopup());
+               }}
+          >
                <StyledIcon>
                     <CartIcon />
                </StyledIcon>
                <StyledNotification>
-                    <StyledNotificationText>1</StyledNotificationText>
+                    <StyledNotificationText>
+                         {props.itemsInCart}
+                    </StyledNotificationText>
                </StyledNotification>
           </StyledContainer>
      );

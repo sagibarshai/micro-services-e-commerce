@@ -4,6 +4,8 @@ import useMenageLinks from "../../shared/hooks/useMenageLinks";
 import IconApp from "../../shared/components/IconApp";
 import CustomLink from "../../shared/components/CustomLink";
 import CartIcon from "../../shared/components/CartIcon";
+import { useSelector } from "react-redux";
+import { StoreState } from "../../redux/store";
 interface StyledProps {
      isActive?: boolean;
      gap?: string;
@@ -32,6 +34,9 @@ const StyledDivRow = styled.div<StyledProps>`
 
 export default () => {
      const { links } = useMenageLinks();
+     const itemsInCart: number = useSelector(
+          (state: StoreState) => state.cartSlice.cartItems.length
+     );
      return (
           <StyledHeader>
                <StyledDivRow gap="22px" marginLeft="60px">
@@ -42,7 +47,7 @@ export default () => {
                </StyledDivRow>
                <IconApp />
                <StyledDivRow marginRight="58px" gap="22px">
-                    <CartIcon />
+                    <CartIcon itemsInCart={itemsInCart} />
                     {links.map((link) => {
                          if (link.path !== "/auth/signin") return;
                          return <CustomLink link={link} />;

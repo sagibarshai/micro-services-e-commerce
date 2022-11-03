@@ -1,4 +1,4 @@
-interface ProductDetials {
+export interface ProductDetials {
      imgSrc: string;
      text: string;
      price: number;

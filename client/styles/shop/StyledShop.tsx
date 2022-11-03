@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { colors } from "../../shared/colors/colors";
 
 interface StyledProps {
@@ -6,6 +6,7 @@ interface StyledProps {
      justifyContent?: string;
      marginTop?: string;
      alignItems?: string;
+     buttonClicked?: boolean;
 }
 export const StyledPageContainer = styled.div`
      display: flex;
@@ -36,4 +37,22 @@ export const StyledImg = styled.img``;
 export const StyledText = styled.span`
      font-weight: bold;
      font-size: 1.6rem;
+`;
+export const StyledIconButton = styled.button<StyledProps>`
+     all: unset;
+     cursor: pointer;
+     transition: all 0.5s;
+     &:hover {
+          transform: scale(1.2);
+          ${(props) =>
+               props.buttonClicked === false &&
+               css`
+                    transform: scale(1.2);
+               `}
+          ${(props) =>
+               props.buttonClicked === true &&
+               css`
+                    transform: scale(0.8);
+               `}
+     }
 `;
