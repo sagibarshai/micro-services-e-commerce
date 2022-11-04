@@ -35,10 +35,6 @@ interface Props {
 }
 export default (props: Props) => {
      const dispatch = useDispatch();
-     const cartIsOpen = useSelector(
-          (state: StoreState) => state.cartSlice.openCartPopup
-     );
-     console.log(cartIsOpen);
      return (
           <StyledContainer
                onClick={() => {

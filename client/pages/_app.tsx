@@ -3,15 +3,18 @@ import type { AppContext, AppProps } from "next/app";
 import Header from "../components/layouts/Header";
 import { useRouter } from "next/router";
 import StyledFooter from "../components/layouts/Footer";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import store, { StoreState } from "../redux/store";
+import { createPortal } from "react-dom";
 
 const AppComponent = ({ Component, pageProps }: AppProps) => {
-     const cartIsOpen = store.getState().cartSlice.openCartPopup;
-     console.log(cartIsOpen);
      const router = useRouter();
      return (
           <Provider store={store}>
+               {/* {createPortal(
+                    <h1>cart</h1>,
+                    document.getElementById("cart-portal")!
+               )} */}
                {!router.pathname.startsWith("/auth") && <Header />}
                <Component {...pageProps} />
                {!router.pathname.startsWith("/auth") && <StyledFooter />}
