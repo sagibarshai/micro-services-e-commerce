@@ -15,7 +15,7 @@ export const StyledParimaryButton = styled.button<StyledProps>`
      border-radius: 100px;
      color: ${(props) => props.color || colors.white};
      background-color: ${(props) =>
-          props.backgroundColor || colors.secondaryGreen};
+          props.backgroundColor || colors.backgroundGreen};
      border-color: transparent;
      font-size: 1.7rem;
      margin-top: ${(props) => props.marginTop};

@@ -65,7 +65,7 @@ export const StyledSvg = styled.i`
 export const StyledTitle = styled.h1<StyledProps>`
      all: unset;
      line-height: 1;
-     color: ${(props) => props.color || colors.secondaryGreen};
+     color: ${(props) => props.color || colors.greenBackground};
      font-size: ${(props) => props.fontSize || "6rem"};
      text-align: center;
      font-weight: ${(props) => props.fontWeight};

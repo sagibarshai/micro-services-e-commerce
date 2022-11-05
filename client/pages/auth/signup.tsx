@@ -170,6 +170,7 @@ const Signup: NextPage = () => {
           <StyledPageContainer>
                <StyledSignupContainer>
                     <StyledXButton
+                         absolute={true}
                          btnClicked={xButtonClicked}
                          onClick={() => {
                               setXButtonClicked((prevState) => !prevState);
@@ -182,7 +183,9 @@ const Signup: NextPage = () => {
                     </StyledXButton>
                     <StyledRow>
                          <StyledLeftContent>
-                              <StyledTitle>Create An Account</StyledTitle>
+                              <StyledTitle color={colors.backgroundGreen}>
+                                   Create An Account
+                              </StyledTitle>
                               <StyledRow
                                    alignItems="baseline"
                                    gap="8px"
@@ -197,7 +200,7 @@ const Signup: NextPage = () => {
                                         }
                                    >
                                         <StyledSpan
-                                             color={colors.secondaryGreen}
+                                             color={colors.backgroundGreen}
                                              fontSize="1.7rem"
                                              fontWeight="bolder"
                                         >

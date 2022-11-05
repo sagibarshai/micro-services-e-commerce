@@ -3,6 +3,7 @@ import { colors } from "../colors/colors";
 
 interface XButtonProps {
      btnClicked: boolean;
+     absolute?: boolean;
 }
 
 export const StyledXButton = styled.button<XButtonProps>`
@@ -12,16 +13,20 @@ export const StyledXButton = styled.button<XButtonProps>`
      background-color: ${colors.paimaryGrey};
      color: ${colors.praimarylack};
      font-weight: bolder;
-     position: absolute;
-     top: 32px;
-     right: 32px;
+     ${(props) =>
+          props.absolute === true &&
+          css`
+               position: absolute;
+               top: 32px;
+               right: 32px;
+          `}
      font-size: 3rem;
      border: none;
      outline: none;
      cursor: pointer;
      transition: all 0.5s;
      &:hover {
-          background-color: ${colors.secondaryGreen};
+          background-color: ${colors.backgroundGreen};
           color: ${colors.white};
      }
      ${(props) =>

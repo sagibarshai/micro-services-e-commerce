@@ -86,7 +86,9 @@ const App: NextPage = () => {
                          <LeafsSvg width="50vw" />
                     </StyledSvg>
                     <StyledAbsoluteDivColumn>
-                         <StyledTitle>Every plant has a story</StyledTitle>
+                         <StyledTitle color={colors.backgroundGreen}>
+                              Every plant has a story
+                         </StyledTitle>
                          <StyledText width="560px" fontSize="1.8rem">
                               Make you're home beautiful with our plant and
                               accessories for your garden and house

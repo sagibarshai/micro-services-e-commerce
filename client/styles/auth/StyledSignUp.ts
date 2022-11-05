@@ -11,7 +11,7 @@ interface StyledProps {
 }
 
 export const StyledPageContainer = styled.div`
-     background-color: ${colors.parimaryGreen};
+     background-color: ${colors.praimaryPink};
      width: 100wh;
      height: 100vh;
      display: flex;

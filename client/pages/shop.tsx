@@ -52,17 +52,12 @@ export default () => {
                                                             alignItems="center"
                                                        >
                                                             <StyledIconButton
+                                                                 onClick={() => {
+                                                                      buttonAnimation();
+                                                                 }}
                                                                  buttonClicked={
                                                                       buttonClicked
                                                                  }
-                                                                 onClick={() => {
-                                                                      buttonAnimation();
-                                                                      dispatch(
-                                                                           addItemToCart(
-                                                                                prod
-                                                                           )
-                                                                      );
-                                                                 }}
                                                             >
                                                                  <IconFavorites
                                                                       width="48px"
@@ -75,8 +70,10 @@ export default () => {
                                                                  }
                                                                  onClick={() => {
                                                                       buttonAnimation();
-                                                                      console.log(
-                                                                           prod
+                                                                      dispatch(
+                                                                           addItemToCart(
+                                                                                prod
+                                                                           )
                                                                       );
                                                                  }}
                                                             >

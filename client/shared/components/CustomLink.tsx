@@ -10,7 +10,7 @@ interface StyledProps {
      isActive: boolean;
 }
 const StyledLink = styled.a<StyledProps>`
-     color: ${colors.textGreen};
+     color: ${colors.garyText};
      text-decoration: none;
      font-size: 2rem;
      font-weight: bolder;
@@ -18,7 +18,7 @@ const StyledLink = styled.a<StyledProps>`
      ${(props) =>
           props.isActive &&
           css`
-               border-bottom: 1px solid ${colors.textGreen};
+               border-bottom: 2px solid ${colors.backgroundGreen};
                color: ${colors.blackInputText};
           `};
 `;

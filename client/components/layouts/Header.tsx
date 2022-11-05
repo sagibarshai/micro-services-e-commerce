@@ -12,13 +12,11 @@ interface StyledProps {
      marginLeft?: string;
      marginRight?: string;
 }
-interface Props {
-     setCartOpen: () => void;
-}
+
 const StyledHeader = styled.header`
      width: 100vw;
      height: 120px;
-     background-color: ${colors.paimaryGrey};
+     background-color: ${colors.praimaryPink};
      display: flex;
      z-index: 2;
      position: sticky;
@@ -34,7 +32,7 @@ const StyledDivRow = styled.div<StyledProps>`
      height: 42px;
 `;
 
-export default (props: Props) => {
+export default () => {
      const { links } = useMenageLinks();
      const itemsInCart: number = useSelector(
           (state: StoreState) => state.cartSlice.cartItems.length
@@ -49,10 +47,7 @@ export default (props: Props) => {
                </StyledDivRow>
                <IconApp />
                <StyledDivRow marginRight="58px" gap="22px">
-                    <CartIcon
-                         itemsInCart={itemsInCart}
-                         setCartOpen={props.setCartOpen}
-                    />
+                    <CartIcon itemsInCart={itemsInCart} />
                     {links.map((link) => {
                          if (link.path !== "/auth/signin") return;
                          return <CustomLink link={link} />;
