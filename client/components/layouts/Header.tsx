@@ -31,7 +31,16 @@ const StyledDivRow = styled.div<StyledProps>`
      margin-right: ${(props) => props.marginRight};
      height: 42px;
 `;
-
+const StyledTooltip = styled.div`
+     position: absolute;
+     height: 50px;
+     width: 100px;
+     background-color: ${colors.white};
+     top: 100%;
+     left: 50%;
+     transform: translate(-50%, -10%);
+     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+`;
 export default () => {
      const { links } = useMenageLinks();
      const itemsInCart: number = useSelector(
@@ -47,7 +56,9 @@ export default () => {
                </StyledDivRow>
                <IconApp />
                <StyledDivRow marginRight="58px" gap="22px">
-                    <CartIcon itemsInCart={itemsInCart} />
+                    <CartIcon itemsInCart={itemsInCart}>
+                         <StyledTooltip />
+                    </CartIcon>
                     {links.map((link) => {
                          if (link.path !== "/auth/signin") return;
                          return <CustomLink link={link} />;

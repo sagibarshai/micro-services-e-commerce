@@ -77,6 +77,7 @@ const StyledTooltipMessage = styled.span`
 
 interface Props {
      itemsInCart: number;
+     children: JSX.Element;
 }
 export default (props: Props) => {
      const [noItemsAnimation, setNoItemsAnimation] = useState<boolean>(false);
@@ -85,6 +86,9 @@ export default (props: Props) => {
      const dispatch = useDispatch();
      const itemsInCart = useSelector(
           (state: StoreState) => state.cartSlice.cartItems.length
+     );
+     const { openCartPopup } = useSelector(
+          (state: StoreState) => state.cartSlice
      );
 
      return (
@@ -108,6 +112,7 @@ export default (props: Props) => {
                <StyledIcon>
                     <CartIcon />
                </StyledIcon>
+               {openCartPopup && props.children}
                {!itemsInCart && noItemsTooltip && (
                     <StyledTooltipMessage>
                          <span>Your cart is empty..</span>
