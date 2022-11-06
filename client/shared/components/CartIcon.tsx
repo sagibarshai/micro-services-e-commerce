@@ -90,7 +90,7 @@ export default (props: Props) => {
      const { openCartPopup } = useSelector(
           (state: StoreState) => state.cartSlice
      );
-
+     console.log(openCartPopup);
      return (
           <StyledContainer
                noItemsAnimation={noItemsAnimation}
@@ -112,7 +112,7 @@ export default (props: Props) => {
                <StyledIcon>
                     <CartIcon />
                </StyledIcon>
-               {openCartPopup && props.children}
+               {itemsInCart !== 0 && openCartPopup && props.children}
                {!itemsInCart && noItemsTooltip && (
                     <StyledTooltipMessage>
                          <span>Your cart is empty..</span>

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { StoreState } from "../../../redux/store";
 import { colors } from "../../../shared/colors/colors";
 import { StyledXButton } from "../../../shared/components/StyledXButton";
@@ -8,6 +8,14 @@ import BlackCart from "../../../shared/svg/cart.svg";
 import DeleteIcon from "../../../shared/svg/delete.svg";
 import PlusIcon from "../../../shared/svg/plus.svg";
 import MinusIcon from "../../../shared/svg/minus.svg";
+import {
+     addItemToCart,
+     decreseCartItemQty,
+     removeItemFromCart,
+     toggleCartPopup,
+} from "../../../redux/cartSlice";
+import { StyledParimaryButton } from "../../../shared/ui-elements/button/button";
+
 interface StyledProps {
      justifyContent?: string;
      alignItems?: string;
@@ -21,7 +29,7 @@ interface StyledProps {
 
 const StyledCartContainer = styled.div`
      width: 495px;
-     height: calc(100vh - 120px - 60px);
+     height: calc(100vh - 120px);
      overflow: hidden;
      overflow-y: auto;
      background-color: ${colors.whiteBackground};
@@ -32,6 +40,19 @@ const StyledCartContainer = styled.div`
      z-index: 2;
      border-radius: 20px;
      padding: 30px;
+     &::-webkit-scrollbar {
+          width: 6px;
+          border-radius: 100px;
+          background-color: #e9e9e9;
+     }
+     &::-webkit-scrollbar-track {
+          background-color: ${colors.lightGrey};
+          opacity: 0.5;
+     }
+     &::-webkit-scrollbar-thumb {
+          background-color: ${colors.blackInputText};
+          opacity: 1;
+     }
 `;
 const StyledDivRow = styled.div<StyledProps>`
      display: flex;
@@ -52,6 +73,7 @@ const StyledIcon = styled.i`
 
 const StyledButton = styled.button`
      all: unset;
+     cursor: pointer;
 `;
 
 const StyledDivColumn = styled.div<StyledProps>`
@@ -73,15 +95,27 @@ const StyledText = styled.span<StyledProps>`
      font-weight: ${(props) => props.fontWeight};
      font-size: ${(props) => props.fontSize};
 `;
+const StyledSumContainer = styled.div`
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     background-color: ${colors.backgroundGray};
+     width: 100%;
+     height: 84px;
+     gap: 17px;
+`;
 
 export default () => {
      const [btnClicked, setBtnClicked] = useState<boolean>(false);
+     const dispatch = useDispatch();
      const cartIsOpen = useSelector(
           (state: StoreState) => state.cartSlice.openCartPopup
      );
+     const { cartSum } = useSelector((state: StoreState) => state.cartSlice);
      const { cartItems } = useSelector((state: StoreState) => state.cartSlice);
 
      if (!cartIsOpen) return <></>;
+     if (!cartItems.length) return <></>;
      return (
           <StyledCartContainer>
                <StyledDivRow
@@ -98,16 +132,20 @@ export default () => {
                          btnClicked={btnClicked}
                          onClick={() => {
                               setBtnClicked(true);
-                    
                               setTimeout(() => {
                                    setBtnClicked(false);
+                                   dispatch(toggleCartPopup());
                               }, 500);
                          }}
                     >
                          X
                     </StyledXButton>
                </StyledDivRow>
-               <StyledDivColumn gap="60px" margin="50px 0">
+               <StyledDivColumn
+                    gap="60px"
+                    margin="50px 0"
+                    justifyContent="center"
+               >
                     {cartItems.map((item) => {
                          return (
                               <StyledDivRow gap="28px">
@@ -130,7 +168,15 @@ export default () => {
                                              <StyledText fontSize="2.5rem">
                                                   {item.text}
                                              </StyledText>
-                                             <StyledButton>
+                                             <StyledButton
+                                                  onClick={() => {
+                                                       dispatch(
+                                                            removeItemFromCart(
+                                                                 item
+                                                            )
+                                                       );
+                                                  }}
+                                             >
                                                   <DeleteIcon />
                                              </StyledButton>
                                         </StyledDivRow>
@@ -141,10 +187,24 @@ export default () => {
                                              <StyledText fontSize="2.5rem">
                                                   Qty:{item.qty}
                                              </StyledText>
-                                             <StyledButton>
+                                             <StyledButton
+                                                  onClick={() => {
+                                                       dispatch(
+                                                            addItemToCart(item)
+                                                       );
+                                                  }}
+                                             >
                                                   <PlusIcon />
                                              </StyledButton>
-                                             <StyledButton>
+                                             <StyledButton
+                                                  onClick={() => {
+                                                       dispatch(
+                                                            decreseCartItemQty(
+                                                                 item
+                                                            )
+                                                       );
+                                                  }}
+                                             >
                                                   <MinusIcon />
                                              </StyledButton>
                                         </StyledDivRow>
@@ -152,6 +212,17 @@ export default () => {
                               </StyledDivRow>
                          );
                     })}
+                    <StyledSumContainer>
+                         <StyledText fontSize="2.5rem" fontWeight="bold">
+                              total:
+                         </StyledText>
+                         <StyledText fontSize="2.5rem" fontWeight="bold">
+                              {cartSum}$
+                         </StyledText>
+                    </StyledSumContainer>
+                    <StyledParimaryButton style={{ alignSelf: "center" }}>
+                         Check out
+                    </StyledParimaryButton>
                </StyledDivColumn>
           </StyledCartContainer>
      );

@@ -14,6 +14,7 @@ export interface Colors {
      garyText: string;
      praimaryPink: string;
      backgroundGreen: string;
+     backgroundGray: string;
 }
 
 export const colors: Colors = {
@@ -31,5 +32,6 @@ export const colors: Colors = {
      greenBackground: "#DCE2CF",
      garyText: "#737373",
      praimaryPink: "#FAE9DF",
-     backgroundGreen: "#14584E",
+     backgroundGreen: "#14584e",
+     backgroundGray: "#E6E5EA45",
 };

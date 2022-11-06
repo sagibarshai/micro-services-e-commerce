@@ -18,7 +18,7 @@ export const StyledPageContainer = styled.div`
      margin-bottom: 100px;
 `;
 export const StyledCategoryTitle = styled.h2<StyledProps>`
-     color: ${colors.secondaryGreen};
+     color: ${colors.backgroundGreen};
      font-size: 3.3rem;
 `;
 export const StyledDivRow = styled.div<StyledProps>`
