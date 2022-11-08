@@ -10,22 +10,34 @@ import {
 
 import IconCircleCart from "../shared/svg/circle-cart.svg";
 import IconFavorites from "../shared/svg/favorites.svg";
-import { products } from "../shared/products/products";
+import { ProductDetials, products } from "../shared/products/products";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { StoreState } from "../redux/store";
 import { addItemToCart } from "../redux/cartSlice";
+import axios from "axios";
 export default () => {
      const dispatch = useDispatch();
      const cartState = useSelector(
           (state: StoreState) => state.cartSlice.cartItems
      );
-     console.log(cartState);
      const [buttonClicked, setButtonClicked] = useState<boolean>(false);
      const buttonAnimation = () => {
           setButtonClicked(true);
           setTimeout(() => setButtonClicked(false), 500);
      };
+
+     const addToCartHandler = async (prod: ProductDetials) => {
+          try {
+               const { data } = await axios.post("/api/cart/add", {
+                    itemUpdated: { ...prod },
+               });
+               console.log(data);
+          } catch (err) {
+               console.log(err);
+          }
+     };
+
      return (
           <StyledPageContainer>
                {products.map((product) => {
@@ -70,11 +82,14 @@ export default () => {
                                                                  }
                                                                  onClick={() => {
                                                                       buttonAnimation();
-                                                                      dispatch(
-                                                                           addItemToCart(
-                                                                                prod
-                                                                           )
+                                                                      addToCartHandler(
+                                                                           prod
                                                                       );
+                                                                      // dispatch(
+                                                                      //      addItemToCart(
+                                                                      //           prod
+                                                                      //      )
+                                                                      // );
                                                                  }}
                                                             >
                                                                  <IconCircleCart

@@ -4,7 +4,7 @@ import signupRouter from "./routes/signup";
 import signinRouter from "./routes/signin";
 import signoutRouter from "./routes/signout";
 import currentuserRouter from "./routes/current-user";
-import { errorHandler } from "./middlewears/error-handler";
+import { errorHandler } from "@planty-errors-handler/common";
 
 const app = express();
 

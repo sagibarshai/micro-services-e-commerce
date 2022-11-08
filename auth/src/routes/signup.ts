@@ -1,9 +1,9 @@
 import express, { Request, Response, NextFunction } from "express";
 import { body, validationResult } from "express-validator";
-import { BadRequestError } from "../errors/bad-request-error";
-import { RequestValidatorError } from "../errors/validation-request-error";
-import { validateRequest } from "../middlewears/validate-request";
-import { DatabaseError } from "../errors/database-error";
+import { BadRequestError } from "@planty-errors-handler/common";
+import { RequestValidatorError } from "@planty-errors-handler/common";
+import { validateRequest } from "@planty-errors-handler/common";
+import { DatabaseError } from "@planty-errors-handler/common";
 import User from "../moduls/user";
 import { CookieHandler } from "../utils/cookie";
 

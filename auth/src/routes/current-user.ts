@@ -2,9 +2,9 @@ import express, { Request, Response, NextFunction } from "express";
 import User from "../moduls/user";
 import { isValidObjectId } from "mongoose";
 import jwt from "jsonwebtoken";
-import { BadRequestError } from "../errors/bad-request-error";
-import { UnauthorizedError } from "../errors/unauthorized-error";
-import { DatabaseError } from "../errors/database-error";
+import { BadRequestError } from "@planty-errors-handler/common";
+import { DatabaseError } from "@planty-errors-handler/common";
+import { unauthorized } from "@planty-errors-handler/common";
 
 const correntUserRouter = express.Router();
 
@@ -19,15 +19,13 @@ interface JwtUserPaylod extends jwt.JwtPayload {
 
 correntUserRouter.get(
      "/api/users/currentuser",
+     unauthorized,
      async (req: CurrentUserRequest, res: Response, next: NextFunction) => {
-          const token = req.headers.cookie?.split("=")[1] || undefined;
-          if (!token) return next(new BadRequestError("Token must be suplied"));
+          const token = req.headers.cookie?.split("=")[1]!;
           const userPayload = jwt.verify(
                token,
                process.env.JWT_KEY!
           ) as JwtUserPaylod;
-          console.log(userPayload);
-          if (!userPayload) throw new UnauthorizedError("Token is not valid");
           const userId = userPayload.id;
 
           if (!isValidObjectId(userId)) {

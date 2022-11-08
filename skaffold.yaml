@@ -26,5 +26,13 @@ build:
       manual:
       - dest: .
         src: '**/*/.tsx'
+  - image: us.gcr.io/e-commerce-365907/cart
+    context: cart
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+      - dest: .
+        src: '**/*/.ts'
 
 

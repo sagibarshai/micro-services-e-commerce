@@ -71,9 +71,11 @@ const StyledIcon = styled.i`
      vertical-align: baseline;
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<StyledProps>`
      all: unset;
      cursor: pointer;
+     width: ${(props) => props.width};
+     height: ${(props) => props.height};
 `;
 
 const StyledDivColumn = styled.div<StyledProps>`
@@ -169,6 +171,8 @@ export default () => {
                                                   {item.text}
                                              </StyledText>
                                              <StyledButton
+                                                  width="35px"
+                                                  height="35px"
                                                   onClick={() => {
                                                        dispatch(
                                                             removeItemFromCart(
@@ -188,6 +192,8 @@ export default () => {
                                                   Qty:{item.qty}
                                              </StyledText>
                                              <StyledButton
+                                                  width="35px"
+                                                  height="35px"
                                                   onClick={() => {
                                                        dispatch(
                                                             addItemToCart(item)
@@ -197,6 +203,8 @@ export default () => {
                                                   <PlusIcon />
                                              </StyledButton>
                                              <StyledButton
+                                                  width="35px"
+                                                  height="35px"
                                                   onClick={() => {
                                                        dispatch(
                                                             decreseCartItemQty(
@@ -220,7 +228,7 @@ export default () => {
                               {cartSum}$
                          </StyledText>
                     </StyledSumContainer>
-                    <StyledParimaryButton style={{ alignSelf: "center" }}>
+                    <StyledParimaryButton alignSelf="center">
                          Check out
                     </StyledParimaryButton>
                </StyledDivColumn>

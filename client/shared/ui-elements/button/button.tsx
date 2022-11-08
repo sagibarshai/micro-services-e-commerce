@@ -7,6 +7,7 @@ interface StyledProps {
      width?: string;
      height?: string;
      marginTop?: string;
+     alignSelf?: string;
 }
 
 export const StyledParimaryButton = styled.button<StyledProps>`
@@ -22,6 +23,7 @@ export const StyledParimaryButton = styled.button<StyledProps>`
      cursor: pointer;
      font-weight: bold;
      transition: all 0.5s;
+     align-self: ${(props) => props.alignSelf};
      &:focus {
           outline: none;
           border: none;
