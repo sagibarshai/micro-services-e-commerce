@@ -13,7 +13,7 @@ export const makeCartDocument = async (
      try {
           cart = await Cart.findOne({ userId: userId });
           if (!cart) {
-               cart = new Cart({ userId, cartItems: [] });
+               cart = new Cart({ userId, cartItems: [], sum: 0 });
                await cart.save();
           }
      } catch (err) {

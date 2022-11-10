@@ -56,6 +56,7 @@ const cartSlice = createSlice({
           updateCart: (state, payload: { payload: any }) => {
                console.log(payload);
                state.cartItems = payload.payload.cartItems;
+               state.cartSum = payload.payload.sum;
           },
           toggleCartPopup: (state) => {
                state.openCartPopup = !state.openCartPopup;
