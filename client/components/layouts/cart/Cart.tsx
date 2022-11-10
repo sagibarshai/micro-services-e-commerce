@@ -9,12 +9,14 @@ import DeleteIcon from "../../../shared/svg/delete.svg";
 import PlusIcon from "../../../shared/svg/plus.svg";
 import MinusIcon from "../../../shared/svg/minus.svg";
 import {
-     addItemToCart,
-     decreseCartItemQty,
-     removeItemFromCart,
+     //      addItemToCart,
+     //      decreseCartItemQty,
+     //      removeItemFromCart,
      toggleCartPopup,
 } from "../../../redux/cartSlice";
 import { StyledParimaryButton } from "../../../shared/ui-elements/button/button";
+import axios from "axios";
+import { updateCart } from "../../../redux/cartSlice";
 
 interface StyledProps {
      justifyContent?: string;
@@ -116,6 +118,37 @@ export default () => {
      const { cartSum } = useSelector((state: StoreState) => state.cartSlice);
      const { cartItems } = useSelector((state: StoreState) => state.cartSlice);
 
+     const decreseFromCartHandler = async (prod: any) => {
+          try {
+               const { data } = await axios.post("/api/cart/decrese", {
+                    itemUpdated: { ...prod },
+               });
+               dispatch(updateCart(data));
+          } catch (err) {
+               console.log(err);
+          }
+     };
+     const removeFromCartHandler = async (prod: any) => {
+          try {
+               const { data } = await axios.post("/api/cart/remove", {
+                    itemUpdated: { ...prod },
+               });
+               dispatch(updateCart(data));
+          } catch (err) {
+               console.log(err);
+          }
+     };
+     const increseFromCartHandler = async (prod: any) => {
+          try {
+               const { data } = await axios.post("/api/cart/add", {
+                    itemUpdated: { ...prod },
+               });
+               dispatch(updateCart(data));
+          } catch (err) {
+               console.log(err);
+          }
+     };
+
      if (!cartIsOpen) return <></>;
      if (!cartItems.length) return <></>;
      return (
@@ -174,10 +207,8 @@ export default () => {
                                                   width="35px"
                                                   height="35px"
                                                   onClick={() => {
-                                                       dispatch(
-                                                            removeItemFromCart(
-                                                                 item
-                                                            )
+                                                       removeFromCartHandler(
+                                                            item
                                                        );
                                                   }}
                                              >
@@ -195,8 +226,8 @@ export default () => {
                                                   width="35px"
                                                   height="35px"
                                                   onClick={() => {
-                                                       dispatch(
-                                                            addItemToCart(item)
+                                                       increseFromCartHandler(
+                                                            item
                                                        );
                                                   }}
                                              >
@@ -206,10 +237,8 @@ export default () => {
                                                   width="35px"
                                                   height="35px"
                                                   onClick={() => {
-                                                       dispatch(
-                                                            decreseCartItemQty(
-                                                                 item
-                                                            )
+                                                       decreseFromCartHandler(
+                                                            item
                                                        );
                                                   }}
                                              >

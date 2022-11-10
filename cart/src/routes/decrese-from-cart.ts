@@ -1,28 +1,10 @@
 import express, { Request, Response } from "express";
 import { unauthorized } from "@planty-errors-handler/common";
-import { Cart, CartDoc } from "../moduls/cart";
-import jwt from "jsonwebtoken";
+import { CartDoc } from "../moduls/cart";
 import { currentuser } from "@planty-errors-handler/common";
-import { DatabaseError } from "@planty-errors-handler/common";
 import { makeCartDocument } from "../middlewears/make-cart-document";
+import { AddToCartResponse } from "./add-to-cart";
 const router = express.Router();
-
-export interface UserPayload {
-     email: string;
-     id: string;
-     firstName: string;
-     lastName: string;
-}
-interface JwtUserPaylod extends jwt.JwtPayload {
-     id: string;
-}
-export interface AddToCartResponse extends Response {
-     locals: {
-          userPayload: JwtUserPaylod;
-          cart: CartDoc;
-     };
-}
-
 interface ItemUpdated {
      text: string;
      price: number;
@@ -36,7 +18,7 @@ interface AddToCartRequest extends Request {
 }
 
 router.post(
-     "/api/cart/add",
+     "/api/cart/decrese",
      unauthorized,
      currentuser,
      makeCartDocument,
@@ -47,10 +29,14 @@ router.post(
           const existingItem: ItemUpdated | undefined = cart.cartItems.find(
                (item) => item.text === itemUpdated.text
           );
-          if (!existingItem) {
-               cart.cartItems.push({ ...itemUpdated, qty: 1 });
+          const existingItemIndex: number | undefined =
+               cart.cartItems.findIndex(
+                    (item) => item.text === itemUpdated.text
+               );
+          if (!existingItem?.qty && existingItemIndex) {
+               cart.cartItems.splice(existingItemIndex, 1);
           } else {
-               existingItem.qty++;
+               cart.cartItems[existingItemIndex].qty--;
           }
           try {
                const updatedCart = await cart.save();
@@ -62,4 +48,4 @@ router.post(
      }
 );
 
-export { router as addToCartRoute };
+export { router as decreseFromCartRoute };

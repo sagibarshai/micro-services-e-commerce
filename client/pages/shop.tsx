@@ -14,7 +14,7 @@ import { ProductDetials, products } from "../shared/products/products";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { StoreState } from "../redux/store";
-import { addItemToCart } from "../redux/cartSlice";
+import { updateCart } from "../redux/cartSlice";
 import axios from "axios";
 export default () => {
      const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export default () => {
                const { data } = await axios.post("/api/cart/add", {
                     itemUpdated: { ...prod },
                });
-               console.log(data);
+               dispatch(updateCart(data));
           } catch (err) {
                console.log(err);
           }
@@ -85,11 +85,6 @@ export default () => {
                                                                       addToCartHandler(
                                                                            prod
                                                                       );
-                                                                      // dispatch(
-                                                                      //      addItemToCart(
-                                                                      //           prod
-                                                                      //      )
-                                                                      // );
                                                                  }}
                                                             >
                                                                  <IconCircleCart

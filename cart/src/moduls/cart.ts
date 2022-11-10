@@ -1,12 +1,19 @@
 import mongoose from "mongoose";
 
+export interface CartItems {
+     price: number;
+     text: string;
+     qty: number;
+}
+[];
+
 export interface CartAtters {
      userId: string;
-     cartItems: {
-          price: number;
-          text: string;
-          qty: number;
-     };
+     cartItems: CartItems;
+}
+export interface CartDoc extends mongoose.Document {
+     userId: string;
+     cartItems: CartItems[];
 }
 
 const CartScahma = new mongoose.Schema({
@@ -24,4 +31,4 @@ const CartScahma = new mongoose.Schema({
           ],
      },
 });
-export const Cart = mongoose.model("Carts", CartScahma);
+export const Cart = mongoose.model<CartDoc>("Carts", CartScahma);
