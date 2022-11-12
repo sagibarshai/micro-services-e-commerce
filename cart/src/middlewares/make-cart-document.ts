@@ -1,11 +1,10 @@
 import { DatabaseError } from "@planty-errors-handler/common";
 import { Request, NextFunction } from "express";
-import { Cart, CartDoc } from "../moduls/cart";
-import { AddToCartResponse } from "../routes/add-to-cart";
-
+import { Cart } from "../moduls/cart";
+import { CartResponse } from "../routes/types/types";
 export const makeCartDocument = async (
      req: Request,
-     res: AddToCartResponse,
+     res: CartResponse,
      next: NextFunction
 ) => {
      const userId = res.locals.userPayload.id;

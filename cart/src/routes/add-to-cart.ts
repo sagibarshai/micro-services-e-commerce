@@ -1,46 +1,19 @@
 import express, { Request, Response } from "express";
-import { unauthorized } from "@planty-errors-handler/common";
+import { DatabaseError, unauthorized } from "@planty-errors-handler/common";
 import { Cart, CartDoc } from "../moduls/cart";
 import jwt from "jsonwebtoken";
 import { currentuser } from "@planty-errors-handler/common";
-import { makeCartDocument } from "../middlewears/make-cart-document";
+import { makeCartDocument } from "../middlewares/make-cart-document";
+import { ItemUpdated, CartRequest, CartResponse } from "./types/types";
+
 const router = express.Router();
-
-export interface UserPayload {
-     email: string;
-     id: string;
-     firstName: string;
-     lastName: string;
-}
-interface JwtUserPaylod extends jwt.JwtPayload {
-     id: string;
-}
-export interface AddToCartResponse extends Response {
-     locals: {
-          userPayload: JwtUserPaylod;
-          cart: CartDoc;
-     };
-}
-
-interface ItemUpdated {
-     text: string;
-     price: number;
-     qty: number;
-     imgSrc: string;
-}
-
-interface AddToCartRequest extends Request {
-     body: {
-          itemUpdated: ItemUpdated;
-     };
-}
 
 router.post(
      "/api/cart/add",
      unauthorized,
      currentuser,
      makeCartDocument,
-     async (req: AddToCartRequest, res: AddToCartResponse) => {
+     async (req: CartRequest, res: CartResponse) => {
           const { itemUpdated } = req.body;
           const cart = res.locals.cart;
           const existingItem: ItemUpdated | undefined = cart.cartItems.find(
@@ -58,8 +31,8 @@ router.post(
                return res.send(updatedCart);
           } catch (err) {
                console.log(err);
+               throw new DatabaseError("Database error");
           }
-          res.send("something went worng");
      }
 );
 

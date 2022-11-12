@@ -34,5 +34,13 @@ build:
       manual:
       - dest: .
         src: '**/*/.ts'
+  - image: us.gcr.io/e-commerce-365907/mail
+    context: mail
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+      - dest: .
+        src: '**/*/.ts'
 
 

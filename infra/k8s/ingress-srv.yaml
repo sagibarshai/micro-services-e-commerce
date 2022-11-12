@@ -30,4 +30,11 @@ spec:
             name: cart-srv
             port:
               number: 4001
+      - path: /api/mail/
+        pathType: Prefix
+        backend:
+          service:
+            name: mail-srv
+            port:
+              number: 4002
 
