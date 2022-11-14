@@ -1,3 +1,5 @@
+import nats, { Stan, Message } from "node-nats-streaming";
+import { randomBytes } from "crypto";
 import express from "express";
 import bodyParser from "body-parser";
 import signupRouter from "./routes/signup";
@@ -15,6 +17,13 @@ app.use(
           extended: true,
      })
 );
+
+const stan: Stan = nats.connect("planty", randomBytes(4).toString("hex"), {
+     url: "http://nats-streaming-srv:4222",
+});
+stan.on("connect", () => {
+     console.log("auth publisher is connected");
+});
 
 app.use(signupRouter);
 app.use(currentuserRouter);

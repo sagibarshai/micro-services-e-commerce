@@ -15,6 +15,12 @@ spec:
       containers:
       - name: mail
         image: us.gcr.io/e-commerce-365907/mail
+        env:
+        - name: EMAIL_SERVICE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: email-srv-password
+              key: EMAIL_SERVICE_PASSWORD
 ---
 apiVersion: v1
 kind: Service
