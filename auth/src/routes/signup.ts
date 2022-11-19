@@ -5,7 +5,8 @@ import { validateRequest } from "@planty-errors-handler/common";
 import { DatabaseError } from "@planty-errors-handler/common";
 import User from "../moduls/user";
 import { CookieHandler } from "../utils/cookie";
-
+import { natsWrapper } from "@planty-errors-handler/common";
+import { UserCreatedPublisher } from "../events/publishers/user-created-publisher";
 interface SignupRequest extends Request {
      body: {
           email: string;
@@ -49,8 +50,11 @@ signupRouter.post(
                     },
                     res
                );
-               // dispatch event
-
+               await new UserCreatedPublisher(natsWrapper.client).publish({
+                    email: user.email,
+                    userId: user.id,
+                    name: `${user.firstName} ${user.lastName} `,
+               });
                return res.status(201).send(user);
           } catch (err) {
                return next(new DatabaseError("Database error"));

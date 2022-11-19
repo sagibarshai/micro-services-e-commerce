@@ -24,6 +24,7 @@ import InfoCircle from "../../shared/svg/info-circle.svg";
 import { StyledXButton } from "../../shared/components/StyledXButton";
 import LeafSvg from "../../shared/svg/leaf1.svg";
 import ParimaryLoader from "../../shared/loading-elements/parimary-loader";
+
 type InputsTypes = "email" | "password" | "firstName" | "lastName";
 
 interface InputState {
@@ -144,7 +145,7 @@ const Signup: NextPage = () => {
                });
                setIsLoading(false);
                console.log(data);
-               Router.push("/api/users/currentuser");
+               Router.push("/");
           } catch (err: any) {
                setIsLoading(false);
                if (

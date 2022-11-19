@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: favorites-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: favorites-mongo
+  template:
+    metadata:
+      labels:
+        app: favorites-mongo
+    spec:
+      containers:
+      - image: mongo
+        name: favorites-mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: favorites-mongo-srv
+spec:
+  selector:
+    app: favorites-mongo
+  ports:
+  - name: favorites-mongo
+    protocol: TCP
+    port: 27017
+    targetPort: 27017

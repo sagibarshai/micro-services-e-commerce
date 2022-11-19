@@ -42,5 +42,21 @@ build:
       manual:
       - dest: .
         src: '**/*/.ts'
+  - image: us.gcr.io/e-commerce-365907/payments
+    context: payments
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+      - dest: .
+        src: '**/*/.ts'
+  - image: us.gcr.io/e-commerce-365907/favorites
+    context: favorites
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+      - dest: .
+        src: '**/*/.ts'
 
 

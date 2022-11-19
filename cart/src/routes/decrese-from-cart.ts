@@ -21,7 +21,6 @@ router.post(
                cart.cartItems.findIndex(
                     (item) => item.text === itemUpdated.text
                );
-          if (!existingItem || !existingItemIndex) return;
 
           if (existingItem?.qty === 1) {
                cart.sum -= itemUpdated.price;

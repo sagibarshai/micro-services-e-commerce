@@ -37,5 +37,19 @@ spec:
             name: mail-srv
             port:
               number: 4002
+      - path: /api/favorites/
+        pathType: Prefix
+        backend:
+          service:
+            name: favorites-srv
+            port:
+              number: 4003
+      - path: /api/payments/
+        pathType: Prefix
+        backend:
+          service:
+            name: payments-srv
+            port:
+              number: 4004
 
 

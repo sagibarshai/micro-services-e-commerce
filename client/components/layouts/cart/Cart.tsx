@@ -17,6 +17,7 @@ import {
 import { StyledParimaryButton } from "../../../shared/ui-elements/button/button";
 import axios from "axios";
 import { updateCart } from "../../../redux/cartSlice";
+import Notification from "../../../shared/notification/Notification";
 
 interface StyledProps {
      justifyContent?: string;
@@ -110,6 +111,7 @@ const StyledSumContainer = styled.div`
 `;
 
 export default () => {
+     const [serverError, setServerError] = useState<null | string>(null);
      const [btnClicked, setBtnClicked] = useState<boolean>(false);
      const dispatch = useDispatch();
      const cartIsOpen = useSelector(
@@ -118,6 +120,17 @@ export default () => {
      const { cartSum } = useSelector((state: StoreState) => state.cartSlice);
      const { cartItems } = useSelector((state: StoreState) => state.cartSlice);
 
+     const onError = (err: any) => {
+          let returendErr = "";
+          if (Array.isArray(err?.response?.data?.errors)) {
+               for (let error of err.response.data.errors!) {
+                    returendErr += error.message;
+               }
+          } else setServerError(`Server error ${err.code}`);
+          setServerError(returendErr);
+          setTimeout(() => setServerError(null), 5000);
+     };
+
      const decreseFromCartHandler = async (prod: any) => {
           try {
                const { data } = await axios.post("/api/cart/decrese", {
@@ -125,7 +138,7 @@ export default () => {
                });
                dispatch(updateCart(data));
           } catch (err) {
-               console.log(err);
+               onError(err);
           }
      };
      const removeFromCartHandler = async (prod: any) => {
@@ -135,7 +148,7 @@ export default () => {
                });
                dispatch(updateCart(data));
           } catch (err) {
-               console.log(err);
+               onError(err);
           }
      };
      const increseFromCartHandler = async (prod: any) => {
@@ -145,7 +158,7 @@ export default () => {
                });
                dispatch(updateCart(data));
           } catch (err) {
-               console.log(err);
+               onError(err);
           }
      };
 
@@ -153,6 +166,18 @@ export default () => {
      if (!cartItems.length) return <></>;
      return (
           <StyledCartContainer>
+               {serverError && (
+                    <Notification
+                         backgroundColor={colors.errorRed}
+                         position="fixed"
+                         variant="error"
+                         animation={true}
+                         message={serverError}
+                         bottom="60%"
+                         left="50%"
+                         transform="translate(-50% , -50%)"
+                    />
+               )}
                <StyledDivRow
                     justifyContent="space-between"
                     alignItems="baseline"

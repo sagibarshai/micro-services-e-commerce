@@ -15,13 +15,16 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { StoreState } from "../redux/store";
 import { updateCart } from "../redux/cartSlice";
+import Notification from "../shared/notification/Notification";
 import axios from "axios";
+import { colors } from "../shared/colors/colors";
 export default () => {
      const dispatch = useDispatch();
      const cartState = useSelector(
           (state: StoreState) => state.cartSlice.cartItems
      );
      const [buttonClicked, setButtonClicked] = useState<boolean>(false);
+     const [serverError, setServerError] = useState<null | string>(null);
      const buttonAnimation = () => {
           setButtonClicked(true);
           setTimeout(() => setButtonClicked(false), 500);
@@ -33,13 +36,52 @@ export default () => {
                     itemUpdated: { ...prod },
                });
                dispatch(updateCart(data));
-          } catch (err) {
+          } catch (err: any) {
                console.log(err);
+               let returendErr = "";
+               if (Array.isArray(err?.response?.data?.errors)) {
+                    console.log(err.response.data.errors!);
+                    for (let error of err.response.data.errors!) {
+                         console.log(error);
+                         returendErr += error.message;
+                    }
+               } else setServerError(`Server error ${err.code}`);
+               setServerError(returendErr);
+               setTimeout(() => setServerError(null), 5000);
           }
      };
-
+     const addToFavoritesHandler = async (prod: ProductDetials) => {
+          try {
+               const { data } = await axios.post("/api/favorites/add", prod);
+               console.log(data);
+          } catch (err: any) {
+               console.log(err);
+               let returendErr = "";
+               if (Array.isArray(err?.response?.data?.errors)) {
+                    console.log(err.response.data.errors!);
+                    for (let error of err.response.data.errors!) {
+                         console.log(error);
+                         returendErr += error.message;
+                    }
+               } else setServerError(`Server error ${err.code}`);
+               setServerError(returendErr);
+               setTimeout(() => setServerError(null), 5000);
+          }
+     };
      return (
           <StyledPageContainer>
+               {serverError && (
+                    <Notification
+                         backgroundColor={colors.errorRed}
+                         position="fixed"
+                         variant="error"
+                         animation={true}
+                         message={serverError}
+                         bottom="60%"
+                         left="50%"
+                         transform="translate(-50% , -50%)"
+                    />
+               )}
                {products.map((product) => {
                     return (
                          <StyledDivColumn gap="27px">
@@ -66,6 +108,9 @@ export default () => {
                                                             <StyledIconButton
                                                                  onClick={() => {
                                                                       buttonAnimation();
+                                                                      addToFavoritesHandler(
+                                                                           prod
+                                                                      );
                                                                  }}
                                                                  buttonClicked={
                                                                       buttonClicked

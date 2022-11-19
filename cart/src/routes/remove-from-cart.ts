@@ -18,7 +18,6 @@ router.post(
                cart.cartItems.findIndex(
                     (item) => item.text === itemUpdated.text
                );
-          if (!existingItemIndex) return;
           cart.sum = cart.sum - itemUpdated.qty * itemUpdated.price;
           cart.cartItems[existingItemIndex].qty = 0;
           cart.cartItems.splice(existingItemIndex, 1);
