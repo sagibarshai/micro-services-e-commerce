@@ -22,7 +22,7 @@ interface StyledProps {
 
 export const StyledPageContainer = styled.div`
      position: relative;
-     background-color: ${colors.secondaryGreen};
+     background-color: ${colors.praimaryPink};
      height: max-content;
      width: 100vw;
      display: flex;

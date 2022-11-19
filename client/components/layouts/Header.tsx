@@ -6,6 +6,7 @@ import CustomLink from "../../shared/components/CustomLink";
 import CartIcon from "../../shared/components/CartIcon";
 import { useSelector } from "react-redux";
 import { StoreState } from "../../redux/store";
+import { useCookies } from "react-cookie";
 interface StyledProps {
      isActive?: boolean;
      gap?: string;
@@ -43,9 +44,11 @@ const StyledTooltip = styled.div`
 `;
 export default () => {
      const { links } = useMenageLinks();
+     const [cookie] = useCookies(["token"]);
      const itemsInCart: number = useSelector(
           (state: StoreState) => state.cartSlice.cartItems.length
      );
+     const isAuth: boolean = cookie.token ? true : false;
      return (
           <StyledHeader>
                <StyledDivRow gap="22px" marginLeft="60px">
@@ -59,10 +62,28 @@ export default () => {
                     <CartIcon itemsInCart={itemsInCart}>
                          <StyledTooltip />
                     </CartIcon>
-                    {links.map((link) => {
-                         if (link.path !== "/auth/signin") return;
+                    {!isAuth ? (
+                         <CustomLink
+                              link={
+                                   links.find(
+                                        (link) => link.path === "/auth/signin"
+                                   )!
+                              }
+                         />
+                    ) : (
+                         <CustomLink
+                              link={
+                                   links.find(
+                                        (link) => link.path === "/auth/signout"
+                                   )!
+                              }
+                         />
+                    )}
+                    {/* {links.map((link) => {
+                         // if (link.path !== "/auth/signin") return;
+                         if(!cookie && link.path !== "/auth/signin" )
                          return <CustomLink link={link} />;
-                    })}
+                    })} */}
                </StyledDivRow>
           </StyledHeader>
      );

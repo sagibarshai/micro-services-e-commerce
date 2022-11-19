@@ -21,7 +21,7 @@ const favorites = new mongoose.Schema({
           required: true,
           type: String,
      },
-     favoritesItem: {
+     favoritesItems: {
           required: true,
           type: [
                {

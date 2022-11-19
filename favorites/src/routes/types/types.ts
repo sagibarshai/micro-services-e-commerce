@@ -22,7 +22,5 @@ export interface FavoritesUpdated {
      imgSrc: string;
 }
 export interface FavoritesRequest extends Request {
-     body: {
-          favoritesUpdated: FavoritesUpdated;
-     };
+     body: FavoritesUpdated;
 }

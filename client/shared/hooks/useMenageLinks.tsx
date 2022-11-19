@@ -20,6 +20,11 @@ let links: Link[] = [
           isActive: false,
      },
      {
+          name: "Sign out",
+          path: "/auth/signout",
+          isActive: false,
+     },
+     {
           name: "Home",
           path: "/",
           isActive: false,
@@ -27,6 +32,11 @@ let links: Link[] = [
      {
           name: "Shop",
           path: "/shop",
+          isActive: false,
+     },
+     {
+          name: "Favorites",
+          path: "/favorites",
           isActive: false,
      },
 ];

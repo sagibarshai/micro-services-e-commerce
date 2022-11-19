@@ -19,7 +19,6 @@ export const makefavoritesDocument = async (
           console.log(err);
           throw new DatabaseError("Database error");
      }
-     console.log("fav!! ", favorites);
      res.locals.favorites = favorites;
      next();
 };

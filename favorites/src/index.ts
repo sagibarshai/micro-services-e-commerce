@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import express, { Request, Response } from "express";
 import { errorHandler } from "@planty-errors-handler/common";
-import { addToFavoritesRoute } from "./routes/add-to-favorites";
+import { manageFavoritesRoute } from "./routes/manage-favorites";
 import bodyParser from "body-parser";
+import { getFavoritesRouter } from "./routes/get-favorites";
 const app = express();
 
 app.set("trust proxy", true); //ingress-nginx is proxy so we allow for express app to trust proxy
@@ -20,7 +21,8 @@ if (!process.env.JWT_KEY) {
 app.get("/api/favorites", (req: Request, res: Response) => {
      res.send("favorites service is ready");
 });
-app.use(addToFavoritesRoute);
+app.use(manageFavoritesRoute);
+app.use(getFavoritesRouter);
 app.use(errorHandler);
 
 const start = async () => {

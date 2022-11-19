@@ -1,8 +1,9 @@
-import express, { Router } from "express";
+import { Router } from "express";
 import {
      unauthorized,
      currentuser,
      validateRequest,
+     DatabaseError,
 } from "@planty-errors-handler/common";
 import { body } from "express-validator";
 import { FavoritesRequest, FavoritesResponse } from "./types/types";
@@ -11,7 +12,7 @@ import { makefavoritesDocument } from "../middlewares/make-favorites-document";
 const router = Router();
 
 router.post(
-     "/api/favorites/add",
+     "/api/favorites/manage-favorites",
      unauthorized,
      currentuser,
      [
@@ -25,20 +26,27 @@ router.post(
      validateRequest,
      makefavoritesDocument,
      async (req: FavoritesRequest, res: FavoritesResponse) => {
-          const favorites = res.locals.favorites;
-          const existingItem = favorites.favoritesItems.find(
-               (item) => item.text === req.body.favoritesUpdated.text
+          const favorite = req.body;
+          const { favorites } = res.locals;
+          const { favoritesItems } = res.locals.favorites;
+          const existingItem = favoritesItems.find(
+               (item) => item.text === favorite.text
           );
           if (!existingItem) {
-               favorites.favoritesItems.push(req.body.favoritesUpdated);
+               favoritesItems.push(favorite);
           } else {
-               const existingItemIndex = favorites.favoritesItems.findIndex(
-                    (item) => item.text === req.body.favoritesUpdated.text
+               const existingItemIndex = favoritesItems.findIndex(
+                    (item) => item.text === favorite.text
                );
-               favorites.favoritesItems.splice(existingItemIndex, 1);
+               favoritesItems.splice(existingItemIndex, 1);
           }
-          await favorites.save();
-          res.status(200).send({ favorites });
+          try {
+               await favorites.save();
+          } catch (err) {
+               console.log(err);
+               throw new DatabaseError("Database Error");
+          }
+          res.status(200).send(favoritesItems);
      }
 );
-export { router as addToFavoritesRoute };
+export { router as manageFavoritesRoute };

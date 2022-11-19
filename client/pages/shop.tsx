@@ -23,8 +23,8 @@ export default () => {
      const cartState = useSelector(
           (state: StoreState) => state.cartSlice.cartItems
      );
-     const [buttonClicked, setButtonClicked] = useState<boolean>(false);
      const [serverError, setServerError] = useState<null | string>(null);
+     const [buttonClicked, setButtonClicked] = useState<boolean>(false);
      const buttonAnimation = () => {
           setButtonClicked(true);
           setTimeout(() => setButtonClicked(false), 500);
@@ -52,8 +52,10 @@ export default () => {
      };
      const addToFavoritesHandler = async (prod: ProductDetials) => {
           try {
-               const { data } = await axios.post("/api/favorites/add", prod);
-               console.log(data);
+               const { data } = await axios.post(
+                    "/api/favorites/manage-favorites",
+                    prod
+               );
           } catch (err: any) {
                console.log(err);
                let returendErr = "";

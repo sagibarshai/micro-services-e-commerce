@@ -22,7 +22,7 @@ const StyledFooterContainer = styled.footer<Props>`
      display: flex;
      align-items: center;
      justify-content: center;
-     background-color: ${colors.parimaryGreen};
+     background-color: ${colors.praimaryPink};
 `;
 
 const StyledSubtitle = styled.h4<Props>`

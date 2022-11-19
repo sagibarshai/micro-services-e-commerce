@@ -7,8 +7,13 @@ interface StyledProps {
      marginTop?: string;
      alignItems?: string;
      buttonClicked?: boolean;
+     position?: string;
+     top?: string;
+     right?: string;
+     flexWrap?: string;
+     alignSelf?: string;
 }
-export const StyledPageContainer = styled.div`
+export const StyledPageContainer = styled.div<StyledProps>`
      display: flex;
      justify-content: center;
      flex-direction: column;
@@ -23,6 +28,8 @@ export const StyledCategoryTitle = styled.h2<StyledProps>`
 `;
 export const StyledDivRow = styled.div<StyledProps>`
      display: flex;
+     align-self: ${(props) => props.alignSelf};
+     flex-wrap: ${(props) => props.flexWrap};
      gap: ${(props) => props.gap};
      justify-content: ${(props) => props.justifyContent};
      margin: ${(props) => props.marginTop};
@@ -32,8 +39,11 @@ export const StyledDivColumn = styled.div<StyledProps>`
      display: flex;
      flex-direction: column;
      gap: ${(props) => props.gap};
+     position: ${(props) => props.position};
 `;
-export const StyledImg = styled.img``;
+export const StyledImg = styled.img`
+     position: relative;
+`;
 export const StyledText = styled.span`
      font-weight: bold;
      font-size: 1.6rem;
@@ -42,6 +52,9 @@ export const StyledIconButton = styled.button<StyledProps>`
      all: unset;
      cursor: pointer;
      transition: all 0.5s;
+     position: ${(props) => props.position};
+     top: ${(props) => props.top};
+     right: ${(props) => props.right};
      &:hover {
           transform: scale(1.2);
           ${(props) =>

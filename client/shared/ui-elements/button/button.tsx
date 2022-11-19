@@ -13,7 +13,7 @@ interface StyledProps {
 export const StyledParimaryButton = styled.button<StyledProps>`
      width: ${(props) => props.width || "365px"};
      height: ${(props) => props.height || "54px"};
-     border-radius: 100px;
+     border-radius: 16px;
      color: ${(props) => props.color || colors.white};
      background-color: ${(props) =>
           props.backgroundColor || colors.backgroundGreen};
