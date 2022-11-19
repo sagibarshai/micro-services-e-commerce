@@ -95,8 +95,8 @@ export default () => {
                                         return (
                                              <StyledDivColumn gap="27px">
                                                   <StyledImg
-                                                       width="528px"
-                                                       height="360px"
+                                                       maxWidth="528px"
+                                                       maxHeight="360px"
                                                        src={prod.imgSrc}
                                                   />
                                                   <StyledDivRow

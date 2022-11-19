@@ -4,9 +4,11 @@ import useMenageLinks from "../../shared/hooks/useMenageLinks";
 import IconApp from "../../shared/components/IconApp";
 import CustomLink from "../../shared/components/CustomLink";
 import CartIcon from "../../shared/components/CartIcon";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../../redux/store";
 import { useCookies } from "react-cookie";
+import axios from "axios";
+import { updateCart } from "../../redux/cartSlice";
 interface StyledProps {
      isActive?: boolean;
      gap?: string;
@@ -45,10 +47,20 @@ const StyledTooltip = styled.div`
 export default () => {
      const { links } = useMenageLinks();
      const [cookie] = useCookies(["token"]);
+     const dispatch = useDispatch();
      const itemsInCart: number = useSelector(
           (state: StoreState) => state.cartSlice.cartItems.length
      );
      const isAuth: boolean = cookie.token ? true : false;
+     const logoutHandler = async () => {
+          try {
+               const { data } = await axios.post("/api/users/signout");
+               dispatch(updateCart([]));
+               console.log(data);
+          } catch (err) {
+               console.log(err);
+          }
+     };
      return (
           <StyledHeader>
                <StyledDivRow gap="22px" marginLeft="60px">
@@ -66,24 +78,20 @@ export default () => {
                          <CustomLink
                               link={
                                    links.find(
-                                        (link) => link.path === "/auth/signin"
+                                        (link) => link.name === "Sign in"
                                    )!
                               }
                          />
                     ) : (
                          <CustomLink
+                              onClick={() => logoutHandler()}
                               link={
                                    links.find(
-                                        (link) => link.path === "/auth/signout"
+                                        (link) => link.name === "Sign out"
                                    )!
                               }
                          />
                     )}
-                    {/* {links.map((link) => {
-                         // if (link.path !== "/auth/signin") return;
-                         if(!cookie && link.path !== "/auth/signin" )
-                         return <CustomLink link={link} />;
-                    })} */}
                </StyledDivRow>
           </StyledHeader>
      );

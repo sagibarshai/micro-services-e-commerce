@@ -6,6 +6,10 @@ const app = express();
 if (!process.env.JWT_KEY) {
      throw new Error("JWT_KEY must be defined");
 }
+if (!process.env.STRIPE_KEY) {
+     console.log(process.env);
+     throw new Error("STRIPE_KEY must be defined");
+}
 
 app.get("/api/payments", (req: Request, res: Response) => {
      res.send("payments service is ready");

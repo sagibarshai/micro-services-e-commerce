@@ -12,6 +12,8 @@ interface StyledProps {
      right?: string;
      flexWrap?: string;
      alignSelf?: string;
+     maxWidth?: string;
+     maxHeight?: string;
 }
 export const StyledPageContainer = styled.div<StyledProps>`
      display: flex;
@@ -21,6 +23,7 @@ export const StyledPageContainer = styled.div<StyledProps>`
      gap: 110px;
      margin-top: 50px;
      margin-bottom: 100px;
+     min-height: 100vh;
 `;
 export const StyledCategoryTitle = styled.h2<StyledProps>`
      color: ${colors.backgroundGreen};
@@ -41,8 +44,10 @@ export const StyledDivColumn = styled.div<StyledProps>`
      gap: ${(props) => props.gap};
      position: ${(props) => props.position};
 `;
-export const StyledImg = styled.img`
-     position: relative;
+export const StyledImg = styled.img<StyledProps>`
+     display: flex;
+     max-width: ${(props) => props.maxWidth};
+     max-height: ${(props) => props.maxHeight};
 `;
 export const StyledText = styled.span`
      font-weight: bold;

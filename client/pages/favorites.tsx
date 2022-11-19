@@ -5,6 +5,7 @@ import {
      StyledImg,
      StyledText,
      StyledIconButton,
+     StyledCategoryTitle,
 } from "../styles/shop/StyledShop";
 import IconDelete from "../shared/svg/delete.svg";
 import { products } from "../shared/products/products";
@@ -18,10 +19,7 @@ import { updateCart } from "../redux/cartSlice";
 export default () => {
      const dispatch = useDispatch();
      const [serverError, setServerError] = useState<null | string>(null);
-     const [favoritesList, setFavoritesList] = useState<any[]>([
-          ...products[0].products,
-          ...products[1].products,
-     ]);
+     const [favoritesList, setFavoritesList] = useState<any[]>([]);
      const [buttonClicked, setButtonClicked] = useState<boolean>(false);
      const buttonAnimation = () => {
           setButtonClicked(true);
@@ -82,7 +80,14 @@ export default () => {
      useEffect(() => {
           getFromFavoritesHandler();
      }, []);
-     if (!favoritesList) return <h1>facorites list is empty!</h1>;
+     if (!favoritesList.length)
+          return (
+               <StyledPageContainer alignItems="center">
+                    <StyledCategoryTitle>
+                         favorites list is empty!
+                    </StyledCategoryTitle>
+               </StyledPageContainer>
+          );
      return (
           <StyledPageContainer alignItems="center">
                {serverError && (

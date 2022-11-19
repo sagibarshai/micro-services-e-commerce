@@ -5,6 +5,7 @@ import { Link as LinkType } from "../hooks/useMenageLinks";
 
 interface Props {
      link: LinkType;
+     onClick?: () => void;
 }
 interface StyledProps {
      isActive: boolean;
@@ -25,7 +26,12 @@ const StyledLink = styled.a<StyledProps>`
 export default (props: Props) => {
      return (
           <Link key={props.link.path} href={props.link.path}>
-               <StyledLink isActive={props.link.isActive}>
+               <StyledLink
+                    isActive={props.link.isActive}
+                    onClick={() => {
+                         props.onClick && props.onClick();
+                    }}
+               >
                     {props.link.name}
                </StyledLink>
           </Link>

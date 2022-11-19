@@ -15,6 +15,7 @@ export interface Colors {
      praimaryPink: string;
      backgroundGreen: string;
      backgroundGray: string;
+     outlineGreenInput?: string;
 }
 
 export const colors: Colors = {
@@ -34,4 +35,5 @@ export const colors: Colors = {
      praimaryPink: "#FAE9DF",
      backgroundGreen: "#14584e",
      backgroundGray: "#E6E5EA45",
+     outlineGreenInput: "#14574D",
 };

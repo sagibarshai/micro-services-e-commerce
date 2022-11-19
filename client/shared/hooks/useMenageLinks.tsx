@@ -21,7 +21,7 @@ let links: Link[] = [
      },
      {
           name: "Sign out",
-          path: "/auth/signout",
+          path: "/auth/signin",
           isActive: false,
      },
      {

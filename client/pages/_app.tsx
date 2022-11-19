@@ -11,10 +11,13 @@ const AppComponent = ({ Component, pageProps }: AppProps) => {
      const router = useRouter();
      return (
           <Provider store={store}>
-               {!router.pathname.startsWith("/auth") && <Header />}
-               {!router.pathname.startsWith("/auth") && <Cart />}
+               {(!router.pathname.startsWith("/auth") ||
+                    router.pathname !== "payment") && <Header />}
+               {(!router.pathname.startsWith("/auth") ||
+                    router.pathname !== "payment") && <Cart />}
                <Component {...pageProps} />
-               {!router.pathname.startsWith("/auth") && <StyledFooter />}
+               {(!router.pathname.startsWith("/auth") ||
+                    router.pathname !== "payment") && <StyledFooter />}
           </Provider>
      );
 };

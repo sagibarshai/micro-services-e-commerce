@@ -4,6 +4,7 @@ import { colors } from "../colors/colors";
 interface XButtonProps {
      btnClicked: boolean;
      absolute?: boolean;
+     alignSelf?: string;
 }
 
 export const StyledXButton = styled.button<XButtonProps>`
@@ -13,6 +14,7 @@ export const StyledXButton = styled.button<XButtonProps>`
      background-color: ${colors.paimaryGrey};
      color: ${colors.praimarylack};
      font-weight: bolder;
+     align-self: ${(props) => props.alignSelf};
      ${(props) =>
           props.absolute === true &&
           css`
