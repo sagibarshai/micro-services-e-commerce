@@ -6,8 +6,8 @@ const buildClient = (appContext: AppContext) => {
           // We are on the server
 
           return axios.create({
-               //        http://ingress-nginx-controller.ingress-nginx.svc.cluster.local
-               baseURL: "http://e-commerce.dev",
+               //
+               baseURL: "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",
                headers: appContext?.ctx?.req?.headers,
           });
      } else {

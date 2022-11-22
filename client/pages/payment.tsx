@@ -4,7 +4,9 @@ import styled from "styled-components";
 import { colors } from "../shared/colors/colors";
 import { StyledXButton } from "../shared/components/StyledXButton";
 import { StyledParimaryButton } from "../shared/ui-elements/button/button";
+import StripeCheckout from "react-stripe-checkout";
 
+import axios from "axios";
 interface StyledProps {
      gap?: string;
      justifyContent?: string;
@@ -87,13 +89,41 @@ const StyledLabel = styled.label`
      align-self: flex-start;
 `;
 
+interface FormDetails {
+     cardNumber: string;
+     cardExprationDate: string;
+     cardCvv: string;
+     cardHolderName: string;
+     sum: number;
+}
+
 export default () => {
      const [btnClicked, setBtnClicked] = useState<boolean>(false);
+     const [cardHolderName, setCardHolderName] = useState<string>("");
+     const [cardNumber, setCardNumber] = useState<string>("");
+     const [cardCvv, setCardCvv] = useState<string>("");
+     const [cardExprationDate, setCardExprationDate] = useState<string>("");
+
      const router = useRouter();
-     console.log(router.pathname);
+
+     const paymentHandler = async (formDetials: FormDetails) => {
+          try {
+               const { data } = await axios.post("/api/payments/charge", {
+                    ...formDetials,
+               });
+               console.log(data);
+          } catch (err) {
+               console.log(err);
+          }
+     };
+
      return (
           <StyledPageContainer>
-               <StyledDivColumn
+               <StripeCheckout
+                    stripeKey=""
+                    token={(token) => console.log(token)}
+               />
+               {/* <StyledDivColumn
                     borderRadius="20px"
                     backgroundColor={colors.white}
                     width="800px"
@@ -125,13 +155,24 @@ export default () => {
                          alignItems="center"
                     >
                          <StyledLabel>CARD NUMBER</StyledLabel>
-                         <StyledInput />
+                         <StyledInput
+                              onChange={(e) => setCardNumber(e.target.value)}
+                         />
                          <StyledLabel>CARDHOLDER NAME</StyledLabel>
-                         <StyledInput />
+                         <StyledInput
+                              onChange={(e) =>
+                                   setCardHolderName(e.target.value)
+                              }
+                         />
                          <StyledDivRow alignSelf="flex-start" gap="8px">
                               <StyledDivColumn>
                                    <StyledLabel>EXPIRE DATE</StyledLabel>
                                    <StyledInput
+                                        onChange={(e) =>
+                                             setCardExprationDate(
+                                                  e.target.value
+                                             )
+                                        }
                                         type="month"
                                         max="2030-12"
                                         min="2022-12"
@@ -141,6 +182,9 @@ export default () => {
                               <StyledDivColumn>
                                    <StyledLabel>CVV</StyledLabel>
                                    <StyledInput
+                                        onChange={(e) =>
+                                             setCardCvv(e.target.value)
+                                        }
                                         textIndent="15px"
                                         width="57px"
                                    />
@@ -151,10 +195,19 @@ export default () => {
                          width="327px"
                          alignSelf="center"
                          marginTop="30px"
+                         onClick={() => {
+                              paymentHandler({
+                                   cardNumber,
+                                   cardHolderName,
+                                   cardExprationDate,
+                                   cardCvv,
+                                   sum: 5,
+                              });
+                         }}
                     >
                          Pay Secure
                     </StyledParimaryButton>
-               </StyledDivColumn>
+               </StyledDivColumn> */}
           </StyledPageContainer>
      );
 };

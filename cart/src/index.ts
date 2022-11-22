@@ -33,6 +33,9 @@ const start = async () => {
      } catch (err) {
           console.log("cannot connect to mongodb://cart-mongo-srv:27017/cart ");
           console.log(err);
+          app.listen(4001, () => {
+               console.log("cart srv is listening on port 4001");
+          });
      }
 };
 start();

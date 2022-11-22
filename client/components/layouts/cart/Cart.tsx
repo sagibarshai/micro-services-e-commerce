@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { StoreState } from "../../../redux/store";
 import { colors } from "../../../shared/colors/colors";
@@ -113,6 +114,7 @@ const StyledSumContainer = styled.div`
 export default () => {
      const [serverError, setServerError] = useState<null | string>(null);
      const [btnClicked, setBtnClicked] = useState<boolean>(false);
+     const router = useRouter();
      const dispatch = useDispatch();
      const cartIsOpen = useSelector(
           (state: StoreState) => state.cartSlice.openCartPopup
@@ -282,7 +284,10 @@ export default () => {
                               {cartSum}$
                          </StyledText>
                     </StyledSumContainer>
-                    <StyledParimaryButton alignSelf="center">
+                    <StyledParimaryButton
+                         alignSelf="center"
+                         onClick={() => router.push("/payment")}
+                    >
                          Check out
                     </StyledParimaryButton>
                </StyledDivColumn>
