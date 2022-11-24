@@ -20,6 +20,12 @@ import axios from "axios";
 import { updateCart } from "../../../redux/cartSlice";
 import Notification from "../../../shared/notification/Notification";
 
+interface Props {
+     currentuser: {
+          email: string;
+     } | null;
+}
+
 interface StyledProps {
      justifyContent?: string;
      alignItems?: string;
@@ -111,7 +117,7 @@ const StyledSumContainer = styled.div`
      gap: 17px;
 `;
 
-export default () => {
+export default (props: Props) => {
      const [serverError, setServerError] = useState<null | string>(null);
      const [btnClicked, setBtnClicked] = useState<boolean>(false);
      const router = useRouter();
@@ -286,7 +292,12 @@ export default () => {
                     </StyledSumContainer>
                     <StyledParimaryButton
                          alignSelf="center"
-                         onClick={() => router.push("/payment")}
+                         onClick={() =>
+                              router.push({
+                                   pathname: "/payment",
+                                   query: props.currentuser,
+                              })
+                         }
                     >
                          Check out
                     </StyledParimaryButton>

@@ -3,6 +3,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import { errorHandler } from "@planty-errors-handler/common";
 import { ChargeRoute } from "./routes/charge";
+import { natsWrapper } from "@planty-errors-handler/common";
+import { randomBytes } from "crypto";
 
 const app = express();
 
@@ -25,6 +27,14 @@ app.use(ChargeRoute);
 app.use(errorHandler);
 const start = async () => {
      try {
+          await natsWrapper.connect(
+               "planty",
+               randomBytes(4).toString("hex"),
+               "http://nats-streaming-srv:4222"
+          );
+          natsWrapper.client.on("SIGINT", () => natsWrapper.client.close());
+          natsWrapper.client.on("SIGTERM", () => natsWrapper.client.close());
+          console.log("payments is connected to nats");
           await mongoose.connect("mongodb://payments-mongo-srv:27017/payments");
           app.listen(4004, () => {
                console.log("payments srv is listening on port 4004");

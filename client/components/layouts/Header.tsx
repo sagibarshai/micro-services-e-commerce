@@ -6,7 +6,6 @@ import CustomLink from "../../shared/components/CustomLink";
 import CartIcon from "../../shared/components/CartIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../../redux/store";
-import { useCookies } from "react-cookie";
 import axios from "axios";
 import { updateCart } from "../../redux/cartSlice";
 interface StyledProps {
@@ -44,14 +43,20 @@ const StyledTooltip = styled.div`
      transform: translate(-50%, -10%);
      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 `;
-export default () => {
+
+interface Props {
+     currentuser: {
+          email: string;
+     } | null;
+}
+
+export default (props: Props) => {
      const { links } = useMenageLinks();
-     const [cookie] = useCookies(["token"]);
      const dispatch = useDispatch();
      const itemsInCart: number = useSelector(
           (state: StoreState) => state.cartSlice.cartItems.length
      );
-     const isAuth: boolean = cookie.token ? true : false;
+     const isAuth: boolean = props.currentuser ? true : false;
      const logoutHandler = async () => {
           try {
                const { data } = await axios.post("/api/users/signout");

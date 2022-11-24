@@ -96,8 +96,11 @@ interface FormDetails {
      cardHolderName: string;
      sum: number;
 }
+// interface Porps {
 
-export default () => {
+// }
+
+export default (props: any) => {
      const [btnClicked, setBtnClicked] = useState<boolean>(false);
      const [cardHolderName, setCardHolderName] = useState<string>("");
      const [cardNumber, setCardNumber] = useState<string>("");
@@ -105,7 +108,7 @@ export default () => {
      const [cardExprationDate, setCardExprationDate] = useState<string>("");
 
      const router = useRouter();
-
+     console.log(props);
      const paymentHandler = async (formDetials: FormDetails) => {
           try {
                const { data } = await axios.post("/api/payments/charge", {
@@ -116,14 +119,16 @@ export default () => {
                console.log(err);
           }
      };
-
+     const query = router.query;
+     console.log(query);
      return (
           <StyledPageContainer>
-               <StripeCheckout
-                    stripeKey=""
+               {/* <StripeCheckout
+                    stripeKey="pk_test_51M5sF0ENLmuYyvjsV4QowUB5WzRPZin2kuS1Cvf2tdDfciwWK01GpCRaRM2qE7tQyXdJBf0m59G5X8r6Mo6GEGWx00jXjiAR3p"
                     token={(token) => console.log(token)}
-               />
-               {/* <StyledDivColumn
+                    email={""}
+               /> */}
+               <StyledDivColumn
                     borderRadius="20px"
                     backgroundColor={colors.white}
                     width="800px"
@@ -207,7 +212,7 @@ export default () => {
                     >
                          Pay Secure
                     </StyledParimaryButton>
-               </StyledDivColumn> */}
+               </StyledDivColumn>
           </StyledPageContainer>
      );
 };
