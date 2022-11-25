@@ -20,6 +20,7 @@ import { products } from "../shared/products/products";
 import { colors } from "../shared/colors/colors";
 
 import IconDelete from "../shared/svg/delete.svg";
+import { apiError } from "../shared/errors/api-error";
 
 export default () => {
      const dispatch = useDispatch();
@@ -41,17 +42,7 @@ export default () => {
                });
                dispatch(updateCart(data));
           } catch (err: any) {
-               console.log(err);
-               let returendErr = "";
-               if (Array.isArray(err?.response?.data?.errors)) {
-                    console.log(err.response.data.errors!);
-                    for (let error of err.response.data.errors!) {
-                         console.log(error);
-                         returendErr += error.message;
-                    }
-               } else setServerError(`Server error ${err.code}`);
-               setServerError(returendErr);
-               setTimeout(() => setServerError(null), 5000);
+               apiError(err, setServerError);
           }
      };
 

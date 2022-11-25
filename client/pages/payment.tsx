@@ -16,6 +16,7 @@ import {
      StyledSumContainer,
      StyledText,
 } from "../styles/payment/payment";
+import { apiError } from "../shared/errors/api-error";
 
 interface FormDetails {
      cardNumber: string;
@@ -27,7 +28,7 @@ interface FormDetails {
 
 export default () => {
      const router = useRouter();
-
+     const [serverError, setServerError] = useState<null | string>(null);
      const [btnClicked, setBtnClicked] = useState<boolean>(false);
      const [cardHolderName, setCardHolderName] = useState<string>("");
      const [cardNumber, setCardNumber] = useState<string>("");
@@ -43,7 +44,7 @@ export default () => {
                });
                console.log(data);
           } catch (err) {
-               console.log(err);
+               apiError(err, setServerError);
           }
      };
      return (
