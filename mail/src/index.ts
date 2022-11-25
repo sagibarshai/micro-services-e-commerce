@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import { randomBytes } from "crypto";
 import { natsWrapper } from "@planty-errors-handler/common/build/NATS/nats-wrapper";
 import { UserCreatedListener } from "./events/user-created-listener";
+import { PaymentCreatedListener } from "./events/payment-succsuss-listener";
 
 const app = express();
 
@@ -35,6 +36,7 @@ const start = async () => {
           natsWrapper.client.on("SIGINT", () => natsWrapper.client.close());
           natsWrapper.client.on("SIGTERM", () => natsWrapper.client.close());
           new UserCreatedListener(natsWrapper.client).listen();
+          new PaymentCreatedListener(natsWrapper.client).listen();
      } catch (err) {
           console.log(err);
      }

@@ -74,7 +74,7 @@ const secondIconsSection: IconSection[] = [
 
 const StyledFooter = (props: Props) => {
      return (
-          <StyledFooterContainer>
+          <StyledFooterContainer id="footer">
                <StyledDivRow
                     {...props}
                     justifyContent="space-between"

@@ -18,6 +18,7 @@ import { colors } from "../shared/colors/colors";
 import IconHome from "../shared/svg/home.svg";
 import IconArrow from "../shared/svg/arrow.svg";
 import IconLeaf from "../shared/svg/black-leaf.svg";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 export type Size = "S" | "M" | "L";
@@ -25,6 +26,7 @@ export type Size = "S" | "M" | "L";
 interface IconSections {
      icon: React.ReactElement;
      text: string;
+     navigateTo: string;
 }
 interface ImagesSection {
      imgSrc: string;
@@ -34,9 +36,17 @@ interface ImagesSection {
 }
 
 const firstSectionIcons: IconSections[] = [
-     { icon: <IconHome />, text: "Indoor plant" },
-     { icon: <IconArrow />, text: "Outdoor plant" },
-     { icon: <IconLeaf />, text: "Contant us" },
+     {
+          icon: <IconHome />,
+          text: "Indoor plants",
+          navigateTo: "/shop/#Indoor plants",
+     },
+     {
+          icon: <IconArrow />,
+          text: "Outdoor plant",
+          navigateTo: "/shop/#Outdoor plants",
+     },
+     { icon: <IconLeaf />, text: "Contant us", navigateTo: "#footer" },
 ];
 
 const firstSectionImages: ImagesSection[] = [
@@ -79,6 +89,7 @@ const thirdSectionImages: ImagesSection[] = [
 ];
 const App: NextPage = () => {
      const [buttonClicked, setButtonClicked] = useState<boolean>(false);
+     const router = useRouter();
      return (
           <StyledPageContainer>
                <StyledSection height="min-content">
@@ -93,7 +104,11 @@ const App: NextPage = () => {
                               Make you're home beautiful with our plant and
                               accessories for your garden and house
                          </StyledText>
-                         <StyledParimaryButton width="200px" height="48px">
+                         <StyledParimaryButton
+                              width="200px"
+                              height="48px"
+                              onClick={() => router.push("/shop")}
+                         >
                               View More
                          </StyledParimaryButton>
                     </StyledAbsoluteDivColumn>
@@ -114,6 +129,7 @@ const App: NextPage = () => {
                                              () => setButtonClicked(false),
                                              500
                                         );
+                                        router.push(element.navigateTo);
                                    }}
                               >
                                    <StyledDivColumn gap="38px">

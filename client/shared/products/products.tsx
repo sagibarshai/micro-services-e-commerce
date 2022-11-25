@@ -8,12 +8,14 @@ type ProductsType = "Chairs" | "Outdoor plants" | "Indoor plants" | "Pictures";
 
 type Products = {
      productType: ProductsType;
+     id: ProductsType;
      products: ProductDetials[];
 }[];
 
 export const products: Products = [
      {
           productType: "Chairs",
+          id: "Chairs",
           products: [
                {
                     imgSrc: "/images/chair.png",
@@ -29,6 +31,7 @@ export const products: Products = [
      },
      {
           productType: "Outdoor plants",
+          id: "Outdoor plants",
           products: [
                {
                     imgSrc: "images/orchid.png",
@@ -44,6 +47,7 @@ export const products: Products = [
      },
      {
           productType: "Indoor plants",
+          id: "Indoor plants",
           products: [
                {
                     imgSrc: "images/pink-flower-cactus.png",
@@ -59,6 +63,7 @@ export const products: Products = [
      },
      {
           productType: "Pictures",
+          id: "Pictures",
           products: [
                {
                     imgSrc: "images/motivation-picture.png",

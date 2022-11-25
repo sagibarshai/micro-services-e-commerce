@@ -90,7 +90,7 @@ export default () => {
                               <StyledCategoryTitle>
                                    {product.productType}
                               </StyledCategoryTitle>
-                              <StyledDivRow gap="42px">
+                              <StyledDivRow gap="42px" id={product.id}>
                                    {product.products.map((prod) => {
                                         return (
                                              <StyledDivColumn gap="27px">
