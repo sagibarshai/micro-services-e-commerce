@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+
 import {
      StyledPageContainer,
      StyledDivColumn,
@@ -7,19 +11,23 @@ import {
      StyledIconButton,
      StyledCategoryTitle,
 } from "../styles/shop/StyledShop";
-import IconDelete from "../shared/svg/delete.svg";
-import { products } from "../shared/products/products";
-import { useEffect, useState } from "react";
+
 import Notification from "../shared/notification/Notification";
-import axios from "axios";
-import { colors } from "../shared/colors/colors";
-import { StyledParimaryButton } from "../shared/ui-elements/button/button";
-import { useDispatch } from "react-redux";
 import { updateCart } from "../redux/cartSlice";
+import { StyledParimaryButton } from "../shared/ui-elements/button/button";
+
+import { products } from "../shared/products/products";
+import { colors } from "../shared/colors/colors";
+
+import IconDelete from "../shared/svg/delete.svg";
+
 export default () => {
      const dispatch = useDispatch();
      const [serverError, setServerError] = useState<null | string>(null);
-     const [favoritesList, setFavoritesList] = useState<any[]>([]);
+     const [favoritesList, setFavoritesList] = useState<any[]>([
+          ...products[0].products,
+          ...products[1].products,
+     ]);
      const [buttonClicked, setButtonClicked] = useState<boolean>(false);
      const buttonAnimation = () => {
           setButtonClicked(true);
@@ -82,7 +90,10 @@ export default () => {
      }, []);
      if (!favoritesList.length)
           return (
-               <StyledPageContainer alignItems="center">
+               <StyledPageContainer
+                    alignItems="center"
+                    height="calc(100vh - 500px)"
+               >
                     <StyledCategoryTitle>
                          favorites list is empty!
                     </StyledCategoryTitle>
@@ -103,7 +114,12 @@ export default () => {
                     />
                )}
 
-               <StyledDivRow gap="42px" flexWrap="wrap" justifyContent="center">
+               <StyledDivRow
+                    width="85vw"
+                    gap="42px"
+                    flexWrap="wrap"
+                    justifyContent="center"
+               >
                     {favoritesList.map((favorite) => {
                          return (
                               <StyledDivColumn gap="27px" position="relative">

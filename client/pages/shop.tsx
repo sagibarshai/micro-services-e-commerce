@@ -1,3 +1,13 @@
+import { useState } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+
+import { updateCart } from "../redux/cartSlice";
+import Notification from "../shared/notification/Notification";
+
+import { ProductDetials, products } from "../shared/products/products";
+import { colors } from "../shared/colors/colors";
+
 import {
      StyledPageContainer,
      StyledCategoryTitle,
@@ -10,19 +20,9 @@ import {
 
 import IconCircleCart from "../shared/svg/circle-cart.svg";
 import IconFavorites from "../shared/svg/favorites.svg";
-import { ProductDetials, products } from "../shared/products/products";
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { StoreState } from "../redux/store";
-import { updateCart } from "../redux/cartSlice";
-import Notification from "../shared/notification/Notification";
-import axios from "axios";
-import { colors } from "../shared/colors/colors";
+
 export default () => {
      const dispatch = useDispatch();
-     const cartState = useSelector(
-          (state: StoreState) => state.cartSlice.cartItems
-     );
      const [serverError, setServerError] = useState<null | string>(null);
      const [buttonClicked, setButtonClicked] = useState<boolean>(false);
      const buttonAnimation = () => {

@@ -1,6 +1,19 @@
+import { useEffect, useReducer, useState } from "react";
 import { NextPage } from "next";
 import Router from "next/router";
-import { useEffect, useReducer, useState } from "react";
+import axios from "axios";
+
+import Input from "../../shared/ui-elements/input/Input";
+import { StyledParimaryButton } from "../../shared/ui-elements/button/button";
+import Notification from "../../shared/notification/Notification";
+import InfoCircle from "../../shared/svg/info-circle.svg";
+import { StyledXButton } from "../../shared/components/StyledXButton";
+import ParimaryLoader from "../../shared/loading-elements/parimary-loader";
+
+import { colors } from "../../shared/colors/colors";
+
+import LeafSvg from "../../shared/svg/leaf1.svg";
+
 import {
      StyledPageContainer,
      StyledTitle,
@@ -11,19 +24,9 @@ import {
      StyledSpan,
      StyledButton,
      StyledForm,
-     StyledHr,
      StyledRightConatiner,
      StyledSvg,
 } from "../../styles/auth/StyledSignUp";
-import axios from "axios";
-import { colors } from "../../shared/colors/colors";
-import Input from "../../shared/ui-elements/input/Input";
-import { StyledParimaryButton } from "../../shared/ui-elements/button/button";
-import Notification from "../../shared/notification/Notification";
-import InfoCircle from "../../shared/svg/info-circle.svg";
-import { StyledXButton } from "../../shared/components/StyledXButton";
-import LeafSvg from "../../shared/svg/leaf1.svg";
-import ParimaryLoader from "../../shared/loading-elements/parimary-loader";
 
 type InputsTypes = "email" | "password" | "firstName" | "lastName";
 

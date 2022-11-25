@@ -1,4 +1,7 @@
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { NextPage } from "next";
+
 import {
      StyledPageContainer,
      StyledSvg,
@@ -11,15 +14,14 @@ import {
      StyledIconButton,
      StyledImg,
 } from "../styles/home/StyledHomePage";
-import StyledFooter from "../components/layouts/Footer";
-import LeafsSvg from "../shared/svg/homepage-leafs-background.svg";
+
 import { StyledParimaryButton } from "../shared/ui-elements/button/button";
 import { colors } from "../shared/colors/colors";
+
+import LeafsSvg from "../shared/svg/homepage-leafs-background.svg";
 import IconHome from "../shared/svg/home.svg";
 import IconArrow from "../shared/svg/arrow.svg";
 import IconLeaf from "../shared/svg/black-leaf.svg";
-import { useRouter } from "next/router";
-import { useState } from "react";
 
 export type Size = "S" | "M" | "L";
 

@@ -1,61 +1,18 @@
-import styled from "styled-components";
 import IconFacebook from "../../shared/svg/icon-facebook.svg";
 import IconInstagram from "../../shared/svg/icon-instagram.svg";
 import IconTwitter from "../../shared/svg/icon-twitter.svg";
 import IconMail from "../../shared/svg/icon-mail.svg";
 import IconPhone from "../../shared/svg/icon-phone.svg";
-import { colors } from "../../shared/colors/colors";
 
-interface Props {
-     justifyContent?: string;
-     gap?: string;
-     fontSize?: string;
-     fontWeight?: string;
-     height?: string;
-     width?: string;
-     alignItems?: string;
-     margin?: string;
-}
-
-const StyledFooterContainer = styled.footer<Props>`
-     height: 250px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     background-color: ${colors.praimaryPink};
-`;
-
-const StyledSubtitle = styled.h4<Props>`
-     all: unset;
-     font-weight: bold;
-     font-size: ${(props) => props.fontSize || "2rem"};
-     font-weight: ${(props) => props.fontWeight || "bold"};
-`;
-const StyledDivColumn = styled.div<Props>`
-     display: flex;
-     flex-direction: column;
-     gap: ${(props) => props.gap};
-     align-items: ${(props) => props.alignItems};
-`;
-
-const StyledDivRow = styled.div<Props>`
-     display: flex;
-     justify-content: ${(props) => props.justifyContent};
-     gap: ${(props) => props.gap};
-     height: ${(props) => props.height};
-     align-items: center;
-     width: ${(props) => props.width};
-`;
-const StyledWrapper = styled.div<Props>`
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     margin: ${(props) => props.margin};
-`;
-
-const StyledIcon = styled.i<Props>`
-     margin: ${(props) => props.margin};
-`;
+import {
+     StyledDivColumn,
+     StyledDivRow,
+     StyledFooterContainer,
+     StyledIcon,
+     StyledSubtitle,
+     StyledWrapper,
+     StyledProps,
+} from "../../styles/footer/footer-style";
 
 interface IconSection {
      icon: React.ReactElement;
@@ -72,7 +29,7 @@ const secondIconsSection: IconSection[] = [
      { icon: <IconMail />, text: "sagibarshai1@gmail.com" },
 ];
 
-const StyledFooter = (props: Props) => {
+const StyledFooter = (props: StyledProps) => {
      return (
           <StyledFooterContainer id="footer">
                <StyledDivRow
