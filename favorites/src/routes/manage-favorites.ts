@@ -32,13 +32,16 @@ router.post(
           const existingItem = favoritesItems.find(
                (item) => item.text === favorite.text
           );
+          let status: number = 200;
           if (!existingItem) {
                favoritesItems.push(favorite);
+               status = 201;
           } else {
                const existingItemIndex = favoritesItems.findIndex(
                     (item) => item.text === favorite.text
                );
                favoritesItems.splice(existingItemIndex, 1);
+               status = 200;
           }
           try {
                await favorites.save();
@@ -46,7 +49,7 @@ router.post(
                console.log(err);
                throw new DatabaseError("Database Error");
           }
-          res.status(200).send(favoritesItems);
+          res.status(status).send(favoritesItems);
      }
 );
 export { router as manageFavoritesRoute };

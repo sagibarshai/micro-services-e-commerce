@@ -1,7 +1,4 @@
-export const apiError = (
-     err: any,
-     setServerError: (returendErr: string | null) => void
-) => {
+export const apiError = (err: any) => {
      console.log(err);
      let returendErr = "";
      if (Array.isArray(err?.response?.data?.errors)) {
@@ -10,7 +7,7 @@ export const apiError = (
                console.log(error);
                returendErr += error.message;
           }
-     } else setServerError(`Server error ${err.code}`);
-     setServerError(returendErr);
-     setTimeout(() => setServerError(null), 5000);
+     } else returendErr = err.message || "some randoommm error";
+     console.log(returendErr);
+     return returendErr;
 };

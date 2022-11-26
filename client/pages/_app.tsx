@@ -1,13 +1,13 @@
 import "../styles/globals.css";
-import type { AppContext, AppProps } from "next/app";
+import type { AppContext } from "next/app";
 import Header from "../components/layouts/Header";
 import { useRouter } from "next/router";
 import StyledFooter from "../components/layouts/Footer";
-import { Provider, useSelector } from "react-redux";
-import store, { StoreState } from "../redux/store";
+import { Provider } from "react-redux";
+import store from "../redux/store";
 import Cart from "../components/layouts/cart/Cart";
 import buildClient from "../api/build-client";
-
+import SharedContnet from "../shared/shared-content/SharedContnet";
 const AppComponent = ({ Component, pageProps, currentuser }: any) => {
      const router = useRouter();
 
@@ -21,6 +21,7 @@ const AppComponent = ({ Component, pageProps, currentuser }: any) => {
                )}
                <Component {...pageProps} />
                {!router.pathname.startsWith("/auth") && <StyledFooter />}
+               <SharedContnet />
           </Provider>
      );
 };

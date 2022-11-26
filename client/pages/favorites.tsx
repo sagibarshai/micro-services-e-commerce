@@ -12,23 +12,19 @@ import {
      StyledCategoryTitle,
 } from "../styles/shop/StyledShop";
 
-import Notification from "../shared/notification/Notification";
 import { updateCart } from "../redux/cartSlice";
 import { StyledParimaryButton } from "../shared/ui-elements/button/button";
 
-import { products } from "../shared/products/products";
-import { colors } from "../shared/colors/colors";
-
 import IconDelete from "../shared/svg/delete.svg";
 import { apiError } from "../shared/errors/api-error";
+import {
+     apiErrorOccurred,
+     succsessApiCall,
+} from "../redux/user-notifications-slice";
 
 export default () => {
      const dispatch = useDispatch();
-     const [serverError, setServerError] = useState<null | string>(null);
-     const [favoritesList, setFavoritesList] = useState<any[]>([
-          ...products[0].products,
-          ...products[1].products,
-     ]);
+     const [favoritesList, setFavoritesList] = useState<any[]>([]);
      const [buttonClicked, setButtonClicked] = useState<boolean>(false);
      const buttonAnimation = () => {
           setButtonClicked(true);
@@ -42,7 +38,9 @@ export default () => {
                });
                dispatch(updateCart(data));
           } catch (err: any) {
-               apiError(err, setServerError);
+               const errMsg = apiError(err);
+               dispatch(apiErrorOccurred(errMsg));
+               setTimeout(() => dispatch(apiErrorOccurred(false)), 5000);
           }
      };
 
@@ -52,17 +50,9 @@ export default () => {
                console.log(data);
                setFavoritesList(data);
           } catch (err: any) {
-               console.log(err);
-               let returendErr = "";
-               if (Array.isArray(err?.response?.data?.errors)) {
-                    console.log(err.response.data.errors!);
-                    for (let error of err.response.data.errors!) {
-                         console.log(error);
-                         returendErr += error.message;
-                    }
-               } else setServerError(`Server error ${err.code}`);
-               setServerError(returendErr);
-               setTimeout(() => setServerError(null), 5000);
+               const errMsg = apiError(err);
+               dispatch(apiErrorOccurred(errMsg));
+               setTimeout(() => dispatch(apiErrorOccurred(false)), 5000);
           }
      };
      const favoritesHandler = async (favorite: any) => {
@@ -72,8 +62,17 @@ export default () => {
                     favorite
                );
                setFavoritesList(data);
+
+               dispatch(
+                    succsessApiCall(
+                         `${favorite.text} has been remove from favorites list`
+                    )
+               );
+               setTimeout(() => dispatch(succsessApiCall(false)), 5000);
           } catch (err) {
-               console.log(err);
+               const errMsg = apiError(err);
+               dispatch(apiErrorOccurred(errMsg));
+               setTimeout(() => dispatch(apiErrorOccurred(false)), 5000);
           }
      };
      useEffect(() => {
@@ -92,19 +91,6 @@ export default () => {
           );
      return (
           <StyledPageContainer alignItems="center">
-               {serverError && (
-                    <Notification
-                         backgroundColor={colors.errorRed}
-                         position="fixed"
-                         variant="error"
-                         animation={true}
-                         message={serverError}
-                         bottom="60%"
-                         left="50%"
-                         transform="translate(-50% , -50%)"
-                    />
-               )}
-
                <StyledDivRow
                     width="85vw"
                     gap="42px"

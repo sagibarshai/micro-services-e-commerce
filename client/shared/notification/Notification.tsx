@@ -74,6 +74,7 @@ export const StyledNotificationContainer = styled.div<Props>`
      padding: ${(props) => props.padding};
      font-size: ${(props) => props.fontSize};
      font-weight: ${(props) => props.fontWeight};
+     color: ${(props) => props.color};
      animation: ${(props) =>
           props.animation &&
           `lowerOpacity ${props.animationTime || "5s"} infinite`};

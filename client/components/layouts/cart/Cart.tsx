@@ -1,24 +1,36 @@
-import styled from "styled-components";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
-import { StoreState } from "../../../redux/store";
-import { colors } from "../../../shared/colors/colors";
+import axios from "axios";
+
 import { StyledXButton } from "../../../shared/components/StyledXButton";
-import { useState } from "react";
+import { StyledParimaryButton } from "../../../shared/ui-elements/button/button";
+import { toggleCartPopup } from "../../../redux/cartSlice";
+import { updateCart } from "../../../redux/cartSlice";
+import {
+     apiErrorOccurred,
+     succsessApiCall,
+} from "../../../redux/user-notifications-slice";
+import { apiError } from "../../../shared/errors/api-error";
+
+import { StoreState } from "../../../redux/store";
+
 import BlackCart from "../../../shared/svg/cart.svg";
 import DeleteIcon from "../../../shared/svg/delete.svg";
 import PlusIcon from "../../../shared/svg/plus.svg";
 import MinusIcon from "../../../shared/svg/minus.svg";
+
 import {
-     //      addItemToCart,
-     //      decreseCartItemQty,
-     //      removeItemFromCart,
-     toggleCartPopup,
-} from "../../../redux/cartSlice";
-import { StyledParimaryButton } from "../../../shared/ui-elements/button/button";
-import axios from "axios";
-import { updateCart } from "../../../redux/cartSlice";
-import Notification from "../../../shared/notification/Notification";
+     StyledButton,
+     StyledCartContainer,
+     StyledDivColumn,
+     StyledDivRow,
+     StyledIcon,
+     StyledImg,
+     StyledSumContainer,
+     StyledText,
+     StyledTitle,
+} from "../../../styles/cart/cart-style";
 
 interface Props {
      currentuser: {
@@ -26,99 +38,7 @@ interface Props {
      } | null;
 }
 
-interface StyledProps {
-     justifyContent?: string;
-     alignItems?: string;
-     width?: string;
-     height?: string;
-     gap?: string;
-     margin?: string;
-     fontSize?: string;
-     fontWeight?: string;
-}
-
-const StyledCartContainer = styled.div`
-     width: 495px;
-     height: calc(100vh - 120px);
-     overflow: hidden;
-     overflow-y: auto;
-     background-color: ${colors.whiteBackground};
-     box-shadow: 8px 16px 32px #0000001a;
-     position: fixed;
-     top: 120px;
-     right: 0;
-     z-index: 2;
-     border-radius: 20px;
-     padding: 30px;
-     &::-webkit-scrollbar {
-          width: 6px;
-          border-radius: 100px;
-          background-color: #e9e9e9;
-     }
-     &::-webkit-scrollbar-track {
-          background-color: ${colors.lightGrey};
-          opacity: 0.5;
-     }
-     &::-webkit-scrollbar-thumb {
-          background-color: ${colors.blackInputText};
-          opacity: 1;
-     }
-`;
-const StyledDivRow = styled.div<StyledProps>`
-     display: flex;
-     justify-content: ${(props) => props.justifyContent};
-     align-items: ${(props) => props.alignItems};
-     gap: ${(props) => props.gap};
-     margin: ${(props) => props.margin};
-`;
-
-const StyledTitle = styled.h1`
-     all: unset;
-     font-size: 3.2rem;
-     font-weight: bolder;
-`;
-const StyledIcon = styled.i`
-     vertical-align: baseline;
-`;
-
-const StyledButton = styled.button<StyledProps>`
-     all: unset;
-     cursor: pointer;
-     width: ${(props) => props.width};
-     height: ${(props) => props.height};
-`;
-
-const StyledDivColumn = styled.div<StyledProps>`
-     display: flex;
-     flex-direction: column;
-     gap: ${(props) => props.gap};
-     justify-content: ${(props) => props.justifyContent};
-     align-items: ${(props) => props.alignItems};
-     width: ${(props) => props.width};
-     margin: ${(props) => props.margin};
-`;
-
-const StyledImg = styled.img`
-     width: 181px;
-     height: 181px;
-     object-fit: cover;
-`;
-const StyledText = styled.span<StyledProps>`
-     font-weight: ${(props) => props.fontWeight};
-     font-size: ${(props) => props.fontSize};
-`;
-const StyledSumContainer = styled.div`
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     background-color: ${colors.backgroundGray};
-     width: 100%;
-     height: 84px;
-     gap: 17px;
-`;
-
 export default (props: Props) => {
-     const [serverError, setServerError] = useState<null | string>(null);
      const [btnClicked, setBtnClicked] = useState<boolean>(false);
      const router = useRouter();
      const dispatch = useDispatch();
@@ -128,17 +48,6 @@ export default (props: Props) => {
      const { cartSum } = useSelector((state: StoreState) => state.cartSlice);
      const { cartItems } = useSelector((state: StoreState) => state.cartSlice);
 
-     const onError = (err: any) => {
-          let returendErr = "";
-          if (Array.isArray(err?.response?.data?.errors)) {
-               for (let error of err.response.data.errors!) {
-                    returendErr += error.message;
-               }
-          } else setServerError(`Server error ${err.code}`);
-          setServerError(returendErr);
-          setTimeout(() => setServerError(null), 5000);
-     };
-
      const decreseFromCartHandler = async (prod: any) => {
           try {
                const { data } = await axios.post("/api/cart/decrese", {
@@ -146,7 +55,9 @@ export default (props: Props) => {
                });
                dispatch(updateCart(data));
           } catch (err) {
-               onError(err);
+               const errMsg = apiError(err);
+               dispatch(apiErrorOccurred(errMsg));
+               setTimeout(() => dispatch(apiErrorOccurred(false)), 5000);
           }
      };
      const removeFromCartHandler = async (prod: any) => {
@@ -156,7 +67,9 @@ export default (props: Props) => {
                });
                dispatch(updateCart(data));
           } catch (err) {
-               onError(err);
+               const errMsg = apiError(err);
+               dispatch(apiErrorOccurred(errMsg));
+               setTimeout(() => dispatch(apiErrorOccurred(false)), 5000);
           }
      };
      const increseFromCartHandler = async (prod: any) => {
@@ -166,7 +79,9 @@ export default (props: Props) => {
                });
                dispatch(updateCart(data));
           } catch (err) {
-               onError(err);
+               const errMsg = apiError(err);
+               dispatch(apiErrorOccurred(errMsg));
+               setTimeout(() => dispatch(apiErrorOccurred(false)), 5000);
           }
      };
 
@@ -174,18 +89,6 @@ export default (props: Props) => {
      if (!cartItems.length) return <></>;
      return (
           <StyledCartContainer>
-               {serverError && (
-                    <Notification
-                         backgroundColor={colors.errorRed}
-                         position="fixed"
-                         variant="error"
-                         animation={true}
-                         message={serverError}
-                         bottom="60%"
-                         left="50%"
-                         transform="translate(-50% , -50%)"
-                    />
-               )}
                <StyledDivRow
                     justifyContent="space-between"
                     alignItems="baseline"

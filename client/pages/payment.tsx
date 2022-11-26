@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 import { StyledParimaryButton } from "../shared/ui-elements/button/button";
 import { StyledXButton } from "../shared/components/StyledXButton";
@@ -17,6 +18,7 @@ import {
      StyledText,
 } from "../styles/payment/payment";
 import { apiError } from "../shared/errors/api-error";
+import { apiErrorOccurred } from "../redux/user-notifications-slice";
 
 interface FormDetails {
      cardNumber: string;
@@ -27,8 +29,8 @@ interface FormDetails {
 }
 
 export default () => {
+     const dispatch = useDispatch();
      const router = useRouter();
-     const [serverError, setServerError] = useState<null | string>(null);
      const [btnClicked, setBtnClicked] = useState<boolean>(false);
      const [cardHolderName, setCardHolderName] = useState<string>("");
      const [cardNumber, setCardNumber] = useState<string>("");
@@ -44,7 +46,9 @@ export default () => {
                });
                console.log(data);
           } catch (err) {
-               apiError(err, setServerError);
+               const errMsg = apiError(err);
+               dispatch(apiErrorOccurred(errMsg));
+               setTimeout(() => dispatch(apiErrorOccurred(false)), 5000);
           }
      };
      return (

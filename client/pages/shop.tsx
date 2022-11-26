@@ -3,11 +3,13 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 
 import { updateCart } from "../redux/cartSlice";
-import Notification from "../shared/notification/Notification";
 import { apiError } from "../shared/errors/api-error";
+import {
+     apiErrorOccurred,
+     succsessApiCall,
+} from "../redux/user-notifications-slice";
 
 import { ProductDetials, products } from "../shared/products/products";
-import { colors } from "../shared/colors/colors";
 
 import {
      StyledPageContainer,
@@ -21,10 +23,10 @@ import {
 
 import IconCircleCart from "../shared/svg/circle-cart.svg";
 import IconFavorites from "../shared/svg/favorites.svg";
+import { StoreState } from "../redux/store";
 
 export default () => {
      const dispatch = useDispatch();
-     const [serverError, setServerError] = useState<null | string>(null);
      const [buttonClicked, setButtonClicked] = useState<boolean>(false);
      const buttonAnimation = () => {
           setButtonClicked(true);
@@ -37,44 +39,41 @@ export default () => {
                     itemUpdated: { ...prod },
                });
                dispatch(updateCart(data));
+               dispatch(succsessApiCall(`${prod.text} has just added to cart`));
+               setTimeout(() => dispatch(succsessApiCall(false)), 5000);
           } catch (err: any) {
-               console.log(err);
-               let returendErr = "";
-               if (Array.isArray(err?.response?.data?.errors)) {
-                    console.log(err.response.data.errors!);
-                    for (let error of err.response.data.errors!) {
-                         console.log(error);
-                         returendErr += error.message;
-                    }
-               } else setServerError(`Server error ${err.code}`);
-               setServerError(returendErr);
-               setTimeout(() => setServerError(null), 5000);
+               const errMsg = apiError(err);
+               dispatch(apiErrorOccurred(errMsg));
+               setTimeout(() => dispatch(apiErrorOccurred(false)), 5000);
           }
      };
-     const addToFavoritesHandler = async (prod: ProductDetials) => {
+     const favoritesHandler = async (prod: ProductDetials) => {
           try {
-               const { data } = await axios.post(
+               const { data, status } = await axios.post(
                     "/api/favorites/manage-favorites",
                     prod
                );
+               let addFav = false;
+               let removeFav = false;
+               console.log(status, data);
+
+               status === 200 ? (removeFav = true) : (addFav = true);
+               dispatch(
+                    succsessApiCall(
+                         `${prod.text} has been ${
+                              addFav ? "add" : "remove"
+                         } from favorites list`
+                    )
+               );
+               setTimeout(() => dispatch(succsessApiCall(false)), 5000);
           } catch (err: any) {
-               apiError(err, setServerError);
+               const errMsg = apiError(err);
+               dispatch(apiErrorOccurred(errMsg));
+               setTimeout(() => dispatch(apiErrorOccurred(false)), 5000);
           }
      };
      return (
           <StyledPageContainer>
-               {serverError && (
-                    <Notification
-                         backgroundColor={colors.errorRed}
-                         position="fixed"
-                         variant="error"
-                         animation={true}
-                         message={serverError}
-                         bottom="60%"
-                         left="50%"
-                         transform="translate(-50% , -50%)"
-                    />
-               )}
                {products.map((product) => {
                     return (
                          <StyledDivColumn gap="27px">
@@ -101,7 +100,7 @@ export default () => {
                                                             <StyledIconButton
                                                                  onClick={() => {
                                                                       buttonAnimation();
-                                                                      addToFavoritesHandler(
+                                                                      favoritesHandler(
                                                                            prod
                                                                       );
                                                                  }}
