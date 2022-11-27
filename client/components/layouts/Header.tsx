@@ -25,7 +25,7 @@ export default (props: Props) => {
      const { links } = useMenageLinks();
      const dispatch = useDispatch();
      const itemsInCart: number = useSelector(
-          (state: StoreState) => state.cartSlice.cartItems.length
+          (state: StoreState) => state.cartSlice.cartItems?.length
      );
      const isAuth: boolean = props.currentuser ? true : false;
      const logoutHandler = async () => {
@@ -42,7 +42,7 @@ export default (props: Props) => {
                <StyledDivRow gap="22px" marginLeft="60px">
                     {links.map((link) => {
                          if (link.path.startsWith("/auth")) return;
-                         return <CustomLink link={link} />;
+                         return <CustomLink key={link.name} link={link} />;
                     })}
                </StyledDivRow>
                <IconApp />

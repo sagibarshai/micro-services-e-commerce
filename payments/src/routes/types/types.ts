@@ -14,9 +14,10 @@ export interface PaymentsRequest extends Request {
           sum: number;
           email: string;
           userId: string;
-          cardNumber: number;
-          cardExpration: string;
-          cardCvv: number;
+          cardNumber: string;
+          expMonth: string;
+          expYear: string;
+          cardCvv: string;
      };
 }
 export interface PaymentsResponse extends Response {

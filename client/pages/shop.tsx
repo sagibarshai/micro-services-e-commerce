@@ -76,14 +76,17 @@ export default () => {
           <StyledPageContainer>
                {products.map((product) => {
                     return (
-                         <StyledDivColumn gap="27px">
+                         <StyledDivColumn gap="27px" key={product.id}>
                               <StyledCategoryTitle>
                                    {product.productType}
                               </StyledCategoryTitle>
                               <StyledDivRow gap="42px" id={product.id}>
                                    {product.products.map((prod) => {
                                         return (
-                                             <StyledDivColumn gap="27px">
+                                             <StyledDivColumn
+                                                  gap="27px"
+                                                  key={product.id}
+                                             >
                                                   <StyledImg
                                                        maxWidth="528px"
                                                        maxHeight="360px"

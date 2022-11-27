@@ -35,7 +35,7 @@ router.post(
           let status: number = 200;
           if (!existingItem) {
                favoritesItems.push(favorite);
-               status = 201;
+               status = 204;
           } else {
                const existingItemIndex = favoritesItems.findIndex(
                     (item) => item.text === favorite.text

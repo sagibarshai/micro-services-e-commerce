@@ -18,7 +18,10 @@ import {
      StyledText,
 } from "../styles/payment/payment";
 import { apiError } from "../shared/errors/api-error";
-import { apiErrorOccurred } from "../redux/user-notifications-slice";
+import {
+     apiErrorOccurred,
+     succsessApiCall,
+} from "../redux/user-notifications-slice";
 
 interface FormDetails {
      cardNumber: string;
@@ -38,13 +41,40 @@ export default () => {
      const [cardExprationDate, setCardExprationDate] = useState<string>("");
 
      const query = router.query;
+     const { sum } = query;
 
      const paymentHandler = async (formDetials: FormDetails) => {
+          let arrayCardNumber: string[] = formDetials.cardNumber.split(" ");
+          let transformedCardNumbers: string = "";
+          for (let i = 0; i < arrayCardNumber.length; i++) {
+               transformedCardNumbers += arrayCardNumber[i];
+          }
+          const expMonth = formDetials.cardExprationDate
+               .split("-")[1]
+               .toString();
+          const expYear = formDetials.cardExprationDate
+               .split("-")[0]
+               .toString();
+          const transformedFormDetials = {
+               expMonth,
+               expYear,
+               cardNumber: transformedCardNumbers,
+               cardHolderName,
+               cardCvv,
+               sum: Number(sum),
+          };
+          console.log(transformedFormDetials);
           try {
                const { data } = await axios.post("/api/payments/charge", {
-                    ...formDetials,
+                    ...transformedFormDetials,
                });
-               console.log(data);
+               dispatch(
+                    succsessApiCall(
+                         `Succsessfly charge!, please check your email to get more detials`
+                    )
+               );
+               setTimeout(() => dispatch(succsessApiCall(false)), 5000);
+               setTimeout(() => router.push("/"), 10000);
           } catch (err) {
                const errMsg = apiError(err);
                dispatch(apiErrorOccurred(errMsg));
@@ -74,7 +104,7 @@ export default () => {
                     </StyledXButton>
                     <StyledSumContainer marginTop="23px" gap="10px">
                          <StyledText>Total To Pay:</StyledText>
-                         <StyledText>457$</StyledText>
+                         <StyledText>{sum}$</StyledText>
                     </StyledSumContainer>
                     <StyledDivColumn
                          width="min-content"
@@ -86,7 +116,16 @@ export default () => {
                     >
                          <StyledLabel>CARD NUMBER</StyledLabel>
                          <StyledInput
-                              onChange={(e) => setCardNumber(e.target.value)}
+                              minLength={19}
+                              maxLength={19}
+                              value={cardNumber}
+                              onChange={(e) => {
+                                   e.target.value = e.target.value
+                                        .replace(/[^\dA-Z]/g, "")
+                                        .replace(/(.{4})/g, "$1 ")
+                                        .trim();
+                                   setCardNumber(e.target.value);
+                              }}
                          />
                          <StyledLabel>CARDHOLDER NAME</StyledLabel>
                          <StyledInput
@@ -112,9 +151,17 @@ export default () => {
                               <StyledDivColumn>
                                    <StyledLabel>CVV</StyledLabel>
                                    <StyledInput
-                                        onChange={(e) =>
-                                             setCardCvv(e.target.value)
-                                        }
+                                        value={cardCvv}
+                                        minLength={3}
+                                        maxLength={3}
+                                        onChange={(e) => {
+                                             e.target.value =
+                                                  e.target.value.replace(
+                                                       /[^\dA-Z]/g,
+                                                       ""
+                                                  );
+                                             setCardCvv(e.target.value);
+                                        }}
                                         textIndent="15px"
                                         width="57px"
                                    />
@@ -131,7 +178,7 @@ export default () => {
                                    cardHolderName,
                                    cardExprationDate,
                                    cardCvv,
-                                   sum: 5,
+                                   sum: Number(sum),
                               });
                          }}
                     >

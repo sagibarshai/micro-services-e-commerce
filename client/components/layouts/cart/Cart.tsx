@@ -119,7 +119,7 @@ export default (props: Props) => {
                >
                     {cartItems.map((item) => {
                          return (
-                              <StyledDivRow gap="28px">
+                              <StyledDivRow gap="28px" key={item.imgSrc}>
                                    <StyledImg src={item.imgSrc} />
                                    <StyledDivColumn
                                         justifyContent="space-between"
@@ -195,12 +195,13 @@ export default (props: Props) => {
                     </StyledSumContainer>
                     <StyledParimaryButton
                          alignSelf="center"
-                         onClick={() =>
+                         onClick={() => {
+                              dispatch(toggleCartPopup());
                               router.push({
                                    pathname: "/payment",
-                                   query: props.currentuser,
-                              })
-                         }
+                                   query: { sum: cartSum },
+                              });
+                         }}
                     >
                          Check out
                     </StyledParimaryButton>

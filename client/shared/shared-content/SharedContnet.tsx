@@ -1,8 +1,11 @@
 import Notification from "../notification/Notification";
 import { colors } from "../colors/colors";
-import IconInfoCircle from "../svg/info-circle.svg";
 import { useSelector } from "react-redux";
+
 import { StoreState } from "../../redux/store";
+
+import IconInfoCircle from "../svg/info-circle.svg";
+import IconCheckV from "../svg/check-v.svg";
 
 export default () => {
      const { showErrorNotification } = useSelector(
@@ -54,7 +57,7 @@ export default () => {
                     color={colors.white}
                     height="150px"
                     width="450px"
-                    icon={<IconInfoCircle />}
+                    icon={<IconCheckV />}
                />
           );
      } else return <></>;

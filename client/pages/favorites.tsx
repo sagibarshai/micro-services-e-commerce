@@ -99,7 +99,11 @@ export default () => {
                >
                     {favoritesList.map((favorite) => {
                          return (
-                              <StyledDivColumn gap="27px" position="relative">
+                              <StyledDivColumn
+                                   gap="27px"
+                                   position="relative"
+                                   key={favorite.imgSrc}
+                              >
                                    <StyledImg
                                         width="528px"
                                         height="360px"

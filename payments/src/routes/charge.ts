@@ -20,16 +20,16 @@ router.post(
      currentuser,
      [
           body("cardNumber")
-               .isLength({ min: 8, max: 8 })
-               .withMessage("Card number must be 8 characters"),
+               .isLength({ min: 16, max: 16 })
+               .withMessage("Card number must exactly be 16 digits"),
           body("cardCvv")
                .isLength({ min: 3, max: 3 })
-               .withMessage("Card CVV must be 3 characters"),
-          body("cardExprationDate")
+               .withMessage("Card CVV must be exactly 3 digits"),
+          body("expMonth")
                .not()
                .isEmpty()
                .withMessage("Card Expretion Date must be valid"),
-          body("cardExprationDate")
+          body("expYear")
                .not()
                .isEmpty()
                .withMessage("Card Expretion Date must be valid"),
@@ -48,10 +48,10 @@ router.post(
           try {
                const params = {
                     card: {
-                         number: "4242424242424242",
-                         exp_month: "12",
-                         exp_year: "2023",
-                         cvc: "123",
+                         number: bodyData.cardNumber,
+                         exp_month: bodyData.expMonth,
+                         exp_year: bodyData.expYear,
+                         cvc: bodyData.cardCvv,
                     },
                };
                token = await stripe.tokens.create(params);

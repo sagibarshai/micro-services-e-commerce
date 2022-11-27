@@ -124,6 +124,7 @@ const App: NextPage = () => {
                     {firstSectionIcons.map((element) => {
                          return (
                               <StyledIconButton
+                                   key={element.text}
                                    buttonClicked={buttonClicked}
                                    onClick={() => {
                                         setButtonClicked(true);
@@ -231,6 +232,7 @@ const App: NextPage = () => {
                               height="48px"
                               backgroundColor={colors.whiteBackground}
                               color={colors.blackInputText}
+                              onClick={() => router.push("/shop")}
                          >
                               View All Products
                          </StyledParimaryButton>
