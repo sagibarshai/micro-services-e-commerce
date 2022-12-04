@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NextPage } from "next";
 
 import {
@@ -22,6 +22,9 @@ import LeafsSvg from "../shared/svg/homepage-leafs-background.svg";
 import IconHome from "../shared/svg/home.svg";
 import IconArrow from "../shared/svg/arrow.svg";
 import IconLeaf from "../shared/svg/black-leaf.svg";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { updateCart } from "../redux/cartSlice";
 
 export type Size = "S" | "M" | "L";
 
@@ -29,12 +32,14 @@ interface IconSections {
      icon: React.ReactElement;
      text: string;
      navigateTo: string;
+     id: string;
 }
 interface ImagesSection {
      imgSrc: string;
      text: string;
      size?: Size;
      price?: number;
+     id: string;
 }
 
 const firstSectionIcons: IconSections[] = [
@@ -42,13 +47,15 @@ const firstSectionIcons: IconSections[] = [
           icon: <IconHome />,
           text: "Indoor plants",
           navigateTo: "/shop/#Indoor plants",
+          id: "a",
      },
      {
           icon: <IconArrow />,
           text: "Outdoor plant",
           navigateTo: "/shop/#Outdoor plants",
+          id: "b",
      },
-     { icon: <IconLeaf />, text: "Contant us", navigateTo: "#footer" },
+     { icon: <IconLeaf />, text: "Contant us", navigateTo: "#footer", id: "c" },
 ];
 
 const firstSectionImages: ImagesSection[] = [
@@ -56,11 +63,13 @@ const firstSectionImages: ImagesSection[] = [
           imgSrc: "/images/coconut.png",
           text: "Coconut plant",
           size: "L",
+          id: "d",
      },
      {
           imgSrc: "/images/chair.png",
           text: "Chairs",
           size: "L",
+          id: "e",
      },
 ];
 const secondSectionImages: ImagesSection[] = [
@@ -68,30 +77,69 @@ const secondSectionImages: ImagesSection[] = [
           imgSrc: "/images/minimalistic-picture.png",
           text: "Minimalistic picture",
           size: "M",
+          id: "f",
      },
-     { imgSrc: "/images/stylish-chair.png", text: "Stylish chair", size: "M" },
-     { imgSrc: "/images/bamboo.png", text: "Bamboo plant", size: "M" },
+     {
+          imgSrc: "/images/stylish-chair.png",
+          text: "Stylish chair",
+          size: "M",
+          id: "g",
+     },
+     { imgSrc: "/images/bamboo.png", text: "Bamboo plant", size: "M", id: "h" },
 ];
 const thirdSectionImages: ImagesSection[] = [
-     { imgSrc: "/images/chair.png", text: "Lola chair", size: "L", price: 300 },
-     { imgSrc: "/images/ficus.png", text: "Ficus", size: "L", price: 20 },
+     {
+          imgSrc: "/images/chair.png",
+          text: "Lola chair",
+          size: "L",
+          price: 300,
+          id: "i",
+     },
+     {
+          imgSrc: "/images/ficus.png",
+          text: "Ficus",
+          size: "L",
+          price: 20,
+          id: "j",
+     },
      {
           imgSrc: "/images/magnet-butterly.png",
           text: "Magnet butterly",
           size: "M",
           price: 50,
+          id: "k",
      },
      {
           imgSrc: "/images/sydney-chair.png",
           text: "Sydney chair",
           size: "M",
           price: 250,
+          id: "m",
      },
-     { imgSrc: "/images/orchid.png", text: "Orchid", size: "M", price: 60 },
+     {
+          imgSrc: "/images/orchid.png",
+          text: "Orchid",
+          size: "M",
+          price: 60,
+          id: "n",
+     },
 ];
 const App: NextPage = () => {
      const [buttonClicked, setButtonClicked] = useState<boolean>(false);
      const router = useRouter();
+     const dispatch = useDispatch();
+
+     useEffect(() => {
+          const getCartItems = async () => {
+               try {
+                    const { data } = await axios.get("/api/cart/getCart");
+                    dispatch(updateCart(data));
+               } catch (err) {
+                    console.log(err);
+               }
+          };
+     }, []);
+
      return (
           <StyledPageContainer>
                <StyledSection height="min-content">
@@ -124,7 +172,7 @@ const App: NextPage = () => {
                     {firstSectionIcons.map((element) => {
                          return (
                               <StyledIconButton
-                                   key={element.text}
+                                   key={element.id}
                                    buttonClicked={buttonClicked}
                                    onClick={() => {
                                         setButtonClicked(true);
@@ -167,7 +215,7 @@ const App: NextPage = () => {
                               {firstSectionImages.map((element) => {
                                    return (
                                         <StyledDivColumn
-                                             key={element.imgSrc}
+                                             key={element.id}
                                              gap="49px"
                                         >
                                              <StyledImg
@@ -207,7 +255,7 @@ const App: NextPage = () => {
                               {secondSectionImages.map((element) => {
                                    return (
                                         <StyledDivColumn
-                                             key={element.imgSrc}
+                                             key={element.id}
                                              gap="26px"
                                              alignItem="center"
                                         >
@@ -267,7 +315,7 @@ const App: NextPage = () => {
                                    if (element.size === "L") {
                                         return (
                                              <StyledDivColumn
-                                                  key={element.imgSrc}
+                                                  key={element.id}
                                                   gap="10px"
                                              >
                                                   <StyledImg
@@ -302,7 +350,7 @@ const App: NextPage = () => {
                                    if (element.size === "M") {
                                         return (
                                              <StyledDivColumn
-                                                  key={element.imgSrc}
+                                                  key={element.id}
                                                   gap="10px"
                                              >
                                                   <StyledImg

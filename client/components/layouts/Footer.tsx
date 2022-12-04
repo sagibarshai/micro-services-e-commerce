@@ -43,9 +43,9 @@ const StyledFooter = (props: StyledProps) => {
                               Follow us
                          </StyledSubtitle>
                          <StyledDivRow gap="20px">
-                              {firstIconsSection.map((element) => {
+                              {firstIconsSection.map((element, index) => {
                                    return (
-                                        <StyledIcon key={element.text}>
+                                        <StyledIcon key={element.text! + index}>
                                              {element.icon}
                                         </StyledIcon>
                                    );
@@ -57,9 +57,11 @@ const StyledFooter = (props: StyledProps) => {
                               Content us
                          </StyledSubtitle>
                          <StyledDivRow gap="70px">
-                              {secondIconsSection.map((element) => {
+                              {secondIconsSection.map((element, index) => {
                                    return (
-                                        <StyledWrapper key={element.text}>
+                                        <StyledWrapper
+                                             key={element.text! + index}
+                                        >
                                              <StyledIcon margin="0 15px 0 0">
                                                   {element.icon}
                                              </StyledIcon>

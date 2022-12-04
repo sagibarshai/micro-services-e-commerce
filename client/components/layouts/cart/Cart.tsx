@@ -117,9 +117,12 @@ export default (props: Props) => {
                     margin="50px 0"
                     justifyContent="center"
                >
-                    {cartItems.map((item) => {
+                    {cartItems.map((item, index) => {
                          return (
-                              <StyledDivRow gap="28px" key={item.imgSrc}>
+                              <StyledDivRow
+                                   gap="28px"
+                                   key={item.imgSrc + index}
+                              >
                                    <StyledImg src={item.imgSrc} />
                                    <StyledDivColumn
                                         justifyContent="space-between"
@@ -197,10 +200,7 @@ export default (props: Props) => {
                          alignSelf="center"
                          onClick={() => {
                               dispatch(toggleCartPopup());
-                              router.push({
-                                   pathname: "/payment",
-                                   query: { sum: cartSum },
-                              });
+                              router.push("/payment");
                          }}
                     >
                          Check out

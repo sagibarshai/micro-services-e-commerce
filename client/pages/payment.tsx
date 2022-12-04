@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { StyledParimaryButton } from "../shared/ui-elements/button/button";
 import { StyledXButton } from "../shared/components/StyledXButton";
@@ -22,6 +22,8 @@ import {
      apiErrorOccurred,
      succsessApiCall,
 } from "../redux/user-notifications-slice";
+import { restartSum, updateCart } from "../redux/cartSlice";
+import { StoreState } from "../redux/store";
 
 interface FormDetails {
      cardNumber: string;
@@ -34,14 +36,12 @@ interface FormDetails {
 export default () => {
      const dispatch = useDispatch();
      const router = useRouter();
+     const { cartSum } = useSelector((state: StoreState) => state.cartSlice);
      const [btnClicked, setBtnClicked] = useState<boolean>(false);
      const [cardHolderName, setCardHolderName] = useState<string>("");
      const [cardNumber, setCardNumber] = useState<string>("");
      const [cardCvv, setCardCvv] = useState<string>("");
      const [cardExprationDate, setCardExprationDate] = useState<string>("");
-
-     const query = router.query;
-     const { sum } = query;
 
      const paymentHandler = async (formDetials: FormDetails) => {
           let arrayCardNumber: string[] = formDetials.cardNumber.split(" ");
@@ -61,20 +61,25 @@ export default () => {
                cardNumber: transformedCardNumbers,
                cardHolderName,
                cardCvv,
-               sum: Number(sum),
+               sum: cartSum,
           };
-          console.log(transformedFormDetials);
           try {
-               const { data } = await axios.post("/api/payments/charge", {
-                    ...transformedFormDetials,
-               });
+               const { data: paymentData } = await axios.post(
+                    "/api/payments/charge",
+                    {
+                         ...transformedFormDetials,
+                    }
+               );
+               dispatch(restartSum());
                dispatch(
                     succsessApiCall(
                          `Succsessfly charge!, please check your email to get more detials`
                     )
                );
+               const { data: cartData } = await axios.get("/api/cart/getCart");
+               dispatch(updateCart(cartData));
                setTimeout(() => dispatch(succsessApiCall(false)), 5000);
-               setTimeout(() => router.push("/"), 10000);
+               setTimeout(() => router.push("/"), 5000);
           } catch (err) {
                const errMsg = apiError(err);
                dispatch(apiErrorOccurred(errMsg));
@@ -104,7 +109,7 @@ export default () => {
                     </StyledXButton>
                     <StyledSumContainer marginTop="23px" gap="10px">
                          <StyledText>Total To Pay:</StyledText>
-                         <StyledText>{sum}$</StyledText>
+                         <StyledText>{cartSum}$</StyledText>
                     </StyledSumContainer>
                     <StyledDivColumn
                          width="min-content"
@@ -178,7 +183,7 @@ export default () => {
                                    cardHolderName,
                                    cardExprationDate,
                                    cardCvv,
-                                   sum: Number(sum),
+                                   sum: cartSum,
                               });
                          }}
                     >

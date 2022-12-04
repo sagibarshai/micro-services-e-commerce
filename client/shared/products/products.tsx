@@ -2,6 +2,7 @@ export interface ProductDetials {
      imgSrc: string;
      text: string;
      price: number;
+     id: string;
 }
 
 type ProductsType = "Chairs" | "Outdoor plants" | "Indoor plants" | "Pictures";
@@ -21,11 +22,13 @@ export const products: Products = [
                     imgSrc: "/images/chair.png",
                     price: 199,
                     text: "Lola chair",
+                    id: "ab",
                },
                {
                     imgSrc: "/images/wood-chair.png",
                     price: 199,
                     text: "Wood chair",
+                    id: "bc",
                },
           ],
      },
@@ -37,11 +40,13 @@ export const products: Products = [
                     imgSrc: "images/orchid.png",
                     price: 89,
                     text: "Orchid",
+                    id: "cd",
                },
                {
                     imgSrc: "/images/mini-palm-tree.png",
                     price: 45,
                     text: "Mini palm tree",
+                    id: "de",
                },
           ],
      },
@@ -53,11 +58,13 @@ export const products: Products = [
                     imgSrc: "images/pink-flower-cactus.png",
                     price: 50,
                     text: "Pink flowe cactus",
+                    id: "ef",
                },
                {
                     imgSrc: "/images/african-cactus.png",
                     price: 50,
                     text: "African cactus",
+                    id: "fg",
                },
           ],
      },
@@ -69,11 +76,13 @@ export const products: Products = [
                     imgSrc: "images/motivation-picture.png",
                     price: 35,
                     text: "Motivation picture",
+                    id: "gj",
                },
                {
                     imgSrc: "/images/minimalistic-picture.png",
                     price: 29,
                     text: "Minimalistic picture",
+                    id: "kj",
                },
           ],
      },

@@ -23,7 +23,6 @@ import {
 
 import IconCircleCart from "../shared/svg/circle-cart.svg";
 import IconFavorites from "../shared/svg/favorites.svg";
-import { StoreState } from "../redux/store";
 
 export default () => {
      const dispatch = useDispatch();
@@ -60,9 +59,9 @@ export default () => {
                status === 200 ? (removeFav = true) : (addFav = true);
                dispatch(
                     succsessApiCall(
-                         `${prod.text} has been ${
-                              addFav ? "add" : "remove"
-                         } from favorites list`
+                         `${prod.text} has been ${addFav ? "add" : "remove"} ${
+                              addFav ? "to" : "from"
+                         } favorites list`
                     )
                );
                setTimeout(() => dispatch(succsessApiCall(false)), 5000);
@@ -74,9 +73,9 @@ export default () => {
      };
      return (
           <StyledPageContainer>
-               {products.map((product) => {
+               {products.map((product, index) => {
                     return (
-                         <StyledDivColumn gap="27px" key={product.id}>
+                         <StyledDivColumn gap="27px" key={product.id + index}>
                               <StyledCategoryTitle>
                                    {product.productType}
                               </StyledCategoryTitle>
@@ -85,7 +84,7 @@ export default () => {
                                         return (
                                              <StyledDivColumn
                                                   gap="27px"
-                                                  key={product.id}
+                                                  key={prod.id}
                                              >
                                                   <StyledImg
                                                        maxWidth="528px"

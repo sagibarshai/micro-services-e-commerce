@@ -24,9 +24,10 @@ interface Props {
 export default (props: Props) => {
      const { links } = useMenageLinks();
      const dispatch = useDispatch();
-     const itemsInCart: number = useSelector(
-          (state: StoreState) => state.cartSlice.cartItems?.length
-     );
+     const itemsInCart: number =
+          useSelector(
+               (state: StoreState) => state.cartSlice.cartItems?.length
+          ) || 0;
      const isAuth: boolean = props.currentuser ? true : false;
      const logoutHandler = async () => {
           try {
@@ -40,9 +41,11 @@ export default (props: Props) => {
      return (
           <StyledHeader>
                <StyledDivRow gap="22px" marginLeft="60px">
-                    {links.map((link) => {
+                    {links.map((link, index) => {
                          if (link.path.startsWith("/auth")) return;
-                         return <CustomLink key={link.name} link={link} />;
+                         return (
+                              <CustomLink key={link.name + index} link={link} />
+                         );
                     })}
                </StyledDivRow>
                <IconApp />

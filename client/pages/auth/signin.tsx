@@ -114,7 +114,7 @@ const Signup: NextPage = () => {
                });
                setIsLoading(false);
                console.log(data);
-               Router.push("/api/users/currentuser");
+               Router.push("/");
           } catch (err: any) {
                setIsLoading(false);
                if (

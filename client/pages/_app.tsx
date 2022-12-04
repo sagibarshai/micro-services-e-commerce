@@ -10,17 +10,21 @@ import buildClient from "../api/build-client";
 import SharedContnet from "../shared/shared-content/SharedContnet";
 const AppComponent = ({ Component, pageProps, currentuser }: any) => {
      const router = useRouter();
-
      return (
           <Provider store={store}>
-               {!router.pathname.startsWith("/auth") && (
-                    <Header currentuser={currentuser} />
-               )}
-               {!router.pathname.startsWith("/auth") && (
-                    <Cart currentuser={currentuser} />
-               )}
+               {!(
+                    router.pathname.includes("/auth") ||
+                    router.pathname.includes("/payment")
+               ) && <Header currentuser={currentuser} />}
+               {!(
+                    router.pathname.includes("/auth") ||
+                    router.pathname.includes("/payment")
+               ) && <Cart currentuser={currentuser} />}
                <Component {...pageProps} />
-               {!router.pathname.startsWith("/auth") && <StyledFooter />}
+               {!(
+                    router.pathname.includes("/auth") ||
+                    router.pathname.includes("/payment")
+               ) && <StyledFooter />}
                <SharedContnet />
           </Provider>
      );
@@ -33,7 +37,6 @@ AppComponent.getInitialProps = async (appContext: AppContext) => {
           return { currentuser: data.user };
      } catch (err: any) {
           const errors = err?.response?.data?.errors;
-          console.log(errors);
           return { currentuser: null };
      }
 };

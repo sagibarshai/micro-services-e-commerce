@@ -26,7 +26,10 @@ const cartSlice = createSlice({
           toggleCartPopup: (state) => {
                state.openCartPopup = !state.openCartPopup;
           },
+          restartSum: (state) => {
+               state.cartSum = 0;
+          },
      },
 });
 export default cartSlice.reducer;
-export const { toggleCartPopup, updateCart } = cartSlice.actions;
+export const { toggleCartPopup, updateCart, restartSum } = cartSlice.actions;

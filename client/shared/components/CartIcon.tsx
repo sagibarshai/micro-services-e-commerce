@@ -84,13 +84,13 @@ export default (props: Props) => {
      const [noItemsTooltip, setNoItemsTooltip] = useState<boolean>(false);
 
      const dispatch = useDispatch();
-     const itemsInCart = useSelector(
-          (state: StoreState) => state.cartSlice.cartItems.length
-     );
+     const itemsInCart =
+          useSelector(
+               (state: StoreState) => state.cartSlice.cartItems?.length
+          ) || 0;
      const { openCartPopup } = useSelector(
           (state: StoreState) => state.cartSlice
      );
-     console.log(openCartPopup);
      return (
           <StyledContainer
                noItemsAnimation={noItemsAnimation}
